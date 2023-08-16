@@ -4,6 +4,12 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/register',
+    name: 'main',
+    component: () => import('@/views/Register.vue')
+  },
+
 ]
 
 const router = new VueRouter({
