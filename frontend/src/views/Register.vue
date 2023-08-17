@@ -79,7 +79,10 @@ export default {
                 })
             .catch(error => {
                 console.log(error);
-                location.href = '/';
+                Swal.fire({
+                    icon: 'error',
+                    title: response.data.message,
+                });
             });
 
         },
