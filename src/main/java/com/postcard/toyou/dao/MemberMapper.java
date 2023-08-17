@@ -8,5 +8,6 @@ import org.springframework.ui.Model;
 public interface MemberMapper {
 
     public int register(MemberModel mModel);
+    public MemberModel login(MemberModel mModel);
 
 }
