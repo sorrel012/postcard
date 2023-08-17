@@ -14,6 +14,7 @@ create table pcCode (
 	m_seq int not null,	
 	constraint fk_m_seq foreign key(m_seq) references member(m_seq)
 );
+ALTER TABLE public.pccode ADD bgcolor VARCHAR(50) DEFAULT '#FFFFF';
 
 create table postcard (
 	pc_seq serial not null,
@@ -23,3 +24,5 @@ create table postcard (
 	pcc_seq int not null,
 	constraint fk_pcc_seq foreign key(pcc_seq) references pcCode(pcc_seq)
 );
+
+select * from member;
