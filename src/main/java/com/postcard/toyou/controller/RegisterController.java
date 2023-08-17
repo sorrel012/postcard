@@ -4,6 +4,7 @@ import com.postcard.toyou.model.MemberModel;
 import com.postcard.toyou.model.ResultModel;
 import com.postcard.toyou.service.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +20,7 @@ public class RegisterController {
     private RegisterService rService;
 
     @PostMapping ("/register")
-    public ResultModel register(@RequestBody MemberModel mModel) {
+    public ResponseEntity<ResultModel> register(@RequestBody MemberModel mModel) {
 
         return rService.register(mModel);
     }
