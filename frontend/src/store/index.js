@@ -4,15 +4,11 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {
-    url: 'http://localhost:8082/',
-  },
-  getters: {
+  state() {
+    return {
+      url: 'http://localhost:8082/',
+    }
   },
   mutations: {
   },
-  actions: {
-  },
-  modules: {
-  }
 })
