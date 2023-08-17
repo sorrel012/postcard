@@ -8,7 +8,7 @@
                 <h1 class="h2 text-center fw-bold title">개인 회원가입</h1>
                 <p class="fs-6 text-center mb-4">회원가입 후 다양한 서비스를 이용하세요.</p>
                 
-                <form class="w-100" @submit="register" id="formregister">               
+                <form class="w-100" @submit.prevent="register" id="formregister">               
                     <div class="mb-1">아이디</div>
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="userid" placeholder="name@example.com" name="m_id" v-model="userinfo.id"> 
@@ -45,6 +45,7 @@
 
 <script>
 import axios from 'axios';
+import Swal from "sweetalert2";
 
 export default {
     name: 'Register',
@@ -60,7 +61,27 @@ export default {
     },
     methods: {
         register() {
-            console.log(this.userinfo);
+            axios.post(this.$store.state.url + 'register', this.userinfo)
+                .then(response => {
+                    console.log(response);
+                    if(response.data.state) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: response.data.message,
+                    });
+                    this.$router.push({name: 'login'});
+                    } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: response.data.message,
+                    });
+                }
+                })
+            .catch(error => {
+                console.log(error);
+                location.href = '/';
+            });
+
         },
     }
 }

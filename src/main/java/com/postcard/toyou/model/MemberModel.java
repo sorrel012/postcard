@@ -12,6 +12,6 @@ public class MemberModel {
     private String pw;
     private String name;
     private String tel;
-    private LocalDateTime writeDate; // TODO 변수명
+    private LocalDateTime regDate;
 
 }
