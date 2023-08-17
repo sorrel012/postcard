@@ -37,6 +37,11 @@ div {
     border-color: rgb(75, 67, 67);
 }
 
+.btn-primary:focus-visible {
+    background-color: rgb(75, 67, 67);
+    border-color: rgb(75, 67, 67);
+}
+
 /*sweetalert2 폰트 변경*/
 .swal2-popup {
     font-family: SUITE-Regular;
