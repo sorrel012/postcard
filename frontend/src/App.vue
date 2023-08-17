@@ -10,19 +10,22 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link ms-3" href="/create">도화지 만들기</a>
+                <a class="nav-link ms-3 me-3" href="/create">도화지 만들기</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link ms-2" href="/write">쪽지 쓰기</a>
+                <a class="nav-link ms-4" href="/write">쪽지 쓰기</a>
               </li>
             </ul>
           </div>
-          <div id="navbarNav2">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav2" aria-controls="navbarNav2" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav2">
             <ul class="navbar-nav">
               <li class="nav-item me-2">
                 <a class="nav-link" href="/login">로그인</a>
               </li>
-              <li class="nav-item me-5">
+              <li class="nav-item me-2">
                 <a class="nav-link" href="/register">회원가입</a>
               </li>
             </ul>

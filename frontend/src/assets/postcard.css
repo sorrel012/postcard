@@ -41,3 +41,7 @@ div {
 .swal2-popup {
     font-family: SUITE-Regular;
 }
+
+.navbar-collapse {
+    flex-direction: row-reverse;
+}
