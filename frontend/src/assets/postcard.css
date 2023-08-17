@@ -50,3 +50,7 @@ div {
 .navbar-collapse {
     flex-direction: row-reverse;
 }
+
+.router-link-exact-active {
+    color: rgb(206, 26, 26) !important;
+}

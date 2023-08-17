@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <div>
+    <div class="mb-5">
       <nav class="pt-3 pb-3 navbar navbar-expand-lg bg-light">
         <div class="font-bold container-fluid">
-          <a class="navbar-brand ms-3" href="/">📧 롤링페이퍼 📧</a>
+          <a class="navbar-brand ms-3" href="/">롤링페이퍼 🧾</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -11,10 +11,13 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link ms-3 me-3" href="/create">도화지 만들기</a>
+                <router-link class="nav-link me-3" to="/create" active-class="active">도화지 만들기</router-link>
+              </li>              
+              <li class="nav-item">
+                <router-link class="nav-link" to="/check" active-class="active">도화지 보기</router-link>
               </li>
               <li class="nav-item">
-                <a class="nav-link ms-4" href="/write">마음 전하기</a>
+                <router-link class="nav-link ms-4" to="/write" active-class="active">마음 전하기</router-link>
               </li>
             </ul>
           </div>
