@@ -60,9 +60,10 @@ export default {
             }).then(() => {
               sessionStorage.setItem('id', this.account.id);
               sessionStorage.setItem('pw', this.account.pw);
-              sessionStorage.setItem('name', response.data.result.name);              
+              sessionStorage.setItem('name', response.data.result.name);
+              sessionStorage.setItem('no', response.data.result.m_seq);
               location.href = '/';
-            });            
+            });
           } else {
             Swal.fire({
               icon: 'error',
