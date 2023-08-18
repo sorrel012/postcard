@@ -1,14 +1,14 @@
 <template>
-  <section class="container-md d-flex justify-content-center p-5 mt-5">
+  <section class="container-md d-flex justify-content-center p-5 mt-5 h-75">
 
-    <div class="col-sm-12 col-md-12 col-lg-5 p-0 bg-white d-flex align-items-center rounded-end pt-4 pb-3 me-5">
+    <div class="col-sm-12 col-md-12 col-lg-5 p-0 d-flex align-items-center rounded-end me-5 w-75 h-100 p-5">
 
       <div class="container-md d-flex flex-column align-items-center">
 
         <h1 class="h1 text-center fw-bold title mt-3">로그인</h1>
         <p class="fs-6 text-center mb-5">로그인 후 다양한 서비스를 이용하세요.</p>
-        <form @submit.prevent="login">
-          <div class="form-floating mb-3">
+        <form @submit.prevent="login" class="w-50">
+          <div class="form-floating mb-3 ">
             <input type="text" class="form-control" placeholder="name@example.com" name="username" v-model="account.id">
             <label for="floatingInput">아이디</label>
           </div>
@@ -82,8 +82,12 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 section {
-  background-color: #FFF9F3;
+  border: 1px solid #e3e3e3;
+  border-radius: 10px;
+}
+.mt-5 {
+  margin-top: 7rem !important;
 }
 </style>

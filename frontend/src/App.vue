@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="mb-5">
+    <div>
       <nav class="pt-3 pb-3 navbar navbar-expand-lg bg-light">
         <div class="font-bold container-fluid">
           <a class="navbar-brand ms-3" href="/">롤링페이퍼 🧾</a>

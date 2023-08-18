@@ -1,33 +1,33 @@
 <template>
-    <section class="container-md d-flex justify-content-center p-5 mt-5">
+    <section class="container-md d-flex justify-content-center p-5 mt-5 h-75">
         
-        <div class="col-sm-12 col-md-12 col-lg-5 p-0 bg-white d-flex align-items-center rounded-end pt-4 pb-4 me-5">
+        <div class="col-sm-12 col-md-12 col-lg-5 p-0 d-flex align-items-center rounded-end me-5 w-75 h-100 p-5">
 
             <div class="container-md d-flex flex-column align-items-center">               
                 
                 <h1 class="h2 text-center fw-bold title">개인 회원가입</h1>
                 <p class="fs-6 text-center mb-4">회원가입 후 다양한 서비스를 이용하세요.</p>
                 
-                <form class="w-100" @submit.prevent="register" id="formregister">               
-                    <div class="mb-1">아이디</div>
+                <form class="w-100 mt-3" @submit.prevent="register" id="formregister">
+                    <div class="mb-1 f-bold">아이디</div>
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="userid" placeholder="name@example.com" name="m_id" v-model="userinfo.id"> 
                         <label for="floatingInput">6~12자 이내로 입력해 주세요</label>
                     </div>
                         
-                    <div class="mb-1">비밀번호</div>
+                    <div class="mb-1 f-bold">비밀번호</div>
                         <div class="form-floating mb-3">
                         <input type="password" class="form-control" id="password" placeholder="Password" name="m_pw" required v-model="userinfo.pw"> 
                         <label for="floatingPassword">8~12자 이내로 입력해 주세요 (알파벳, 숫자 필수)</label>
                     </div>
 
-                    <div class="mb-1">이름</div>
+                    <div class="mb-1 f-bold">이름</div>
                         <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="name" placeholder="name" name="m_name" required v-model="userinfo.name"> 
                         <label for="floatingPassword" >이름을 입력해 주세요</label>
                     </div>
                     
-                    <div class="mb-1">연락처</div>
+                    <div class="mb-1 f-bold">연락처</div>
                         <div class="form-floating">
                         <input type="text" class="form-control" id="tel" placeholder="tel" name="m_tel" required v-model="userinfo.tel"> 
                         <label for="floatingPassword">"-" 없이 입력해 주세요</label>
@@ -90,8 +90,15 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 section {
-    background-color: #FFF9F3;
+  border: 1px solid #e3e3e3;
+  border-radius: 10px;
+}
+.mt-5 {
+  margin-top: 7rem !important;
+}
+.b-color {
+  border-color: #7A6B6B;
 }
 </style>
