@@ -52,6 +52,7 @@
 
 <script>
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export default {
   name: 'create',
@@ -66,7 +67,8 @@ export default {
         pcbRadiusPx: '',
         m_seq: 0
       },
-      pcBorder: 1,
+      name: '',
+      pcBorder: 2,
       pcbRadius: 5,
       fbgColor: '#FFFFFF',
     }
@@ -95,11 +97,30 @@ export default {
       this.postcard.m_seq = sessionStorage.getItem('no');
       axios.post(this.$store.state.url + 'create', this.postcard)
           .then(response => {
-            console.log(response.data.result);
+            console.log(response);
+            if (response.data.state) {
+              Swal.fire({
+                icon: 'success',
+                title: response.data.result,
+                text: response.data.message,
+                timer: 10000,
+              }).then(() => {
+                location.href = '/mypaper';
+              });
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: response.data.message,
+              });
+            }
           })
           .catch(error => {
             console.log(error);
-          })
+            Swal.fire({
+              icon: 'error',
+              title: '도화지를 만들지 못했습니다.',
+            });
+          });
     }
   }
 }
