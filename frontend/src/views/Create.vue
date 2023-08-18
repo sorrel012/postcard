@@ -7,7 +7,7 @@
 
 
         <h4 class="m-4 f-bold">도화지 이름</h4>
-        <input type="text" placeholder="친구들에게 보여질 이름을 적어주세요" class="form-control mt-4 mb-5" style="height: 50px;" v-model="postcard.papername" required>
+          <input type="text" placeholder="친구들에게 보여질 이름을 적어주세요" class="form-control mt-4 mb-5" style="height: 50px;" v-model="postcard.title" required>
 
         <h4 class="m-4 mt-5 mb-3 f-bold">도화지 배경 색상</h4>
         <h6>선택하지 않을 시 배경 색상은 하얀색으로 지정됩니다.</h6>
@@ -58,12 +58,13 @@ export default {
   data() {
     return {
       postcard: {
-        papername: '',
+        title: '',
         bgColor: '#FFFFFF',
         pcColor: '#FFFFFF',
         pcbColor: '#000000',
         pcBorderPx: '',
-        pcbRadiusPx: ''
+        pcbRadiusPx: '',
+        m_seq: 0
       },
       pcBorder: 1,
       pcbRadius: 5,
@@ -91,6 +92,7 @@ export default {
   },
   methods: {
     create() {
+      this.postcard.m_seq = sessionStorage.getItem('no');
       axios.post(this.$store.state.url + 'create', this.postcard)
           .then(response => {
             console.log(response.data.result);

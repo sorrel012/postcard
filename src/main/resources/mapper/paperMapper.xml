@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.postcard.toyou.dao.PaperMapper">
+
+    <select id="isUnique" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select count(#{code}) as cnt from paper;
+    </select>
+
+    <insert id="create" parameterType="com.postcard.toyou.model.PaperModel">
+        insert into paper(m_seq, title, bgcolor, pccolor, pcborder, pcbcolor, pcbradius, code)
+            values(#{m_seq}, #{title}, #{bgColor}, #{pcColor}, #{pcBorderPx}, #{pcbColor}, #{pcbRadiusPx}, #{code})
+    </insert>
+</mapper>
+

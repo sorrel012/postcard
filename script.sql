@@ -8,7 +8,7 @@ create table member (
 );
 
 
-create table pcCode (
+create table paper (
 	pcc_seq serial primary key,
 	
 	m_seq int not null,	
