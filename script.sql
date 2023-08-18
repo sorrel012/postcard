@@ -17,10 +17,11 @@ create table paper (
 ALTER TABLE public.paper ADD bgcolor VARCHAR(50) DEFAULT '#FFFFFF';
 ALTER TABLE public.paper ADD pccolor VARCHAR(50) DEFAULT '#FFFFFF';
 ALTER TABLE public.paper ADD pcbcolor VARCHAR(50) DEFAULT '#000000';
-ALTER TABLE public.paper ADD pcborder VARCHAR(50) not null;
-ALTER TABLE public.paper ADD pcbradius VARCHAR(50) not null;
+ALTER TABLE public.paper ADD pcborderpx VARCHAR(50) not null;
+ALTER TABLE public.paper ADD pcbradiuspx VARCHAR(50) not null;
 ALTER TABLE public.paper ADD title VARCHAR(5000) not null;
 ALTER TABLE public.paper ADD code int unique not null;
+ALTER TABLE public.paper ADD regdate timestamp not null default current_timestamp;
 
 create table postcard (
 	pc_seq serial not null,
@@ -31,6 +32,9 @@ create table postcard (
 	constraint fk_pcc_seq foreign key(pcc_seq) references pcCode(pcc_seq)
 );
 ALTER TABLE public.postcard ADD textcolor VARCHAR(50) DEFAULT '#FFFFFF';
+
+insert into postcard (content, pcc_seq, textcolor) values ('해린잉~~~~ 보구 싶엉 ㅠ', 5, '##FB6E52');
+select count(*) from postcard where pcc_seq=5;
 
 select * from member;
 select * from paper;

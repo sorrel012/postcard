@@ -8,8 +8,17 @@
     </select>
 
     <insert id="create" parameterType="com.postcard.toyou.model.PaperModel">
-        insert into paper(m_seq, title, bgcolor, pccolor, pcborder, pcbcolor, pcbradius, code)
+        insert into paper(m_seq, title, bgcolor, pccolor, pcborderpx, pcbcolor, pcbradiuspx, code)
             values(#{m_seq}, #{title}, #{bgColor}, #{pcColor}, #{pcBorderPx}, #{pcbColor}, #{pcbRadiusPx}, #{code})
     </insert>
+
+    <select id="getList" parameterType="java.lang.Integer" resultType="com.postcard.toyou.model.PaperModel">
+        select * from paper where m_seq=#{m_seq}
+    </select>
+
+    <select id="getCnt" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select count(*) from postcard where pcc_seq=#{seq}
+    </select>
+
 </mapper>
 

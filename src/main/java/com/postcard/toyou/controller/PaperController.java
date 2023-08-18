@@ -7,10 +7,7 @@ import com.postcard.toyou.service.LoginService;
 import com.postcard.toyou.service.PaperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.awt.print.Paper;
 
@@ -23,8 +20,12 @@ public class PaperController {
 
     @PostMapping("/create")
     public ResponseEntity<ResultModel> create(@RequestBody PaperModel pModel) {
-
         return pService.create(pModel);
+    }
+
+    @GetMapping("/mypaperlist")
+    public ResponseEntity<ResultModel> getList(@RequestParam int m_seq) {
+        return pService.getList(m_seq);
     }
 
 }

@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Paper;
+import java.util.List;
+
 @Service
 public class PaperServiceImpl implements PaperService {
 
@@ -30,8 +33,8 @@ public class PaperServiceImpl implements PaperService {
         pModel.setCode(code);
 
         ResultModel rModel = new ResultModel();
-        int result1 = pMapper.create(pModel);
-        if (result1 == 1) {
+        int result = pMapper.create(pModel);
+        if (result == 1) {
             rModel.setState(true);
             rModel.setMessage("도화지가 생성되었습니다.");
             rModel.setResult(code);
@@ -53,4 +56,28 @@ public class PaperServiceImpl implements PaperService {
         return code;
     }
 
+    @Override
+    public ResponseEntity<ResultModel> getList(int mSeq) {
+
+        ResultModel rModel = new ResultModel();
+
+        List<PaperModel> plist = pMapper.getList(mSeq);
+        for(PaperModel p : plist) {
+
+            int seq = p.getPcc_seq();
+            int cnt = pMapper.getCnt(seq);
+            p.setPcCnt(cnt);
+
+            String regdate = p.getRegdate();
+            regdate = regdate.split(" ")[0];
+            p.setRegdate(regdate);
+
+        }
+
+        rModel.setState(true);
+        rModel.setMessage("도화지 목록을 불러왔습니다.");
+        rModel.setResult(plist);
+
+        return ResponseEntity.ok(rModel);
+    }
 }
