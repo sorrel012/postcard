@@ -3,7 +3,6 @@ package com.postcard.toyou.controller;
 import com.postcard.toyou.model.MemberModel;
 import com.postcard.toyou.model.ResultModel;
 import com.postcard.toyou.service.LoginService;
-import com.postcard.toyou.service.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
