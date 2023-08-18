@@ -4,7 +4,7 @@
 <mapper namespace="com.postcard.toyou.dao.PaperMapper">
 
     <select id="isUnique" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-        select count(#{code}) as cnt from paper;
+        select count(*) as cnt from paper where code=#{code};
     </select>
 
     <insert id="create" parameterType="com.postcard.toyou.model.PaperModel">

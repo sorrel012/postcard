@@ -14,12 +14,13 @@ create table paper (
 	m_seq int not null,	
 	constraint fk_m_seq foreign key(m_seq) references member(m_seq)
 );
-ALTER TABLE public.pccode ADD bgcolor VARCHAR(50) DEFAULT '#FFFFFF';
-ALTER TABLE public.pccode ADD pccolor VARCHAR(50) DEFAULT '#FFFFFF';
-ALTER TABLE public.pccode ADD pcbcolor VARCHAR(50) DEFAULT '#000000';
-ALTER TABLE public.pccode ADD pcborder VARCHAR(50) not null;
-ALTER TABLE public.pccode ADD pcbradius VARCHAR(50) not null;
-ALTER TABLE public.pccode ADD title VARCHAR(5000) not null;
+ALTER TABLE public.paper ADD bgcolor VARCHAR(50) DEFAULT '#FFFFFF';
+ALTER TABLE public.paper ADD pccolor VARCHAR(50) DEFAULT '#FFFFFF';
+ALTER TABLE public.paper ADD pcbcolor VARCHAR(50) DEFAULT '#000000';
+ALTER TABLE public.paper ADD pcborder VARCHAR(50) not null;
+ALTER TABLE public.paper ADD pcbradius VARCHAR(50) not null;
+ALTER TABLE public.paper ADD title VARCHAR(5000) not null;
+ALTER TABLE public.paper ADD code int unique not null;
 
 create table postcard (
 	pc_seq serial not null,
@@ -32,3 +33,6 @@ create table postcard (
 ALTER TABLE public.postcard ADD textcolor VARCHAR(50) DEFAULT '#FFFFFF';
 
 select * from member;
+select * from paper;
+
+select count(1) as cnt from paper;
