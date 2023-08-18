@@ -7,8 +7,12 @@ export default new Vuex.Store({
   state() {
     return {
       url: 'http://localhost:8082/',
+      paper: {},
     }
   },
   mutations: {
+    setPaper(state, value) {
+      state.paper = value;
+    }
   },
 })

@@ -14,7 +14,7 @@
                 <router-link class="nav-link me-3" to="/create" active-class="active">도화지 만들기</router-link>
               </li>              
               <li class="nav-item">
-                <router-link class="nav-link" to="/mypaper" active-class="active">도화지 보기</router-link>
+                <router-link class="nav-link" to="/mypaperlist" active-class="active">도화지 보기</router-link>
               </li>
               <li class="nav-item">
                 <router-link class="nav-link ms-4" to="/write" active-class="active">마음 전하기</router-link>
@@ -58,7 +58,7 @@ export default {
   created() {
     if(sessionStorage.getItem('id') != null) {
       this.isMember = true;
-    };
+    }
   },
   methods: {
     logout() {
