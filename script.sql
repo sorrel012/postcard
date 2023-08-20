@@ -29,14 +29,16 @@ create table postcard (
 	regDate timestamp not null default current_timestamp,
 	
 	pcc_seq int not null,
-	constraint fk_pcc_seq foreign key(pcc_seq) references pcCode(pcc_seq)
+	constraint fk_pcc_seq foreign key(pcc_seq) references paper(pcc_seq)
 );
 ALTER TABLE public.postcard ADD textcolor VARCHAR(50) DEFAULT '#FFFFFF';
 
-insert into postcard (content, pcc_seq, textcolor) values ('해린잉~~~~ 보구 싶엉 ㅠ', 5, '##FB6E52');
+insert into postcard (content, pcc_seq, textcolor) values ('수영잉~~~~ 보구 싶엉 ㅠ', 1, '#FB6E52');
+insert into postcard (content, pcc_seq, textcolor) values ('내가 항상 고마워하는 거 알지? 너가 최고야!', 1, '#000000');
 select count(*) from postcard where pcc_seq=5;
 
 select * from member;
 select * from paper;
+select * from postcard;
 
 select count(1) as cnt from paper;
