@@ -2,41 +2,44 @@
   <div class="p-5 h-100">
     <h1 class="mt-4 mb-5">{{ paper.title }}</h1>
 
-    <div class="container mt-5 d-flex">
-      <div class="postcard p-4 fs-4">첫 번째 쪽지~ 안녕안녕안녕</div>
-      <div class="postcard p-4 fs-4">두 번째 쪽지</div>
-    </div>
-
-    <div>
-      <button>추가</button>
+    <div class="container d-flex">
+      <div class="p-3 fs-3 m-5 w-25" v-for="postcard in postcards" :key="postcard.pc_seq"
+          :style="{backgroundColor: paper.pcColor, outline: `${paper.pcBorderPx} solid ${paper.pcbColor}`,
+                    borderRadius: paper.pcbRadiusPx, boxShadow: `4px 4px 1px 3px ${paper.pcbColor}`, color: postcard.textColor}">
+          {{ postcard.content }}
+      </div>
     </div>
 
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'MyPaper',
   data() {
     return {
       paper: {},
+      postcards: [],
     }
   },
   created() {
     this.paper = this.$store.state.paper;
-    console.log(this.paper.bgColor);
+    console.log(this.paper);
     document.body.style.backgroundColor = this.paper.bgColor;
-  },
-  mounted() {
+
+    axios.get(this.$store.state.url + 'postcardlist', {params: {pcc_seq: this.paper.pcc_seq}})
+          .then(response => {
+            console.log(response);
+            this.postcards = response.data.result;
+          })
+          .catch(error => {
+            console.log(error);
+          })
   },
 }
 </script>
 
 <style scoped>
-.postcard {
-  background-color: antiquewhite;
-  outline: 2px solid black;
-  border-radius: postcard.pcbRadiusPx;
-  boxS-shadow: 4px 4px 1px 3px black;
-}
 </style>
