@@ -20,7 +20,7 @@ ALTER TABLE public.paper ADD pcbcolor VARCHAR(50) DEFAULT '#000000';
 ALTER TABLE public.paper ADD pcborderpx VARCHAR(50) not null;
 ALTER TABLE public.paper ADD pcbradiuspx VARCHAR(50) not null;
 ALTER TABLE public.paper ADD title VARCHAR(5000) not null;
-ALTER TABLE public.paper ADD code int unique not null;
+ALTER TABLE public.paper ADD code int unique not null; 
 ALTER TABLE public.paper ADD regdate timestamp not null default current_timestamp;
 
 create table postcard (
