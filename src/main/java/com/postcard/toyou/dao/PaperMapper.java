@@ -12,4 +12,5 @@ public interface PaperMapper {
     public int isUnique(int code);
     List<PaperModel> getList(int mSeq);
     int getCnt(int seq);
+    List<PaperModel> getPaper(int code);
 }

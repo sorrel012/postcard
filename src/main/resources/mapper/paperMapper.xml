@@ -20,5 +20,9 @@
         select count(*) from postcard where pcc_seq=#{seq}
     </select>
 
+    <select id="getPaper" parameterType="java.lang.Integer" resultType="com.postcard.toyou.model.PaperModel">
+        select * from paper where code=#{code}
+    </select>
+
 </mapper>
 

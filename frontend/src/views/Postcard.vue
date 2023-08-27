@@ -3,16 +3,20 @@
     <h1 class="mt-4 mb-5">{{ paper.title }}</h1>
 
     <div class="container d-flex">
-      <div class="p-3 fs-3 m-4 w-25" v-for="postcard in postcards" :key="postcard.pc_seq"
+      <div class="p-3 fs-4 m-4 w-25" v-for="postcard in postcards" :key="postcard.pc_seq"
            :style="{backgroundColor: paper.pcColor, outline: `${paper.pcBorderPx} solid ${paper.pcbColor}`,
                     borderRadius: paper.pcbRadiusPx, boxShadow: `4px 4px 1px 3px ${paper.pcbColor}`, color: postcard.textColor}">
         {{ postcard.content }}
       </div>
-      <textarea :class="{'p-3':true, 'fs-3':true, 'm-4':true, 'w-25':true, 'd-none': isNew}" :style="{border, backgroundColor: paper.pcColor, outline: `${paper.pcBorderPx} solid ${paper.pcbColor}`, borderRadius: paper.pcbRadiusPx, boxShadow: `4px 4px 1px 3px ${paper.pcbColor}`}">
+      <textarea :class="{'p-3':true, 'fs-4':true, 'm-4':true, 'w-25':true, 'd-none': isNew}" :style="{backgroundColor: paper.pcColor, outline: `${paper.pcBorderPx} solid ${paper.pcbColor}`, borderRadius: paper.pcbRadiusPx, boxShadow: `4px 4px 1px 3px ${paper.pcbColor}`, color:postcard.textColor}">
       </textarea>
+      <div :class="{'mt-4':true, 'd-none':isLoading}" @click="regPostcard">
+        <input type="color" :class="{'form-control':true, 'form-control-color':true, 'mb-2':true, 'w-100':true, 'd-none':isNew}" style= height:50px v-model="postcard.textColor">
+        <button :class="{'btn':true, 'btn-success':true, 'd-none':isNew}" v-model="postcard.content">✔</button>
+      </div>
     </div>
 
-    <div :class="{'mt-3':true, 'd-none':isLoading }" @click="newPostcard">
+    <div :class="{'mt-3':true, 'd-none':isLoading}" @click="newPostcard">
       <button class="btn btn-danger">+</button>
     </div>
 
@@ -31,6 +35,10 @@ export default {
       postcards: [],
       isLoading: true,
       isNew: true,
+      postcard: {
+        content: '',
+        textColor: '#000000',
+      },
     }
   },
   created() {
@@ -85,9 +93,16 @@ export default {
     newPostcard() {
       this.isNew = false;
     },
-  }
+    regPostcard() {
+
+    }
+  },
 }
 </script>
 
 <style scoped>
+textarea {
+  border: none;
+  resize: none;
+}
 </style>
