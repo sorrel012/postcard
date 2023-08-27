@@ -28,7 +28,12 @@ const routes = [
     path: '/mypaper',
     name: 'mypaper',
     component: () => import('@/views/MyPaper.vue')
-  }
+  },
+  {
+    path: '/write',
+    name: 'write',
+    component: () => import('@/views/Postcard.vue')
+  },
 ]
 
 const router = new VueRouter({
