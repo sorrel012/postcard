@@ -8,11 +8,15 @@ export default new Vuex.Store({
     return {
       url: 'http://localhost:8082/',
       paper: {},
+      isLoading: true,
     }
   },
   mutations: {
     setPaper(state, value) {
       state.paper = value;
+    },
+    setLoadingStatus(state, value) {
+      state.isLoading = value;
     }
   },
 })
