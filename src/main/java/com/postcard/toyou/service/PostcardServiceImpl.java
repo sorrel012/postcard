@@ -33,4 +33,24 @@ public class PostcardServiceImpl implements PostcardService {
 
         return ResponseEntity.ok(rModel);
     }
+
+    @Override
+    public ResponseEntity<ResultModel> writePostcard(PostcardModel pmodel) {
+
+        ResultModel rModel = new ResultModel();
+
+        int result = pcMapper.writePostcard(pmodel);
+
+        if(result > 0) {
+            rModel.setState(true);
+            rModel.setMessage("쪽지를 남겼습니다.");
+            rModel.setResult(true);
+        } else {
+            rModel.setState(false);
+            rModel.setMessage("쪽지를 남기지 못했습니다.");
+            rModel.setResult(false);
+        }
+
+        return ResponseEntity.ok(rModel);
+    }
 }

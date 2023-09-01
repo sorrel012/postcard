@@ -7,4 +7,9 @@
         select * from postcard
     </select>
 
+    <insert id="writePostcard" parameterType="com.postcard.toyou.model.PostcardModel">
+        insert into postcard (content, pcc_seq, textcolor)
+            values (#{content}, #{pcc_seq}, #{textColor})
+    </insert>
+
 </mapper>

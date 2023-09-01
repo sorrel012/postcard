@@ -9,5 +9,6 @@ import java.util.List;
 public interface PostcardMapper {
 
     List<PostcardModel> getList(int pccSeq);
+    int writePostcard(PostcardModel pmodel);
 
 }
