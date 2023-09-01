@@ -47,7 +47,6 @@
 <script>
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import router from "@/router";
 
 export default {
   name: 'Postcard',
@@ -98,6 +97,7 @@ export default {
                 return response.data;
               })
               .catch(error => {
+                console.log(error);
                 Swal.showValidationMessage(
                     '도화지가 존재하지 않습니다.'
                 )
