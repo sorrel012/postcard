@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5 h-100">
+  <div class="p-5 h-100 w-100">
 
     <div :class="{'mt-4':true, 'fs-1':true, 'f-bold':true, 'd-none': !isLoading}" @click="inputCode">
       <button class="btn btn-danger w-50">전하기 💌</button>
@@ -7,19 +7,35 @@
 
     <h1 class="mt-4 mb-5">{{ paper.title }}</h1>
 
-    <div class="container d-flex">
+    <div class="row flex-start w-100 m-0 align-items-baseline">
+      <!-- 기존의 쪽지들 -->
       <div class="p-3 fs-4 m-4 w-25" v-for="postcard in postcards" :key="postcard.pc_seq"
-           :style="{backgroundColor: paper.pcColor, outline: `${paper.pcBorderPx} solid ${paper.pcbColor}`,
-                    borderRadius: paper.pcbRadiusPx, boxShadow: `4px 4px 1px 3px ${paper.pcbColor}`, color: postcard.textColor}">
+           :style="{maxWidth: '210px', backgroundColor: paper.pcColor, outline: `${paper.pcBorderPx} solid ${paper.pcbColor}`,
+                  borderRadius: paper.pcbRadiusPx, boxShadow: `4px 4px 1px 3px ${paper.pcbColor}`, color: postcard.textColor}">
         {{ postcard.content }}
       </div>
-      <textarea :class="{'p-3':true, 'fs-4':true, 'm-4':true, 'w-25':true, 'd-none': !isNew}" :style="{backgroundColor: paper.pcColor, outline: `${paper.pcBorderPx} solid ${paper.pcbColor}`, borderRadius: paper.pcbRadiusPx, boxShadow: `4px 4px 1px 3px ${paper.pcbColor}`, color:postcard.textColor}" v-model="postcard.content">
-      </textarea>
-      <div :class="{'mt-4':true, 'd-none':isLoading}">
-        <input type="color" :class="{'form-control':true, 'form-control-color':true, 'mb-2':true, 'w-100':true, 'd-none':!isNew}" style= height:50px v-model="postcard.textColor">
-        <button :class="{'btn':true, 'btn-success':true, 'd-none':!isNew}" @click="regPostcard">✔</button>
+
+      <!-- 새로운 쪽지-->
+      <div class="p-3 fs-4 m-2 w-50">
+        <div class="d-flex align-items-start">
+          <textarea :class="{'p-3':true, 'fs-4':true, 'w-100':true, 'd-none': !isNew}"
+                    :style="{backgroundColor: paper.pcColor, outline: `${paper.pcBorderPx} solid ${paper.pcbColor}`,borderRadius: paper.pcbRadiusPx, boxShadow: `4px 4px 1px 3px ${paper.pcbColor}`, color:postcard.textColor, maxWidth: '210px'}"
+                    v-model="postcard.content">
+            </textarea>
+          <div class="ms-3 d-flex flex-column align-items-center">
+            <input type="color"
+                   :class="{'form-control':true, 'form-control-color':true, 'mb-2':true, 'd-none':!isNew}"
+                   style="height:50px"
+                   v-model="postcard.textColor">
+            <button :class="{'btn':true, 'btn-success':true, 'd-none':!isNew}"
+                    @click="regPostcard">✔</button>
+          </div>
+        </div>
       </div>
     </div>
+
+
+
 
     <div :class="{'mt-3':true, 'd-none':isLoading}" @click="newPostcard">
       <button class="btn btn-danger">+</button>
@@ -39,7 +55,6 @@ export default {
     return {
       paper: {},
       postcards: [],
-      isLoading: true,
       isNew: false,
       postcard: {
         content: '',
@@ -50,6 +65,12 @@ export default {
   },
   created() {
     document.body.style.backgroundColor = '#FFFFFF';
+    this.$store.commit('setLoadingStatus', true);
+  },
+  computed: {
+    isLoading() {
+      return this.$store.state.isLoading;
+    }
   },
   methods: {
     inputCode() {
@@ -72,7 +93,7 @@ export default {
                 this.postcard.pcc_seq = this.paper.pcc_seq;
 
                 this.getPostcards();
-                this.isLoading = false;
+                console.log(this.isLoading);
 
                 return response.data;
               })
@@ -109,6 +130,10 @@ export default {
                 icon: 'success',
                 title: result.data.message,
               });
+
+              this.postcard.content = '';
+              this.postcard.textColor = '#FFFFFF';
+
             } else {
               Swal.fire({
                 icon: 'error',
@@ -122,7 +147,8 @@ export default {
             console.log(error);
           })
 
-          router.go(0);
+
+          this.isNew = false;
           this.getPostcards();
     },
     getPostcards() {
@@ -130,6 +156,7 @@ export default {
           .then(response => {
             console.log(response);
             this.postcards = response.data.result;
+            this.$store.commit('setLoadingStatus', false);
           })
           .catch(error => {
             console.log(error);
