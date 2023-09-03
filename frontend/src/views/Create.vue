@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5 h-100" :style="{backgroundColor: postcard.bgColor }" >
+  <div class="p-5 h-100" :class="{'d-none':!isMember}" :style="{backgroundColor: postcard.bgColor }" >
     <h1 class="mt-4">{{ name }}의 롤링페이퍼 💌</h1>
 
     <div class="container-md mt-5 h-100 mh-100 d-inline-block">
@@ -53,6 +53,7 @@
 <script>
 import axios from "axios";
 import Swal from "sweetalert2";
+import router from "@/router";
 
 export default {
   name: 'create',
@@ -71,14 +72,29 @@ export default {
       pcBorder: 2,
       pcbRadius: 5,
       fbgColor: '#FFFFFF',
+      isMember: false,
     }
   },
-  created() {
+  async created() {
+
+    const id = sessionStorage.getItem('id');
+    if(id == null || id == '') {
+      await Swal.fire({
+        icon: 'error',
+        title: '로그인 후 이용하실 수 있습니다.',
+      })
+      location.href='/login';
+      return
+    } else {
+      this.isMember = true;
+    }
+
     this.name = sessionStorage.getItem('name');
     this.postcard.pcBorderPx = this.pcBorder + 'px';
     this.postcard.pcbRadiusPx = this.pcbRadius + '%';
     this.postcard.bgColor = this.fbgColor;
     document.body.style.backgroundColor = this.fbgColor;
+
   },
   watch: {
     pcBorder() {

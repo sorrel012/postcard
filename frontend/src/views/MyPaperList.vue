@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid row d-lg-flex align-items-sm-start p-5 pt-4 p-height mt-5">
+  <div :class="{'d-none':!isMember, 'd-lg-flex':isMember}" class="container-fluid row align-items-sm-start p-5 pt-4 p-height mt-5" >
 
     <div class="col-sm-9 col-md-9 col-lg-12 container-lg">
       <div class="container-lg mb-4 p-0">
@@ -46,15 +46,32 @@
 
 <script>
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export default {
   name: 'MyPaper',
   data() {
     return {
       paperlist: [],
+      isMember: false,
     }
   },
-  created() {
+  async created() {
+    
+    console.log(this.isMember);
+    const id = sessionStorage.getItem('id');
+    console.log(id);
+    if(id == null || id == '') {
+      await Swal.fire({
+        icon: 'error',
+        title: '로그인 후 이용하실 수 있습니다.',
+      })
+      location.href='/login';
+      return
+    } else {
+      this.isMember = true;
+    }
+
     document.body.style.backgroundColor = 'rgb(255, 255, 255)';
     axios.get(this.$store.state.url + 'mypaperlist', { params: {m_seq: sessionStorage.getItem('no')} })
         .then(response => {
