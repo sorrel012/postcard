@@ -7,20 +7,21 @@
 
     <h1 class="mt-4 mb-5">{{ paper.title }}</h1>
 
-    <div class="row flex-start w-100 m-0 align-items-baseline">
+    <div class="row w-100 m-0 align-items-baseline">
       <!-- 기존의 쪽지들 -->
-      <div class="p-3 fs-4 m-4 w-25" v-for="postcard in postcards" :key="postcard.pc_seq"
-           :style="{maxWidth: '210px', backgroundColor: paper.pcColor, outline: `${paper.pcBorderPx} solid ${paper.pcbColor}`,
-                  borderRadius: paper.pcbRadiusPx, boxShadow: `4px 4px 1px 3px ${paper.pcbColor}`, color: postcard.textColor}">
+      <div class="p-3 fs-4 ms-auto me-auto mt-4 mb-4 col-12 col-sm-4 col-xl-2" v-for="postcard in postcards" >
+        <div class="pt-3 pb-3 ps-2 pe-2" :style="{backgroundColor: paper.pcColor, outline: `${paper.pcBorderPx} solid ${paper.pcbColor}`,
+        borderRadius: paper.pcbRadiusPx, boxShadow: `4px 4px 1px 3px ${paper.pcbColor}`, color: postcard.textColor}">
         {{ postcard.content }}
+        </div>
       </div>
 
       <!-- 새로운 쪽지-->
-      <div class="p-3 fs-4 m-2 w-50">
+      <div class="p-3 fs-4 m-2 ms-0 me-0">
         <div class="d-flex align-items-start">
-          <textarea :class="{'p-3':true, 'fs-4':true, 'w-100':true, 'd-none': !isNew}"
-                    :style="{backgroundColor: paper.pcColor, outline: `${paper.pcBorderPx} solid ${paper.pcbColor}`,borderRadius: paper.pcbRadiusPx, boxShadow: `4px 4px 1px 3px ${paper.pcbColor}`, color:postcard.textColor, maxWidth: '210px'}"
-                    v-model="postcard.content">
+            <textarea :class="{'p-3':true, 'fs-4':true, 'col-12':true, 'col-sm':true, 'w-75':true, 'd-none': !isNew}"
+                      :style="{backgroundColor: paper.pcColor, outline: `${paper.pcBorderPx} solid ${paper.pcbColor}`,borderRadius: paper.pcbRadiusPx, boxShadow: `4px 4px 1px 3px ${paper.pcbColor}`, color:postcard.textColor, maxWidth: '210px'}"
+                      v-model="postcard.content">
             </textarea>
           <div class="ms-3 d-flex flex-column align-items-center">
             <input type="color"
@@ -33,9 +34,6 @@
         </div>
       </div>
     </div>
-
-
-
 
     <div :class="{'mt-3':true, 'd-none':isLoading}" @click="newPostcard">
       <button class="btn btn-danger">+</button>
@@ -132,7 +130,7 @@ export default {
               });
 
               this.postcard.content = '';
-              this.postcard.textColor = '#FFFFFF';
+              this.postcard.textColor = '#000000';
 
             } else {
               Swal.fire({
