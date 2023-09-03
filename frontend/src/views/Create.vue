@@ -11,7 +11,7 @@
 
         <h4 class="m-4 mt-5 mb-3 f-bold">도화지 배경 색상</h4>
         <h6>선택하지 않을 시 배경 색상은 하얀색으로 지정됩니다.</h6>
-        <input type="color" class="form-control mt-4 mb-2" style="height: 5%;" v-model="fbgColor" >
+        <input type="color" class="form-control mt-4 mb-2" style="height: 50px;" v-model="fbgColor" >
 
         <h4 class="m-4 mt-5 mb-3 f-bold">쪽지 꾸미기</h4>
         <h6>선택하지 않을 시 쪽지는 기본으로 지정됩니다</h6>
