@@ -2,9 +2,8 @@
   <div class="p-5 h-100" :class="{'d-none':!isMember}">
     <h1 class="mt-4 mb-5">{{ paper.title }}</h1>
 
-    <div class="row w-100 m-0 align-items-baseline">
-      <!-- 기존의 쪽지들 -->
-      <div class="p-3 fs-4 ms-auto me-auto mt-4 mb-4 col-12 col-sm-4 col-xl-2" v-for="postcard in postcards" >
+    <div class="d-flex flex-wrap justify-content-start">
+      <div class="p-3 fs-4 mt-4 mb-4 col-12 col-sm-4 col-xl-2" v-for="postcard in postcards">
         <div class="pt-3 pb-3 ps-2 pe-2" :style="{backgroundColor: paper.pcColor, outline: `${paper.pcBorderPx} solid ${paper.pcbColor}`,
         borderRadius: paper.pcbRadiusPx, boxShadow: `4px 4px 1px 3px ${paper.pcbColor}`, color: postcard.textColor}">
           {{ postcard.content }}

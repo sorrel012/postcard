@@ -9,13 +9,14 @@
 
     <div class="row w-100 m-0 align-items-baseline">
       <!-- 기존의 쪽지들 -->
-      <div class="p-3 fs-4 ms-auto me-auto mt-4 mb-4 col-12 col-sm-4 col-xl-2" v-for="postcard in postcards" >
-        <div class="pt-3 pb-3 ps-2 pe-2" :style="{backgroundColor: paper.pcColor, outline: `${paper.pcBorderPx} solid ${paper.pcbColor}`,
+      <div class="d-flex flex-wrap justify-content-start">
+        <div class="p-3 fs-4 mt-4 mb-4 col-12 col-sm-4 col-xl-2" v-for="postcard in postcards">
+          <div class="pt-3 pb-3 ps-2 pe-2" :style="{backgroundColor: paper.pcColor, outline: `${paper.pcBorderPx} solid ${paper.pcbColor}`,
         borderRadius: paper.pcbRadiusPx, boxShadow: `4px 4px 1px 3px ${paper.pcbColor}`, color: postcard.textColor}">
-        {{ postcard.content }}
+            {{ postcard.content }}
+          </div>
         </div>
       </div>
-
       <!-- 새로운 쪽지-->
       <div class="p-3 fs-4 m-2 ms-0 me-0">
         <div class="d-flex align-items-start">
