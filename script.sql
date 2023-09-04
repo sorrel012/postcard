@@ -22,6 +22,7 @@ ALTER TABLE public.paper ADD pcbradiuspx VARCHAR(50) not null;
 ALTER TABLE public.paper ADD title VARCHAR(5000) not null;
 ALTER TABLE public.paper ADD code int unique not null; 
 ALTER TABLE public.paper ADD regdate timestamp not null default current_timestamp;
+ALTER TABLE public.paper ADD isDelete varchar(1) not null default 'N';
 
 create table postcard (
 	pc_seq serial not null,
@@ -32,9 +33,11 @@ create table postcard (
 	constraint fk_pcc_seq foreign key(pcc_seq) references paper(pcc_seq)
 );
 ALTER TABLE public.postcard ADD textcolor VARCHAR(50) DEFAULT '#FFFFFF';
+ALTER TABLE public.postcard ADD isDelete varchar(1) not null default 'N';
 
 insert into postcard (content, pcc_seq, textcolor) values ('수영잉~~~~ 보구 싶엉 ㅠ', 1, '#FB6E52');
 insert into postcard (content, pcc_seq, textcolor) values ('내가 항상 고마워하는 거 알지? 너가 최고야!', 1, '#000000');
+update postcard set isdelete='N' where pc_seq=2;
 select count(*) from postcard where pcc_seq=5;
 
 select * from member;

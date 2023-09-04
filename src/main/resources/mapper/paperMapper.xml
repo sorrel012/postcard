@@ -4,7 +4,7 @@
 <mapper namespace="com.postcard.toyou.dao.PaperMapper">
 
     <select id="isUnique" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-        select count(*) as cnt from paper where code=#{code};
+        select count(*) as cnt from paper where code=#{code} and isdelete='N'
     </select>
 
     <insert id="create" parameterType="com.postcard.toyou.model.PaperModel">
@@ -13,15 +13,15 @@
     </insert>
 
     <select id="getList" parameterType="java.lang.Integer" resultType="com.postcard.toyou.model.PaperModel">
-        select * from paper where m_seq=#{m_seq}
+        select * from paper where m_seq=#{m_seq} and isdelete='N' order by regdate
     </select>
 
     <select id="getCnt" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-        select count(*) from postcard where pcc_seq=#{seq}
+        select count(*) from postcard where pcc_seq=#{seq} and isdelete='N'
     </select>
 
     <select id="getPaper" parameterType="java.lang.Integer" resultType="com.postcard.toyou.model.PaperModel">
-        select * from paper where code=#{code}
+        select * from paper where code=#{code} and isdelete='N'
     </select>
 
 </mapper>

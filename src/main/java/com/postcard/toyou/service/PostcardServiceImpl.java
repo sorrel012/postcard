@@ -53,4 +53,25 @@ public class PostcardServiceImpl implements PostcardService {
 
         return ResponseEntity.ok(rModel);
     }
+
+    @Override
+    public ResponseEntity<ResultModel> deletePostcard(int pcSeq) {
+
+        ResultModel rModel = new ResultModel();
+
+        int result = pcMapper.deletePostcard(pcSeq);
+
+        if(result > 0) {
+            rModel.setState(true);
+            rModel.setMessage("쪽지를 삭제했습니다.");
+            rModel.setResult(true);
+        } else {
+            rModel.setState(false);
+            rModel.setMessage("쪽지를 삭제하지 못했습니다.");
+            rModel.setResult(false);
+        }
+
+        return ResponseEntity.ok(rModel);
+    }
+
 }

@@ -24,4 +24,10 @@ public class PostcardController {
         return pcService.writePostcard(pmodel);
     }
 
+    @DeleteMapping("/postcard")
+    public ResponseEntity<ResultModel> deletePostcard(@RequestParam int pc_seq) {
+        return pcService.deletePostcard(pc_seq);
+    }
+
+
 }

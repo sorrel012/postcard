@@ -7,4 +7,5 @@ import org.springframework.http.ResponseEntity;
 public interface PostcardService {
     ResponseEntity<ResultModel> getList(int pccSeq);
     ResponseEntity<ResultModel> writePostcard(PostcardModel pmodel);
+    ResponseEntity<ResultModel> deletePostcard(int pcSeq);
 }

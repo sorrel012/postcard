@@ -4,12 +4,16 @@
 <mapper namespace="com.postcard.toyou.dao.PostcardMapper">
 
     <select id="getList" parameterType="java.lang.Integer" resultType="com.postcard.toyou.model.PostcardModel">
-        select * from postcard
+        select * from postcard where isdelete='N' order by regdate
     </select>
 
     <insert id="writePostcard" parameterType="com.postcard.toyou.model.PostcardModel">
         insert into postcard (content, pcc_seq, textcolor)
             values (#{content}, #{pcc_seq}, #{textColor})
     </insert>
+
+    <update id="deletePostcard" parameterType="java.lang.Integer">
+        update postcard set isdelete='Y' where pc_seq=#{pc_seq}
+    </update>
 
 </mapper>
