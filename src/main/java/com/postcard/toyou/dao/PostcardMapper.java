@@ -11,4 +11,5 @@ public interface PostcardMapper {
     List<PostcardModel> getList(int pccSeq);
     int writePostcard(PostcardModel pmodel);
     int deletePostcard(int pcSeq);
+    int deleteAllPostcards(int pccSeq);
 }

@@ -31,4 +31,9 @@ public class PaperController {
         return pService.getPaper(code);
     }
 
+    @DeleteMapping("/paper")
+    public ResponseEntity<ResultModel> deletePaper(@RequestParam int pcc_seq) {
+        return pService.deletePaper(pcc_seq);
+    }
+
 }

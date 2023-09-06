@@ -16,4 +16,8 @@
         update postcard set isdelete='Y' where pc_seq=#{pc_seq}
     </update>
 
+    <update id="deleteAllPostcards" parameterType="java.lang.Integer">
+        update postcard set isdelete='Y' where pcc_seq=#{pcc_seq}
+    </update>
+
 </mapper>

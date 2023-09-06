@@ -1,6 +1,7 @@
 package com.postcard.toyou.service;
 
 import com.postcard.toyou.dao.PaperMapper;
+import com.postcard.toyou.dao.PostcardMapper;
 import com.postcard.toyou.model.PaperModel;
 import com.postcard.toyou.model.ResultModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,9 @@ public class PaperServiceImpl implements PaperService {
 
     @Autowired
     private PaperMapper pMapper;
+
+    @Autowired
+    private PostcardMapper pcMapper;
 
     @Override
     public ResponseEntity<ResultModel> create(PaperModel pModel) {
@@ -94,6 +98,36 @@ public class PaperServiceImpl implements PaperService {
         rModel.setState(true);
         rModel.setMessage("도화지를 불러왔습니다.");
         rModel.setResult(plist);
+
+        return ResponseEntity.ok(rModel);
+    }
+
+    @Override
+    public ResponseEntity<ResultModel> deletePaper(int pccSeq) {
+
+        ResultModel rModel = new ResultModel();
+
+        int result1 = pMapper.deletePaper(pccSeq);
+
+        if(result1 > 0) {
+            int result2 = pcMapper.deleteAllPostcards(pccSeq);
+
+            if (result2 > 0) {
+                rModel.setState(true);
+                rModel.setMessage("도화지를 삭제했습니다.");
+                rModel.setResult(true);
+
+            } else {
+                rModel.setState(false);
+                rModel.setMessage("도화지를 삭제하지 못했습니다.");
+                rModel.setResult(false);
+            }
+
+        } else {
+            rModel.setState(false);
+            rModel.setMessage("도화지를 삭제하지 못했습니다.");
+            rModel.setResult(false);
+        }
 
         return ResponseEntity.ok(rModel);
     }

@@ -71,7 +71,6 @@ export default {
         preConfirm: () => {
           return axios.delete(this.$store.state.url + 'postcard', {params: {pc_seq : postcard.pc_seq}})
               .then(response => {
-                console.log('delete: ', response);
                 this.getPostcards(this.paper);
               })
               .catch(error => {

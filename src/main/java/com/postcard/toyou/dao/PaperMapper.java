@@ -13,4 +13,5 @@ public interface PaperMapper {
     List<PaperModel> getList(int mSeq);
     int getCnt(int seq);
     List<PaperModel> getPaper(int code);
+    int deletePaper(int pccSeq);
 }

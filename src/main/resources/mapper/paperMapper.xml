@@ -24,5 +24,9 @@
         select * from paper where code=#{code} and isdelete='N'
     </select>
 
+    <update id="deletePaper" parameterType="java.lang.Integer">
+        update paper set isdelete='Y' where pcc_seq=#{pcc_seq}
+    </update>
+
 </mapper>
 

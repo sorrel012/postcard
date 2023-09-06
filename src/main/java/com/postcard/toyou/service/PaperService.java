@@ -9,4 +9,5 @@ public interface PaperService {
     ResponseEntity<ResultModel> create(PaperModel pModel);
     ResponseEntity<ResultModel> getList(int mSeq);
     ResponseEntity<ResultModel> getPaper(int code);
+    ResponseEntity<ResultModel> deletePaper(int pccSeq);
 }
