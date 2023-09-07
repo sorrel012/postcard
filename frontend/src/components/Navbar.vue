@@ -13,10 +13,11 @@
               <router-link class="nav-link me-3" to="/create" active-class="active">도화지 만들기</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/mypaperlist" active-class="active">도화지 보기</router-link>
+              <router-link class="nav-link " to="/write" active-class="active">마음 전하기</router-link>
             </li>
+
             <li class="nav-item">
-              <router-link class="nav-link ms-4" to="/write" active-class="active">마음 전하기</router-link>
+              <router-link class="nav-link ms-4" to="/board" active-class="active">게시판</router-link>
             </li>
           </ul>
         </div>
@@ -28,6 +29,9 @@
           <ul class="navbar-nav">
             <li class="nav-item me-2" v-if="isMember" @click="logout">
               <a class="nav-link">로그아웃</a>
+            </li>
+            <li class="nav-item me-2" v-if="isMember">
+              <a class="nav-link" href="/myprofile">회원정보</a>
             </li>
             <li class="nav-item me-2" v-if="!isMember">
               <a class="nav-link" href="/login">로그인</a>
