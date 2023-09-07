@@ -3,10 +3,11 @@ create table member (
 	id varchar(100) not null,
 	pw varchar(500) not null,
 	name varchar(50) not null,
-	tel varchar(15) not null,
+	address varchar(1000) not null,
+	addressDetail varchar(3000) not null,
+	email varchar(500) not null
 	regDate timestamp not null default current_timestamp
 );
-
 
 create table paper (
 	pcc_seq serial primary key,
@@ -39,6 +40,7 @@ insert into postcard (content, pcc_seq, textcolor) values ('수영잉~~~~ 보구
 insert into postcard (content, pcc_seq, textcolor) values ('내가 항상 고마워하는 거 알지? 너가 최고야!', 1, '#000000');
 update postcard set isdelete='N' where pc_seq=2;
 update paper set isdelete='N' where pcc_seq=5;
+update postcard  set isdelete='N' where pcc_seq=5;
 select count(*) from postcard where pcc_seq=5;
 
 select * from member;
