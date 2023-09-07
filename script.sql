@@ -5,7 +5,7 @@ create table member (
 	name varchar(50) not null,
 	address varchar(1000) not null,
 	addressDetail varchar(3000) not null,
-	email varchar(500) not null
+	email varchar(500) not null,
 	regDate timestamp not null default current_timestamp
 );
 

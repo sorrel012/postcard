@@ -116,7 +116,10 @@ export default {
         to: '01012345678',
         content: this.authCode
       }
-      axios.post(this.$store.state.url + 'auth', authConfig);
+      axios.post(this.$store.state.url + 'auth', authConfig)
+          .then(result => {
+            console.log(result)
+          })
       Swal.fire({
         title: '인증번호를 입력해 주세요.',
         text: '입력하신 번호로 인증번호가 발송되었습니다',
@@ -129,6 +132,7 @@ export default {
         showLoaderOnConfirm: true,
         preConfirm: (code) => {
           if(code !== this.authCode) {
+            throw new Error('인증번호 불일치')
           }
           return true;
         },
