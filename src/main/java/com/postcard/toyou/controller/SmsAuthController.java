@@ -21,9 +21,8 @@ public class SmsAuthController {
     private SmsAuthService smsAuthService;
 
     @PostMapping("/auth")
-    public String sendSms(@RequestBody SmsMessageDTO messageDto, Model model) throws JsonProcessingException, RestClientException, URISyntaxException, NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException {
+    public String sendSms(@RequestBody SmsMessageDTO messageDto) throws JsonProcessingException, RestClientException, URISyntaxException, NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException {
         SmsResponseDTO response = smsAuthService.sendSms(messageDto);
-        model.addAttribute("response", response);
         return "result";
     }
 
