@@ -113,12 +113,14 @@ export default {
     requireAuth() {
       this.makeAuthCode();
       const authConfig = {
-        to: '01012345678',
+        to: this.userinfo.tel,
         content: this.authCode
       }
       axios.post(this.$store.state.url + 'auth', authConfig)
           .then(result => {
             console.log(result)
+          }).catch(error => {
+            console.log(error);
           })
       Swal.fire({
         title: '인증번호를 입력해 주세요.',
