@@ -36,22 +36,23 @@ import java.util.List;
 @Service
 public class SmsAuthService {
 
-    @Value("${naver-cloud-sms.accessKey}")
+    @Value("${naver-cloud-sms.access-key}")
     private String accessKey;
 
-    @Value("${naver-cloud-sms.secretKey}")
+    @Value("${naver-cloud-sms.secret-key}")
     private String secretKey;
 
-    @Value("${naver-cloud-sms.serviceId}")
+    @Value("${naver-cloud-sms.service-id}")
     private String serviceId;
 
-    @Value("${naver-cloud-sms.senderPhone}")
+    @Value("${naver-cloud-sms.sender-phone}")
     private String senderPhone;
+
 
     public String makeSignature(Long time) throws UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException {
         String space = " ";
         String newLine = "\n";
-        String method = "GET";
+        String method = "POST";
         String url = "/sms/v2/services/"+ this.serviceId+"/messages";
         String timestamp = time.toString();
         String accessKey = this.accessKey;
