@@ -5,15 +5,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.postcard.toyou.dto.SmsMessageDTO;
 import com.postcard.toyou.dto.SmsRequestDTO;
 import com.postcard.toyou.dto.SmsResponseDTO;
-import lombok.Data;
+import com.postcard.toyou.model.ResultModel;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
@@ -30,35 +31,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-@Data
 @RequiredArgsConstructor
 @ConfigurationProperties(prefix = "naver-cloud-sms")
 @Service
 public class SmsAuthService {
 
+    @Value("${naver-cloud-sms.accessKey}")
     private String accessKey;
+
+    @Value("${naver-cloud-sms.secretKey}")
     private String secretKey;
+
+    @Value("${naver-cloud-sms.serviceId}")
     private String serviceId;
+
+    @Value("${naver-cloud-sms.senderPhone}")
     private String senderPhone;
 
     public String makeSignature(Long time) throws UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException {
         String space = " ";
         String newLine = "\n";
         String method = "GET";
-        String url = "/photos/puppy.jpg?query1=&query2";
-        String timestamp = "{timestamp}";
+        String url = "/sms/v2/services/"+ this.serviceId+"/messages";
+        String timestamp = time.toString();
         String accessKey = this.accessKey;
         String secretKey = this.secretKey;
 
         String message = new StringBuilder()
-                .append(method)
-                .append(space)
-                .append(url)
-                .append(newLine)
-                .append(timestamp)
-                .append(newLine)
-                .append(accessKey)
-                .toString();
+                                .append(method)
+                                .append(space)
+                                .append(url)
+                                .append(newLine)
+                                .append(timestamp)
+                                .append(newLine)
+                                .append(accessKey)
+                                .toString();
 
         SecretKeySpec signingKey = new SecretKeySpec(secretKey.getBytes("UTF-8"), "HmacSHA256");
         Mac mac = Mac.getInstance("HmacSHA256");
@@ -70,7 +77,10 @@ public class SmsAuthService {
         return encodeBase64String;
     }
 
-    public SmsResponseDTO sendSms(SmsMessageDTO messageDto) throws JsonProcessingException, RestClientException, URISyntaxException, InvalidKeyException, NoSuchAlgorithmException, UnsupportedEncodingException {
+    public ResponseEntity<ResultModel> sendSms(SmsMessageDTO messageDto) throws JsonProcessingException, RestClientException, URISyntaxException, InvalidKeyException, NoSuchAlgorithmException, UnsupportedEncodingException {
+
+        ResultModel rModel = new ResultModel();
+
         Long time = System.currentTimeMillis();
 
         HttpHeaders headers = new HttpHeaders();
@@ -99,6 +109,8 @@ public class SmsAuthService {
         restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
         SmsResponseDTO response = restTemplate.postForObject(new URI("https://sens.apigw.ntruss.com/sms/v2/services/"+ serviceId +"/messages"), httpBody, SmsResponseDTO.class);
 
-        return response;
+        System.out.println("response: " + response);
+
+        return null;
     }
 }

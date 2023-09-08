@@ -2,11 +2,14 @@ package com.postcard.toyou.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.postcard.toyou.dto.SmsMessageDTO;
-import com.postcard.toyou.dto.SmsResponseDTO;
+import com.postcard.toyou.model.ResultModel;
 import com.postcard.toyou.service.SmsAuthService;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClientException;
 
 import java.io.UnsupportedEncodingException;
@@ -18,12 +21,12 @@ import java.security.NoSuchAlgorithmException;
 @RestController
 public class SmsAuthController {
 
+    @Autowired
     private SmsAuthService smsAuthService;
 
     @PostMapping("/auth")
-    public String sendSms(@RequestBody SmsMessageDTO messageDto) throws JsonProcessingException, RestClientException, URISyntaxException, NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException {
-        SmsResponseDTO response = smsAuthService.sendSms(messageDto);
-        return "result";
+    public ResponseEntity<ResultModel> sendSms(@RequestBody SmsMessageDTO messageDto) throws JsonProcessingException, RestClientException, URISyntaxException, NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException {
+        return smsAuthService.sendSms(messageDto);
     }
 
 }
