@@ -110,8 +110,14 @@ public class SmsAuthService {
         restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
         SmsResponseDTO response = restTemplate.postForObject(new URI("https://sens.apigw.ntruss.com/sms/v2/services/"+ serviceId +"/messages"), httpBody, SmsResponseDTO.class);
 
-        System.out.println("response: " + response);
+        if(response.getStatusName().equals("success")) {
+            rModel.setState(true);
+            rModel.setMessage("인증에 성공하였습니다.");
+        } else {
+            rModel.setState(false);
+            rModel.setMessage("인증에 실패하였습니다.");
+        }
 
-        return null;
+        return ResponseEntity.ok(rModel);
     }
 }
