@@ -13,9 +13,13 @@
           <div class="row mb-4">
             <div class="col-2 f-bold text-start d-flex align-items-center ps-4">아이디</div>
             <div class="col-10">
-              <div class="form-floating">
+              <div class="form-floating btn-group w-100">
                 <input type="text" class="form-control" placeholder="" v-model="userinfo.id">
                 <label for="floatingInput">6~12자 이내로 입력해 주세요</label>
+                <input type="button" class="btn btn-primary" value="중복 확인" onclick="checkDup;">
+              </div>
+              <div class="form-floating btn-group w-50 flex-start ps-2 mt-1 c-red" :class="{'d-none':!isCheckDup}">
+                {{dupMsg}}
               </div>
             </div>
           </div>
@@ -41,13 +45,21 @@
           </div>
 
           <div class="row mb-4">
-            <div class="col-2 f-bold text-start d-flex ps-4 align-items-center">연락처</div>
+            <div class="col-2 f-bold text-start d-flex align-items-center ps-4" style="height: 48px;">연락처</div>
             <div class="col-10">
-              <div class="d-flex">
-                <div class="form-floating btn-group w-100">
-                  <input type="text" class="form-control" placeholder="" required v-model="userinfo.tel">
+              <div class="d-flex flex-column">
+                <div class="form-floating btn-group w-100 mb-2">
+                  <input type="text" class="form-control" :readonly="isSuccess" placeholder="" required v-model="userinfo.tel">
                   <label for="floatingInput">-빼고 입력해 주세요.</label>
-                  <input type="button" class="btn btn-primary" :value="authMsg" @click="requireAuth">
+                  <input type="button" class="btn btn-primary" :disabled="isSuccess"  :value="authMsg" @click="requireAuth">
+                </div>
+                <div class="form-floating btn-group w-50 flex-start" :class="{'d-none':!wantAuth}">
+                  <input type="text" class="form-control" placeholder="" required v-model="userinfo.userAuthCode" :readonly="isSuccess">
+                  <label for="floatingInput">인증번호를 입력해 주세요.</label>
+                  <input type="button" class="btn btn-primary" value="인증" @click="confirmAuth" :disabled="isSuccess">
+                </div>
+                <div class="form-floating btn-group w-50 flex-start ps-2 mt-1 c-red" :class="{'d-none':!isAuth}">
+                  {{confirmMsg}}
                 </div>
               </div>
             </div>
@@ -64,9 +76,9 @@
           </div>
 
           <div class="row mb-4">
-            <div class="col-2 f-bold text-start d-flex align-items-baseline ps-4">주소</div>
+            <div class="col-2 f-bold text-start d-flex align-items-center ps-4" style="height: 48px;">주소</div>
             <div class="col-10">
-              <div class="form-floating btn-group mb-2 w-100">
+              <div class="form-floating btn-group mb-2 w-100" >
                 <input type="text" class="form-control" placeholder="" readonly required>
                 <label for="floatingInput">주소를 검색해 주세요</label>
                 <input type="button" class="btn btn-primary" value="주소 검색" onclick="sample6_execDaumPostcode();">
@@ -106,51 +118,54 @@ export default {
         addressDetail: ''
       },
       authMsg: '본인 인증',
+      confirmMsg: '',
       authCode: '',
+      userAuthCode: '',
+      wantAuth: false,
+      isAuth: false,
+      isSuccess: false,
+      isCheckDup: false,
+      isDup: true,
     }
   },
   methods: {
+    checkDup() {
+      this.isCheckDup = true;
+      axios.post(this.$store.state.url + 'dup', this.userinfo.id)
+          .then(result => {
+
+          })
+          .catch(error => {
+            
+          })
+
+    },
     requireAuth() {
+
+      // if(this.userinfo.tel.length != 11) {
+      //   Swal.fire({
+      //     title: '연락처를 입력해 주세요',
+      //     icon: 'error'
+      //   });
+      //   return
+      // }
+
+      this.wantAuth = true;
       this.makeAuthCode();
       const authConfig = {
-        to: '01012345678',
+        to: this.userinfo.tel,
         content: this.authCode
       }
-      axios.post(this.$store.state.url + 'auth', authConfig)
-          .then(result => {
-            console.log(result)
-          })
-      Swal.fire({
-        title: '인증번호를 입력해 주세요.',
-        text: '입력하신 번호로 인증번호가 발송되었습니다',
-        input: 'text',
-        inputAttributes: {
-          autocapitalize: 'off'
-        },
-        showCancelButton: true,
-        confirmButtonText: 'Submit',
-        showLoaderOnConfirm: true,
-        preConfirm: (code) => {
-          if(code !== this.authCode) {
-            throw new Error('인증번호 불일치')
-          }
-          return true;
-        },
-        allowOutsideClick: () => !Swal.isLoading()
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire({
-            title: '인증에 성공했습니다.',
-            text: '회원가입을 이어서 진행해 주세요'
-          });
-          this.authMsg = '인증 완료';
-        }
-      }).catch(error => {
-        console.log(error);
-        Swal.showValidationMessage(
-            '인증에 실패했습니다.'
-        )
-      })
+      // axios.post(this.$store.state.url + 'auth', authConfig)
+      //     .then(result => {
+      //       if(result.data.status) {
+      //         this.confirmMsg = '인증 성공';
+      //         this.isAuth = true;
+      //         this.authMsg = '인증 완료'
+      //       }
+      //     }).catch(error => {
+      //       console.log(error);
+      //     })
     },
     makeAuthCode() {
       const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -160,6 +175,17 @@ export default {
         authCode += chars[index];
       }
       this.authCode= authCode;
+    },
+    confirmAuth() {
+      this.isAuth = true;
+      if(this.authCode == this.userAuthCode) {
+        this.confirmMsg = '인증 성공';
+        this.isSuccess = true;
+        this.authMsg = '인증 완료'
+      } else {
+        this.confirmMsg = '인증 실패';
+        this.isSuccess = false;
+      }
     },
     register() {
       axios.post(this.$store.state.url + 'register', this.userinfo)
@@ -196,5 +222,7 @@ section {
   border: 1px solid #e3e3e3;
   border-radius: 10px;
 }
-
+.c-red {
+  color: red;
+}
 </style>
