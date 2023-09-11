@@ -8,6 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import java.util.Collections;
+import java.util.List;
+
 @Service
 public class RegisterServiceImpl implements RegisterService {
 
@@ -31,5 +34,20 @@ public class RegisterServiceImpl implements RegisterService {
 
     };
 
+    @Override
+    public ResponseEntity<Object> selectDupId(String id) {
 
+        ResultModel rModel = new ResultModel();
+
+        List<String> dupId = this.mMapper.selectDupId(id);
+        if(dupId.size() == 0) {
+            rModel.setState(true);
+            rModel.setMessage(id + " 는 사용할 수 있는 아이디입니다.");
+        } else {
+            rModel.setState(false);
+            rModel.setMessage(id + " 는 사용할 수 없는 아이디입니다.");
+        }
+
+        return ResponseEntity.ok(rModel);
+    }
 }

@@ -10,18 +10,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
 public class RegisterController {
-
 
     @Autowired
     private RegisterService rService;
 
     @PostMapping ("/register")
     public ResponseEntity<ResultModel> register(@RequestBody MemberModel mModel) {
-
         return rService.register(mModel);
+    }
+
+    @PostMapping(value = "/dup")
+    public ResponseEntity<Object> selectDupId(@RequestBody MemberModel mModel) {
+        return rService.selectDupId(mModel.getId());
     }
 
 }

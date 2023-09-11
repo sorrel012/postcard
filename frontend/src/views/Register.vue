@@ -11,15 +11,17 @@
         <form class="w-100 mt-3" @submit.prevent="register" id="formregister">
 
           <div class="row mb-4">
-            <div class="col-2 f-bold text-start d-flex align-items-center ps-4">아이디</div>
+            <div class="col-2 f-bold text-start d-flex align-items-center ps-4" style="height: 50px;">아이디</div>
             <div class="col-10">
-              <div class="form-floating btn-group w-100">
-                <input type="text" class="form-control" placeholder="" v-model="userinfo.id">
-                <label for="floatingInput">6~12자 이내로 입력해 주세요</label>
-                <input type="button" class="btn btn-primary" value="중복 확인" onclick="checkDup;">
-              </div>
-              <div class="form-floating btn-group w-50 flex-start ps-2 mt-1 c-red" :class="{'d-none':!isCheckDup}">
-                {{dupMsg}}
+              <div class="d-flex flex-column">
+                <div class="form-floating btn-group w-100 mb-2">
+                  <input type="text" class="form-control" :readonly="!isDup" placeholder="" v-model="userinfo.id">
+                  <label for="floatingInput">6~12자로 입력해 주세요</label>
+                  <input type="button" class="btn btn-primary" :value="idCheckBtnMsg" @click="dupOrMod">
+                </div>
+                <div class="form-floating btn-group w-50 flex-start ps-2 mt-1 c-red" :class="{'d-none':!isCheckDup}">
+                  {{dupMsg}}
+                </div>
               </div>
             </div>
           </div>
@@ -29,7 +31,7 @@
             <div class="col-10">
               <div class="form-floating">
                 <input type="password" class="form-control" placeholder="" required v-model="userinfo.pw">
-                <label for="floatingInput">8~12자 이내로 입력해 주세요 (알파벳, 숫자 필수)</label>
+                <label for="floatingInput">8~15자로 입력해 주세요 (알파벳, 숫자 필수)</label>
               </div>
             </div>
           </div>
@@ -81,7 +83,7 @@
               <div class="form-floating btn-group mb-2 w-100" >
                 <input type="text" class="form-control" placeholder="" readonly required>
                 <label for="floatingInput">주소를 검색해 주세요</label>
-                <input type="button" class="btn btn-primary" value="주소 검색" onclick="sample6_execDaumPostcode();">
+                <input type="button" class="btn btn-primary" value="주소 검색" @click="sample6_execDaumPostcode();">
               </div>
               <div class="form-floating">
                 <input type="text" class="form-control" placeholder="" required>
@@ -126,19 +128,53 @@ export default {
       isSuccess: false,
       isCheckDup: false,
       isDup: true,
+      idCheckBtnMsg: '중복 확인',
+      dupMsg: '',
     }
   },
   methods: {
+    dupOrMod() {
+      if(!this.isDup) {
+        this.isCheckDup = false;
+        this.isDup = true;
+        this.userinfo.id = '';
+        this.idCheckBtnMsg = '중복 확인';
+
+      } else {
+        this.checkDup();
+      }
+    },
     checkDup() {
+      if(this.userinfo.id.length < 6) {
+        Swal.fire({
+          title: '아이디를 6자 이상 입력해 주세요',
+          icon: 'error'
+        });
+        return
+      }
+
+      if(this.userinfo.id.length > 12) {
+        Swal.fire({
+          title: '아이디를 12자 이하 입력해 주세요',
+          icon: 'error'
+        });
+        return
+      }
+
       this.isCheckDup = true;
-      axios.post(this.$store.state.url + 'dup', this.userinfo.id)
+      axios.post(this.$store.state.url + 'dup', this.userinfo)
           .then(result => {
+            this.dupMsg = result.data.message;
+
+            if(result.data.state) {
+              this.isDup = false;
+              this.idCheckBtnMsg = '수정하기'
+            }
 
           })
           .catch(error => {
-            
+            console.log(error);
           })
-
     },
     requireAuth() {
 
@@ -188,29 +224,74 @@ export default {
       }
     },
     register() {
-      axios.post(this.$store.state.url + 'register', this.userinfo)
-          .then(response => {
-            console.log(response);
-            if (response.data.state) {
-              Swal.fire({
-                icon: 'success',
-                title: response.data.message,
-              });
-              this.$router.push({name: 'login'});
-            } else {
-              Swal.fire({
-                icon: 'error',
-                title: response.data.message,
-              });
-            }
-          })
-          .catch(error => {
-            console.log(error);
-            Swal.fire({
-              icon: 'error',
-              title: '아이디 비밀번호가 일치하지 않습니다.',
-            });
-          });
+
+      console.log('생일: ', this.userinfo.birth);
+      
+      //아이디 중복확인 완료 검사
+      if(this.isDup) {
+        Swal.fire({
+          title: '아이디 중복 검사를 완료해 주세요',
+          icon: 'error'
+        });
+        return
+      }
+
+      //비밀번호 유효성 검사(숫자+문자, 8-12글자)
+      const pwPattern = new RegExp('^(?=.*[A-Za-z])(?=.*\\d).{8,15}$');
+      let isPwValid = pwPattern.test(this.userinfo.pw);
+      if(!isPwValid) {
+        Swal.fire({
+          title: '올바르지 않은 비밀번호 형식입니다',
+          text: '숫자와 알파벳을 포함하여 8-15자로 입력해 주세요',
+          icon: 'error'
+        });
+        return
+      }
+
+      //문자 본인 인증 완료 검사
+      if(!this.isAuth) {
+        Swal.fire({
+          title: '본인 인증을 완료해 주세요',
+          icon: 'error'
+        });
+        return
+      }
+
+      //생년월일 유효성 검사(YYYY-mm-DD)
+      const bdPattern = new RegExp('^([0-9]{0,4})-([0-9]{0,2})-([0-9]{0,2})$');
+      let isBdValid = bdPattern.test(this.userinfo.birth);
+      if(!isBdValid) {
+        Swal.fire({
+          title: '올바르지 않은 생년월일 형식입니다',
+          text: '연도(4자리)-월(2자리)-일(2자리) 형식으로 입력해 주세요',
+          icon: 'error'
+        });
+        return
+      }
+
+      // axios.post(this.$store.state.url + 'register', this.userinfo)
+      //     .then(response => {
+      //       console.log(response);
+      //       if (response.data.state) {
+      //         Swal.fire({
+      //           icon: 'success',
+      //           title: response.data.message,
+      //         });
+      //         this.$router.push({name: 'login'});
+      //       } else {
+      //         Swal.fire({
+      //           icon: 'error',
+      //           title: response.data.message,
+      //         });
+      //       }
+      //     })
+      //     .catch(error => {
+      //       console.log(error);
+      //       Swal.fire({
+      //         icon: 'error',
+      //         title: '아이디 비밀번호가 일치하지 않습니다.',
+      //       });
+      //     });
 
     },
   }

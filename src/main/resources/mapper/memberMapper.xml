@@ -3,6 +3,10 @@
 
 <mapper namespace="com.postcard.toyou.dao.MemberMapper">
 
+    <select id="selectDupId" parameterType="java.util.ArrayList">
+        select id from member where id=#{id}
+    </select>
+
     <insert id="register" parameterType="com.postcard.toyou.model.MemberModel">
         insert into member (id, pw, name, tel) values (#{id}, #{pw}, #{name}, #{tel})
     </insert>
