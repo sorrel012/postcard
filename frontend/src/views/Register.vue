@@ -15,26 +15,42 @@
             <div class="col-10">
               <div class="d-flex flex-column">
                 <div class="form-floating btn-group w-100 mb-2">
-                  <input type="text" class="form-control" :readonly="!isDup" placeholder="" v-model="userinfo.id">
+                  <input type="text" class="form-control" :readonly="!isDup" placeholder="" v-model="userinfo.id" ref="idRef" required>
                   <label for="floatingInput">6~12자로 입력해 주세요</label>
                   <input type="button" class="btn btn-primary" :value="idCheckBtnMsg" @click="dupOrMod">
                 </div>
-                <div class="form-floating btn-group w-50 flex-start ps-2 mt-1 c-red" :class="{'d-none':!isCheckDup}">
+                <div class="form-floating btn-group w-50 flex-start ps-2 mt-1" :class="{'d-none':!isCheckDup, 'c-red':isDup, 'c-blue':!isDup}">
                   {{dupMsg}}
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="row mb-4">
+          <div class="row mb-2">
             <div class="col-2 f-bold text-start d-flex align-items-center ps-4">비밀번호</div>
             <div class="col-10">
               <div class="form-floating">
-                <input type="password" class="form-control" placeholder="" required v-model="userinfo.pw">
+                <input type="password" class="form-control" placeholder="" required v-model="userinfo.pw" ref="pwRef">
                 <label for="floatingInput">8~15자로 입력해 주세요 (알파벳, 숫자 필수)</label>
               </div>
             </div>
           </div>
+          <div class="row mb-1">
+            <div class="col-2 f-bold text-start d-flex align-items-center ps-4">비밀번호 확인</div>
+            <div class="col-10">
+              <div class="form-floating">
+                <input type="password" class="form-control" placeholder="" required v-model="correctPw" ref="pwCorrectRef">
+                <label for="floatingInput">비밀번호를 한 번 더 입력해 주세요</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-10">
+              <div class="mt-1 mb-4 text-start ps-2" :class="{'c-red':!isCorrect, 'c-blue':isCorrect}">{{matchMsg}}</div>
+            </div>
+          </div>
+
 
           <div class="row mb-4">
             <div class="col-2 f-bold text-start d-flex align-items-center ps-4">이름</div>
@@ -51,16 +67,16 @@
             <div class="col-10">
               <div class="d-flex flex-column">
                 <div class="form-floating btn-group w-100 mb-2">
-                  <input type="text" class="form-control" :readonly="isSuccess" placeholder="" required v-model="userinfo.tel">
+                  <input type="text" class="form-control" :readonly="isSuccess" placeholder="" required v-model="userinfo.tel" ref="telRef">
                   <label for="floatingInput">-빼고 입력해 주세요.</label>
                   <input type="button" class="btn btn-primary" :disabled="isSuccess"  :value="authMsg" @click="requireAuth">
                 </div>
                 <div class="form-floating btn-group w-50 flex-start" :class="{'d-none':!wantAuth}">
-                  <input type="text" class="form-control" placeholder="" required v-model="userinfo.userAuthCode" :readonly="isSuccess">
+                  <input type="text" class="form-control" placeholder="" v-model="userAuthCode" :readonly="isSuccess" ref="authRef">
                   <label for="floatingInput">인증번호를 입력해 주세요.</label>
                   <input type="button" class="btn btn-primary" value="인증" @click="confirmAuth" :disabled="isSuccess">
                 </div>
-                <div class="form-floating btn-group w-50 flex-start ps-2 mt-1 c-red" :class="{'d-none':!isAuth}">
+                <div class="form-floating btn-group w-50 flex-start ps-2 mt-1" :class="{'d-none':!isAuth, 'c-red':!isSuccess, 'c-blue':isSuccess}">
                   {{confirmMsg}}
                 </div>
               </div>
@@ -71,7 +87,7 @@
             <div class="col-2 f-bold text-start d-flex align-items-center ps-4">생년월일</div>
             <div class="col-10">
               <div class="form-floating">
-                <input type="date" class="form-control" placeholder="" required v-model="userinfo.birth">
+                <input type="date" class="form-control" placeholder="" required v-model="userinfo.birth" ref="bdRef">
                 <label for="floatingInput">날짜를 골라주세요</label>
               </div>
             </div>
@@ -81,19 +97,19 @@
             <div class="col-2 f-bold text-start d-flex align-items-center ps-4" style="height: 48px;">주소</div>
             <div class="col-10">
               <div class="form-floating btn-group mb-2 w-100" >
-                <input type="text" class="form-control" placeholder="" readonly required>
+                <input type="text" class="form-control" placeholder="" required readonly v-model="userinfo.address" ref="addRef">
                 <label for="floatingInput">주소를 검색해 주세요</label>
-                <input type="button" class="btn btn-primary" value="주소 검색" @click="sample6_execDaumPostcode();">
+                <input type="button" class="btn btn-primary" value="주소 검색" @click="daumPostcode">
               </div>
               <div class="form-floating">
-                <input type="text" class="form-control" placeholder="" required>
+                <input type="text" class="form-control" placeholder="" required v-model="userinfo.addressDetail" ref="addDetailRef">
                 <label for="floatingInput">상세 주소를 입력해 주세요</label>
               </div>
             </div>
           </div>
 
           <div class="container-fluid p-0 mt-3">
-            <button type="submit" class="btn btn-primary mt-4 w-100" id="btnregister">회원가입</button>
+            <button type="submit" class="btn btn-primary mt-4 w-100">회원가입</button>
           </div>
         </form>
 
@@ -130,6 +146,20 @@ export default {
       isDup: true,
       idCheckBtnMsg: '중복 확인',
       dupMsg: '',
+      matchMsg: '',
+      correctPw: '',
+      isCorrect: false,
+    }
+  },
+  watch: {
+    correctPw() {
+      if(this.correctPw == this.userinfo.pw) {
+        this.matchMsg = '비밀번호가 일치합니다'
+        this.isCorrect = true;
+      } else {
+        this.matchMsg = '비밀번호가 일치하지 않습니다'
+        this.isCorrect = false;
+      }
     }
   },
   methods: {
@@ -178,13 +208,13 @@ export default {
     },
     requireAuth() {
 
-      // if(this.userinfo.tel.length != 11) {
-      //   Swal.fire({
-      //     title: '연락처를 입력해 주세요',
-      //     icon: 'error'
-      //   });
-      //   return
-      // }
+      if(this.userinfo.tel.length != 11) {
+        Swal.fire({
+          title: '연락처를 입력해 주세요',
+          icon: 'error'
+        });
+        return
+      }
 
       this.wantAuth = true;
       this.makeAuthCode();
@@ -192,16 +222,14 @@ export default {
         to: this.userinfo.tel,
         content: this.authCode
       }
-      // axios.post(this.$store.state.url + 'auth', authConfig)
-      //     .then(result => {
-      //       if(result.data.status) {
-      //         this.confirmMsg = '인증 성공';
-      //         this.isAuth = true;
-      //         this.authMsg = '인증 완료'
-      //       }
-      //     }).catch(error => {
-      //       console.log(error);
-      //     })
+      axios.post(this.$store.state.url + 'auth', authConfig)
+          .then(result => {
+            if(result.data.state) {
+              console.log(result.data.message);
+            }
+          }).catch(error => {
+            console.log(error);
+          })
     },
     makeAuthCode() {
       const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -223,12 +251,48 @@ export default {
         this.isSuccess = false;
       }
     },
+    daumPostcode() {
+      const _this = this;
+      new window.daum.Postcode({
+        oncomplete:(data) => {
+
+          // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+          // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+          let addr = ''; // 주소 변수
+
+          //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+          if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+            addr = data.roadAddress;
+          } else { // 사용자가 지번 주소를 선택했을 경우(J)
+            addr = data.jibunAddress;
+          }
+          
+          // 주소 정보를 해당 필드에 넣는다.
+          _this.userinfo.address = addr;
+
+          // 커서를 상세주소 필드로 이동한다.
+          _this.$refs.addRef.focus();
+          _this.$nextTick(() => {
+            _this.$refs.addDetailRef.focus();
+          });
+        }
+      }).open();
+    },
     register() {
 
-      console.log('생일: ', this.userinfo.birth);
+      //본인인증 하지 않았을 경우
+      if(!this.wantAuth) {
+        this.$refs.telRef.focus();
+        Swal.fire({
+          title: '본인 인증을 완료해 주세요',
+          icon: 'error'
+        })
+        return
+      }
       
       //아이디 중복확인 완료 검사
       if(this.isDup) {
+        this.$refs.idRef.focus();
         Swal.fire({
           title: '아이디 중복 검사를 완료해 주세요',
           icon: 'error'
@@ -239,7 +303,9 @@ export default {
       //비밀번호 유효성 검사(숫자+문자, 8-12글자)
       const pwPattern = new RegExp('^(?=.*[A-Za-z])(?=.*\\d).{8,15}$');
       let isPwValid = pwPattern.test(this.userinfo.pw);
+
       if(!isPwValid) {
+        this.$refs.pwRef.focus();
         Swal.fire({
           title: '올바르지 않은 비밀번호 형식입니다',
           text: '숫자와 알파벳을 포함하여 8-15자로 입력해 주세요',
@@ -248,8 +314,19 @@ export default {
         return
       }
 
+      //비밀번호와 비밀번호 확인 일치 검사
+      if(!this.isCorrect) {
+        this.$refs.pwCorrectRef.focus();
+        Swal.fire({
+          title: '비밀번호와 비밀번호 확인이 일치하지 않습니다.',
+          icon: 'error'
+        });
+        return
+      }
+
       //문자 본인 인증 완료 검사
       if(!this.isAuth) {
+        this.$refs.authRef.focus();
         Swal.fire({
           title: '본인 인증을 완료해 주세요',
           icon: 'error'
@@ -260,7 +337,9 @@ export default {
       //생년월일 유효성 검사(YYYY-mm-DD)
       const bdPattern = new RegExp('^([0-9]{0,4})-([0-9]{0,2})-([0-9]{0,2})$');
       let isBdValid = bdPattern.test(this.userinfo.birth);
+
       if(!isBdValid) {
+        this.$refs.bdRef.focus();
         Swal.fire({
           title: '올바르지 않은 생년월일 형식입니다',
           text: '연도(4자리)-월(2자리)-일(2자리) 형식으로 입력해 주세요',
@@ -269,29 +348,29 @@ export default {
         return
       }
 
-      // axios.post(this.$store.state.url + 'register', this.userinfo)
-      //     .then(response => {
-      //       console.log(response);
-      //       if (response.data.state) {
-      //         Swal.fire({
-      //           icon: 'success',
-      //           title: response.data.message,
-      //         });
-      //         this.$router.push({name: 'login'});
-      //       } else {
-      //         Swal.fire({
-      //           icon: 'error',
-      //           title: response.data.message,
-      //         });
-      //       }
-      //     })
-      //     .catch(error => {
-      //       console.log(error);
-      //       Swal.fire({
-      //         icon: 'error',
-      //         title: '아이디 비밀번호가 일치하지 않습니다.',
-      //       });
-      //     });
+      axios.post(this.$store.state.url + 'register', this.userinfo)
+          .then(response => {
+            console.log(response);
+            if (response.data.state) {
+              Swal.fire({
+                icon: 'success',
+                title: response.data.message,
+              });
+              this.$router.push({name: 'login'});
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: response.data.message,
+              });
+            }
+          })
+          .catch(error => {
+            console.log(error);
+            Swal.fire({
+              icon: 'error',
+              title: '회원가입에 실패했습니다.',
+            });
+          });
 
     },
   }
@@ -305,5 +384,8 @@ section {
 }
 .c-red {
   color: red;
+}
+.c-blue {
+  color: blue;
 }
 </style>

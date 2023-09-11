@@ -113,10 +113,10 @@ public class SmsAuthServiceImpl implements SmsAuthService {
 
         if(response.getStatusName().equals("success")) {
             rModel.setState(true);
-            rModel.setMessage("인증에 성공하였습니다.");
+            rModel.setMessage("인증번호 발송에 성공하였습니다.");
         } else {
             rModel.setState(false);
-            rModel.setMessage("인증에 실패하였습니다.");
+            rModel.setMessage("인증번호 발송에 실패하였습니다.");
         }
 
         return ResponseEntity.ok(rModel);
