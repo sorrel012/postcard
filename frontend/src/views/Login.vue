@@ -26,6 +26,7 @@
             회원이 아니신가요? <router-link to="/register">회원가입</router-link>
           </p>
         </div>
+        <img src="@/assets/kakao_login.png" alt="kakao" @click="kakaoLogin">
 
       </div>
 
@@ -44,7 +45,13 @@ export default {
       account: {
         id: '',
         pw: ''
-      }
+      },
+      loginParams: {
+        client_id: process.env.VUE_APP_KAKAO_REST_KEY,
+        redirect_uri: process.env.VUE_APP_KAKAO_REDIRECT_URL,
+        response_type: 'code',
+        scope: 'account_email,birthday',
+      },
     }
   },
   methods: {
@@ -78,7 +85,22 @@ export default {
             title: '아이디 비밀번호가 일치하지 않습니다.',
           });
         })
-    }
+    },
+    kakaoLogin() {
+      const url = 'https://kauth.kakao.com/oauth/authorize';
+
+      const config = {
+        params: this.loginParams,
+      }
+
+      axios.get(url, config)
+          .then(response => {
+            console.log(response);
+          }).catch(error => {
+            console.log(error);
+          });
+
+    },
   }
 }
 </script>
@@ -90,5 +112,8 @@ section {
 }
 .mt-5 {
   margin-top: 7rem !important;
+}
+img:hover {
+  cursor: pointer;
 }
 </style>
