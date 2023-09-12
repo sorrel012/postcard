@@ -27,7 +27,8 @@
           </p>
         </div>
         <div class=" mt-4 mb-2">
-          <img src="@/assets/kakao_login.png" alt="kakao" @click="kakaoLogin">
+          <img src="@/assets/kakao_login.png" alt="kakao" @click="kakaoLogin" class="me-2">
+          <img src="@/assets/naver_login.png" alt="naver" @click="naverLogin">
         </div>
 
 
@@ -37,6 +38,7 @@
   </section>
 </template>
 
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 <script>
 import axios from 'axios';
 import Swal from 'sweetalert2';
@@ -49,12 +51,18 @@ export default {
         id: '',
         pw: ''
       },
-      loginParams: {
+      kakaoLoginParams: {
         client_id: process.env.VUE_APP_KAKAO_REST_KEY,
         redirect_uri: process.env.VUE_APP_KAKAO_REDIRECT_URI,
         response_type: 'code',
         scope: 'account_email',
       },
+      naverLoginParams: {
+        client_id: process.env.VUE_APP_NAVER_CLIENT_ID,
+        redirect_uri: process.env.VUE_APP_NAVER_REDIRECT_URI,
+        response_type: 'code',
+        state: '1234',
+      }
     }
   },
   methods: {
@@ -90,7 +98,11 @@ export default {
     },
     kakaoLogin() {
       const url = 'https://kauth.kakao.com/oauth/authorize';
-      location.href = `${url}?client_id=${this.loginParams.client_id}&redirect_uri=${this.loginParams.redirect_uri}&response_type=${this.loginParams.response_type}`;
+      location.href = `${url}?client_id=${this.kakaoLoginParams.client_id}&redirect_uri=${this.kakaoLoginParams.redirect_uri}&response_type=${this.kakaoLoginParams.response_type}`;
+    },
+    naverLogin() {
+      const url = 'https://nid.naver.com/oauth2.0/authorize';
+      location.href = `${url}?client_id=${this.naverLoginParams.client_id}&redirect_uri=${this.naverLoginParams.redirect_uri}&response_type=${this.naverLoginParams.response_type}&state=${this.naverLoginParams.state}`;
     },
   }
 }

@@ -50,6 +50,11 @@ const routes = [
     component: () => import('@/components/KaKaoLogin.vue')
   },
   {
+    path: '/naver-login',
+    name: 'naver',
+    component: () => import('@/components/NaverLogin.vue')
+  },
+  {
     path: '/sns-register',
     name: 'sns',
     component: () => import('@/views/SnsRegister.vue')

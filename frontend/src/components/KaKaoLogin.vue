@@ -12,9 +12,8 @@ export default {
     return {
       tokenParams: {
         client_id: process.env.VUE_APP_KAKAO_REST_KEY,
-        redirect_uri: process.env.VUE_APP_KAKAO_REDIRECT_URI,
         code: this.$route.query.code,
-        grant_type : "authorization_code",
+        grant_type : 'authorization_code',
       },
       token: {
         access_token: '',

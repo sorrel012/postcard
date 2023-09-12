@@ -22,4 +22,9 @@ public class LoginController {
         return lService.login(mModel);
     }
 
+    @PostMapping("naverlogin")
+    public ResponseEntity<ResultModel> naverLogin(@RequestBody String params) {
+        return lService.naverLogin(params);
+    }
+
 }
