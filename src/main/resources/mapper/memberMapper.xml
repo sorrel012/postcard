@@ -8,7 +8,11 @@
     </select>
 
     <insert id="register" parameterType="com.postcard.toyou.model.MemberModel">
-        insert into member (id, pw, name, tel) values (#{id}, #{pw}, #{name}, #{tel})
+        insert into member (id, pw, name, tel, email, address, addressdetail, birth) values (#{id}, #{pw}, #{name}, #{tel}, #{email}, #{address}, #{addressDetail}, #{birth})
+    </insert>
+
+    <insert id="snsRegister" parameterType="com.postcard.toyou.model.MemberModel">
+        insert into member (id, name, tel, email, address, addressdetail, birth) values (#{id}, #{name}, #{tel}, #{email}, #{address}, #{addressDetail}, #{birth})
     </insert>
 
     <select id="login" parameterType="com.postcard.toyou.model.MemberModel" resultType="com.postcard.toyou.model.MemberModel">

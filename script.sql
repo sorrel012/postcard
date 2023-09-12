@@ -1,12 +1,14 @@
 create table member (
 	m_seq serial primary key,
 	id varchar(100) not null,
-	pw varchar(500) not null,
+	pw varchar(500) null,
 	name varchar(50) not null,
 	address varchar(1000) not null,
 	addressDetail varchar(3000) not null,
-	email varchar(500) not null,
-	regDate timestamp not null default current_timestamp
+	tel varchar(15) not null,
+	email varchar(50) not null,
+	regDate timestamp not null default current_timestamp,
+    birth VARCHAR(50) not null;
 );
 
 create table paper (

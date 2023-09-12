@@ -12,4 +12,6 @@ public interface MemberMapper {
     public int register(MemberModel mModel);
     public MemberModel login(MemberModel mModel);
     public List<String> selectDupId(String id);
+    int snsRegister(MemberModel mModel);
+
 }

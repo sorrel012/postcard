@@ -24,6 +24,11 @@ public class RegisterController {
         return rService.register(mModel);
     }
 
+    @PostMapping ("/snsregister")
+    public ResponseEntity<ResultModel> snsRegister(@RequestBody MemberModel mModel) {
+        return rService.snsRegister(mModel);
+    }
+
     @PostMapping(value = "/dup")
     public ResponseEntity<Object> selectDupId(@RequestBody MemberModel mModel) {
         return rService.selectDupId(mModel.getId());

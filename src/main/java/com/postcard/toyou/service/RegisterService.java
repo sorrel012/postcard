@@ -8,4 +8,5 @@ public interface RegisterService {
 
     public ResponseEntity<ResultModel> register(MemberModel mModel);
     ResponseEntity<Object> selectDupId(String id);
+    ResponseEntity<ResultModel> snsRegister(MemberModel mModel);
 }

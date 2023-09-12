@@ -9,6 +9,10 @@ export default new Vuex.Store({
       url: 'http://localhost:8082/',
       paper: {},
       isLoading: true,
+      snsUser: {
+        id: '',
+        email: '',
+      }
     }
   },
   mutations: {
@@ -17,6 +21,12 @@ export default new Vuex.Store({
     },
     setLoadingStatus(state, value) {
       state.isLoading = value;
+    },
+    setSnsUserId(state, value) {
+      state.snsUser.id = value;
+    },
+    setSnsUserEmail(state, value) {
+      state.snsUser.email = value;
     }
   },
 })

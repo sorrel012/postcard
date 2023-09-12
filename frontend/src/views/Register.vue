@@ -66,7 +66,7 @@
             <div class="col-2 f-bold text-start d-flex align-items-center ps-4">이메일</div>
             <div class="col-10">
               <div class="form-floating">
-                <input type="text" class="form-control" placeholder="" required v-model="userinfo.email">
+                <input type="text" class="form-control" placeholder="" required v-model="userinfo.email" ref="eRef">
                 <label for="floatingInput">id@email.com</label>
               </div>
             </div>
@@ -204,10 +204,10 @@ export default {
 
       this.isCheckDup = true;
       axios.post(this.$store.state.url + 'dup', this.userinfo)
-          .then(result => {
+          .then(response => {
             this.dupMsg = result.data.message;
 
-            if(result.data.state) {
+            if(response.data.state) {
               this.isDup = false;
               this.idCheckBtnMsg = '수정하기'
             }
@@ -340,7 +340,7 @@ export default {
       let isEmailValid = emailPattern.test(this.userinfo.email)
 
       if(!isEmailValid) {
-        this.$refs.bdRef.focus();
+        this.$refs.eRef.focus();
         Swal.fire({
           title: '올바르지 않은 이메일 형식입니다',
           text: 'id@email.com 형식으로 입력해 주세요',

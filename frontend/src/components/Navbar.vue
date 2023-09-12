@@ -69,7 +69,6 @@ export default {
         timer: 2000,
       }).then(() => {
         sessionStorage.removeItem('id');
-        sessionStorage.removeItem('pw');
         sessionStorage.removeItem('name');
         sessionStorage.removeItem('no');
         location.href = '/';

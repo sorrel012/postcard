@@ -44,6 +44,16 @@ const routes = [
     name: 'write',
     component: () => import('@/views/Postcard.vue')
   },
+  {
+    path: '/kakao-login',
+    name: 'kakao',
+    component: () => import('@/components/KaKaoLogin.vue')
+  },
+  {
+    path: '/sns-register',
+    name: 'sns',
+    component: () => import('@/views/SnsRegister.vue')
+  }
 ]
 
 const router = new VueRouter({

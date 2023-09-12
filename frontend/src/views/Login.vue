@@ -1,7 +1,7 @@
 <template>
-  <section class="container-md d-flex justify-content-center p-5 mt-5 h-75">
+  <section class="container-md d-flex justify-content-center p-5 mt-4 mb-4 w-75">
 
-    <div class="col-sm-12 col-md-12 col-lg-5 p-0 d-flex align-items-center rounded-end me-5 w-75 h-100 p-5">
+    <div class="col-sm-12 col-md-12 col-lg-5 d-flex align-items-center rounded-end me-5 w-75 h-100 p-3">
 
       <div class="container-md d-flex flex-column align-items-center">
 
@@ -26,7 +26,10 @@
             회원이 아니신가요? <router-link to="/register">회원가입</router-link>
           </p>
         </div>
-        <img src="@/assets/kakao_login.png" alt="kakao" @click="kakaoLogin">
+        <div class=" mt-4 mb-2">
+          <img src="@/assets/kakao_login.png" alt="kakao" @click="kakaoLogin">
+        </div>
+
 
       </div>
 
@@ -48,9 +51,9 @@ export default {
       },
       loginParams: {
         client_id: process.env.VUE_APP_KAKAO_REST_KEY,
-        redirect_uri: process.env.VUE_APP_KAKAO_REDIRECT_URL,
+        redirect_uri: process.env.VUE_APP_KAKAO_REDIRECT_URI,
         response_type: 'code',
-        scope: 'account_email,birthday',
+        scope: 'account_email',
       },
     }
   },
@@ -66,7 +69,6 @@ export default {
               timer: 2000,
             }).then(() => {
               sessionStorage.setItem('id', this.account.id);
-              sessionStorage.setItem('pw', this.account.pw);
               sessionStorage.setItem('name', response.data.result.name);
               sessionStorage.setItem('no', response.data.result.m_seq);
               location.href = '/';
@@ -88,18 +90,7 @@ export default {
     },
     kakaoLogin() {
       const url = 'https://kauth.kakao.com/oauth/authorize';
-
-      const config = {
-        params: this.loginParams,
-      }
-
-      axios.get(url, config)
-          .then(response => {
-            console.log(response);
-          }).catch(error => {
-            console.log(error);
-          });
-
+      location.href = `${url}?client_id=${this.loginParams.client_id}&redirect_uri=${this.loginParams.redirect_uri}&response_type=${this.loginParams.response_type}`;
     },
   }
 }

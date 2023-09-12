@@ -31,8 +31,24 @@ public class RegisterServiceImpl implements RegisterService {
         }
 
         return ResponseEntity.ok(rModel);
-
     };
+
+    @Override
+    public ResponseEntity<ResultModel> snsRegister(MemberModel mModel) {
+
+        ResultModel rModel = new ResultModel();
+
+        int result = mMapper.snsRegister(mModel);
+        if(result == 1) {
+            rModel.setState(true);
+            rModel.setMessage("회원가입에 성공하였습니다.");
+        } else {
+            rModel.setState(false);
+            rModel.setMessage("회원가입에 실패하였습니다.");
+        }
+
+        return ResponseEntity.ok(rModel);
+    }
 
     @Override
     public ResponseEntity<Object> selectDupId(String id) {
@@ -43,11 +59,14 @@ public class RegisterServiceImpl implements RegisterService {
         if(dupId.size() == 0) {
             rModel.setState(true);
             rModel.setMessage(id + " 는 사용할 수 있는 아이디입니다.");
+            rModel.setResult(dupId);
         } else {
             rModel.setState(false);
             rModel.setMessage(id + " 는 사용할 수 없는 아이디입니다.");
+            rModel.setResult(dupId);
         }
 
         return ResponseEntity.ok(rModel);
     }
+
 }

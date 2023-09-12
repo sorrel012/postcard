@@ -19,7 +19,6 @@ public class LoginController {
 
     @PostMapping("/login")
     public ResponseEntity<ResultModel> login(@RequestBody MemberModel mModel) {
-
         return lService.login(mModel);
     }
 

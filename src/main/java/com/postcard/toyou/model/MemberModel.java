@@ -12,6 +12,10 @@ public class MemberModel {
     private String pw;
     private String name;
     private String tel;
+    private String email;
+    private String address;
+    private String addressDetail;
     private LocalDateTime regDate;
+    private String birth;
 
 }
