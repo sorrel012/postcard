@@ -14,7 +14,7 @@
             <div class="col-2 f-bold text-start d-flex align-items-center ps-4">아이디</div>
             <div class="col-10 d-flex flex-column">
                 <div class="btn-group w-100">
-                  <input type="text" class="form-control" disabled :value="userinfo.id" ref="idRef" required>
+                  <input type="text" class="form-control" :class="{'disabled':hasEmail}" :value="userinfo.id" ref="idRef" required>
                 </div>
             </div>
           </div>
@@ -102,7 +102,13 @@ export default {
         tel: '',
         address: '',
         addressDetail: ''
-      }
+      },
+      hasEmail: true,
+    }
+  },
+  created() {
+    if (this.$store.state.snsUser.email == '' || this.$store.state.snsUser.email == null) {
+      this.hasEmail = false;
     }
   },
   methods: {
@@ -137,7 +143,7 @@ export default {
 
       //이메일 유효성 검사
       const emailPattern = new RegExp('^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$');
-      let isEmailValid = emailPattern.test(this.userinfo.email);
+      let isEmailValid = emailPattern.test(this.userinfo.email)
 
       if(!isEmailValid) {
         this.$refs.eRef.focus();
