@@ -63,6 +63,16 @@
           </div>
 
           <div class="row mb-4">
+            <div class="col-2 f-bold text-start d-flex align-items-center ps-4">이메일</div>
+            <div class="col-10">
+              <div class="form-floating">
+                <input type="text" class="form-control" placeholder="" required v-model="userinfo.email">
+                <label for="floatingInput">id@email.com</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-4">
             <div class="col-2 f-bold text-start d-flex align-items-center ps-4" style="height: 48px;">연락처</div>
             <div class="col-10">
               <div class="d-flex flex-column">
@@ -133,7 +143,8 @@ export default {
         birth: '',
         tel: '',
         address: '',
-        addressDetail: ''
+        addressDetail: '',
+        email: '',
       },
       authMsg: '본인 인증',
       confirmMsg: '',
@@ -319,6 +330,20 @@ export default {
         this.$refs.pwCorrectRef.focus();
         Swal.fire({
           title: '비밀번호와 비밀번호 확인이 일치하지 않습니다.',
+          icon: 'error'
+        });
+        return
+      }
+
+      //이메일 유효성 검사
+      const emailPattern = new RegExp('^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$');
+      let isEmailValid = emailPattern.test(this.userinfo.email)
+
+      if(!isEmailValid) {
+        this.$refs.bdRef.focus();
+        Swal.fire({
+          title: '올바르지 않은 이메일 형식입니다',
+          text: 'id@email.com 형식으로 입력해 주세요',
           icon: 'error'
         });
         return
