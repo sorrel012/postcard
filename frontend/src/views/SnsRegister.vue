@@ -14,7 +14,7 @@
             <div class="col-2 f-bold text-start d-flex align-items-center ps-4">아이디</div>
             <div class="col-10 d-flex flex-column">
                 <div class="btn-group w-100">
-                  <input type="text" class="form-control" :class="{'disabled':hasEmail}" :value="userinfo.id" ref="idRef" required>
+                  <input type="text" class="form-control" disabled :value="userinfo.id" ref="idRef" required>
                 </div>
             </div>
           </div>
@@ -33,7 +33,7 @@
             <div class="col-2 f-bold text-start d-flex align-items-center ps-4">이메일</div>
             <div class="col-10 d-flex flex-column">
               <div class="btn-group w-100">
-                <input type="text" class="form-control" placeholder="" disabled :value="userinfo.email" ref="eRef">
+                <input type="text" class="form-control" placeholder="" :disabled="hasEmail" :value="userinfo.email" ref="eRef">
               </div>
             </div>
           </div>

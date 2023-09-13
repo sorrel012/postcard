@@ -8,4 +8,5 @@ public interface LoginService {
 
     public ResponseEntity<ResultModel> login(MemberModel mModel);
     ResponseEntity<ResultModel> naverLogin(String params);
+    ResponseEntity<ResultModel> getNaverUser(String header);
 }

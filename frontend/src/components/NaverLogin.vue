@@ -15,7 +15,7 @@ export default {
         client_secret: process.env.VUE_APP_NAVER_CLIENT_SECRET_ID,
         code: this.$route.query.code,
         grant_type : 'authorization_code',
-        state: '12345',
+        state: this.generateEncodedState(),
       },
       token: {
         access_token: '',
@@ -37,44 +37,40 @@ export default {
           console.log(error);
         })
 
-    // const userUrl = 'https://kapi.kakao.com/v2/user/me';
-    // const userConfig = {
-    //   headers: {
-    //     'Authorization' : `Bearer ${this.token.access_token}`,
-    //     'Content-type' : 'application/x-www-form-urlencoded;charset=utf-8'
-    //   }
-    // }
-    //
-    // await axios.post(userUrl, {}, userConfig)
-    //     .then(response => {
-    //       this.$store.commit('setSnsUserId', response.data.id)
-    //       this.$store.commit('setSnsUserEmail', response.data.kakao_account.email)
-    //
-    //       this.userinfo.id = response.data.id;
-    //
-    //       axios.post(this.$store.state.url + 'dup', this.userinfo)
-    //           .then(response => {
-    //             console.log(response.data.result.length);
-    //             if(response.data.result.length == 0) {
-    //               this.$router.push({name: 'sns'})
-    //             } else {
-    //               sessionStorage.setItem('id', this.userinfo.id);
-    //               this.getUserinfo();
-    //             }
-    //           })
-    //           .catch(error => {
-    //             console.log(error);
-    //           })
-    //
-    //
-    //     })
-    //     .catch(error => {
-    //       console.log(error);
-    //       Swal.fire({
-    //         title: '로그인에 실패했습니다.',
-    //         icon: 'error'
-    //       });
-    //     })
+    const userConfig = {
+      headers: {
+        'Authorization' : `Bearer ${this.token.access_token}`,
+      }
+    }
+
+    await axios.get(this.$store.state.url+'naverlogin', userConfig)
+        .then(response => {
+          this.$store.commit('setSnsUserId', response.data.result.response.id)
+          this.$store.commit('setSnsUserEmail', response.data.result.response.email)
+
+          this.userinfo.id = response.data.result.response.id;
+
+          axios.post(this.$store.state.url + 'dup', this.userinfo)
+              .then(response => {
+                if(response.data.result.length == 0) {
+                  this.$router.push({name: 'sns'})
+                } else {
+                  sessionStorage.setItem('id', this.userinfo.id);
+                  this.getUserinfo();
+                }
+              })
+              .catch(error => {
+                console.log(error);
+              })
+
+        })
+        .catch(error => {
+          console.log(error);
+          Swal.fire({
+            title: '로그인에 실패했습니다.',
+            icon: 'error'
+          });
+        })
 
   },
   methods: {
@@ -108,7 +104,13 @@ export default {
               title: '로그인에 실패했습니다.',
             });
           })
-    }
+    },
+    generateRandomState() {
+      return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    },
+    generateEncodedState() {
+      return encodeURIComponent(this.generateRandomState());
+    },
   }
 }
 </script>

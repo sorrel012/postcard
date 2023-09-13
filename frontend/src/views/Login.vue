@@ -27,8 +27,12 @@
           </p>
         </div>
         <div class=" mt-4 mb-2">
-          <img src="@/assets/kakao_login.png" alt="kakao" @click="kakaoLogin" class="me-2">
-          <img src="@/assets/naver_login.png" alt="naver" @click="naverLogin">
+          <div>
+            <img src="@/assets/kakao_login.png" alt="kakao" @click="kakaoLogin" class="w-25 mb-2" >
+          </div>
+          <div>
+            <img src="@/assets/naver_login.png" alt="naver" @click="naverLogin" class="w-25">
+          </div>
         </div>
 
 
@@ -38,7 +42,8 @@
   </section>
 </template>
 
-<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8">
+</script>
 <script>
 import axios from 'axios';
 import Swal from 'sweetalert2';
@@ -61,7 +66,7 @@ export default {
         client_id: process.env.VUE_APP_NAVER_CLIENT_ID,
         redirect_uri: process.env.VUE_APP_NAVER_REDIRECT_URI,
         response_type: 'code',
-        state: '1234',
+        state: this.generateEncodedState(),
       }
     }
   },
@@ -103,6 +108,12 @@ export default {
     naverLogin() {
       const url = 'https://nid.naver.com/oauth2.0/authorize';
       location.href = `${url}?client_id=${this.naverLoginParams.client_id}&redirect_uri=${this.naverLoginParams.redirect_uri}&response_type=${this.naverLoginParams.response_type}&state=${this.naverLoginParams.state}`;
+    },
+    generateRandomState() {
+      return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    },
+    generateEncodedState() {
+      return encodeURIComponent(this.generateRandomState());
     },
   }
 }

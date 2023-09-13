@@ -6,6 +6,8 @@ import com.postcard.toyou.dto.SmsResponseDTO;
 import com.postcard.toyou.model.MemberModel;
 import com.postcard.toyou.model.ResultModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -53,6 +55,40 @@ public class LoginServiceImpl implements LoginService {
                 rModel.setState(true);
                 rModel.setMessage("네이버 로그인에 성공했습니다.");
                 rModel.setResult(response);
+            } else {
+                rModel.setState(false);
+                rModel.setMessage("네이버 로그인 응답을 받지 못했습니다.");
+            }
+        } catch (URISyntaxException e) {
+            rModel.setState(false);
+            rModel.setMessage("잘못된 URI 형식입니다.");
+        } catch (Exception e) {
+            rModel.setState(false);
+            rModel.setMessage("네이버 로그인 중 오류가 발생했습니다: " + e.getMessage());
+        }
+
+        return ResponseEntity.ok(rModel);
+    }
+
+    @Override
+    public ResponseEntity<ResultModel> getNaverUser(String header) {
+        ResultModel rModel = new ResultModel();
+        RestTemplate restTemplate = new RestTemplate();
+
+        try {
+            URI uri = new URI("https://openapi.naver.com/v1/nid/me");
+
+            // 헤더 설정
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", header);
+            HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
+
+            ResponseEntity<Object> response = restTemplate.exchange(uri, HttpMethod.GET, entity, Object.class);
+
+            if (response.getBody() != null) {
+                rModel.setState(true);
+                rModel.setMessage("네이버 로그인에 성공했습니다.");
+                rModel.setResult(response.getBody());
             } else {
                 rModel.setState(false);
                 rModel.setMessage("네이버 로그인 응답을 받지 못했습니다.");
