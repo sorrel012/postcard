@@ -4,7 +4,6 @@ import com.postcard.toyou.model.MemberModel;
 import com.postcard.toyou.model.ResultModel;
 import com.postcard.toyou.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +30,17 @@ public class LoginController {
     public ResponseEntity<ResultModel> getNaverUser(HttpServletRequest request) {
         String header = request.getHeader("Authorization");
         return lService.getNaverUser(header);
+    }
+
+    @PostMapping("googlelogin")
+    public ResponseEntity<ResultModel> googleLogin(@RequestBody String params) {
+        return lService.googleLogin(params);
+    }
+
+    @GetMapping("googlelogin")
+    public ResponseEntity<ResultModel> getGoogleUser(HttpServletRequest request) {
+        String header = request.getHeader("Authorization");
+        return lService.getGoogleUser(header);
     }
 
 }

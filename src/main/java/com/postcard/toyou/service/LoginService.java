@@ -9,4 +9,7 @@ public interface LoginService {
     public ResponseEntity<ResultModel> login(MemberModel mModel);
     ResponseEntity<ResultModel> naverLogin(String params);
     ResponseEntity<ResultModel> getNaverUser(String header);
+    ResponseEntity<ResultModel> googleLogin(String params);
+    ResponseEntity<ResultModel> getGoogleUser(String header);
+
 }

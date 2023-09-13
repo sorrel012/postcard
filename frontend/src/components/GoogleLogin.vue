@@ -7,15 +7,15 @@ import axios from 'axios';
 import Swal from "sweetalert2";
 
 export default {
-  name: 'NaverLogin',
+  name: 'GoolgeLogin',
   data() {
     return {
       tokenParams: {
-        client_id: process.env.VUE_APP_NAVER_CLIENT_ID,
-        client_secret: process.env.VUE_APP_NAVER_CLIENT_SECRET_ID,
+        client_id: process.env.VUE_APP_GOOGLE_CLIENT_ID,
+        client_secret: process.env.VUE_APP_GOOGLE_CLIENT_SECRET_PW,
         code: this.$route.query.code,
         grant_type : 'authorization_code',
-        state: this.generateEncodedState(),
+        redirect_uri: 'http://localhost:8080/google-login',
       },
       token: {
         access_token: '',
@@ -28,10 +28,9 @@ export default {
   },
   async created() {
 
-    await axios.post(this.$store.state.url+'naverlogin', new URLSearchParams(this.tokenParams).toString())
+    await axios.post(this.$store.state.url+'googlelogin', new URLSearchParams(this.tokenParams).toString())
         .then(response => {
           this.token.access_token = response.data.result.access_token;
-          this.token.refresh_token = response.data.result.refresh_token;
         })
         .catch(error => {
           console.log(error);
@@ -43,12 +42,13 @@ export default {
       }
     }
 
-    await axios.get(this.$store.state.url+'naverlogin', userConfig)
+    await axios.get(this.$store.state.url+'googlelogin', userConfig)
         .then(response => {
-          this.$store.commit('setSnsUserId', response.data.result.response.id)
-          this.$store.commit('setSnsUserEmail', response.data.result.response.email)
+          console.log(response);
+          this.$store.commit('setSnsUserId', response.data.result.id)
+          this.$store.commit('setSnsUserEmail', response.data.result.email)
 
-          this.userinfo.id = response.data.result.response.id;
+          this.userinfo.id = response.data.result.id;
 
           axios.post(this.$store.state.url + 'dup', this.userinfo)
               .then(response => {

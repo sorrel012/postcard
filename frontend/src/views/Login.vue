@@ -26,15 +26,8 @@
             회원이 아니신가요? <router-link to="/register">회원가입</router-link>
           </p>
         </div>
-        <div class=" mt-4 mb-2">
-          <div>
-            <img src="@/assets/kakao_login.png" alt="kakao" @click="kakaoLogin" class="w-25 mb-2" >
-          </div>
-          <div>
-            <img src="@/assets/naver_login.png" alt="naver" @click="naverLogin" class="w-25">
-          </div>
-        </div>
 
+        <sns-login></sns-login>
 
       </div>
 
@@ -47,6 +40,7 @@
 <script>
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import SnsLogin from "@/components/SnsLogin.vue";
 
 export default {
   name: 'Login',
@@ -56,19 +50,10 @@ export default {
         id: '',
         pw: ''
       },
-      kakaoLoginParams: {
-        client_id: process.env.VUE_APP_KAKAO_REST_KEY,
-        redirect_uri: process.env.VUE_APP_KAKAO_REDIRECT_URI,
-        response_type: 'code',
-        scope: 'account_email',
-      },
-      naverLoginParams: {
-        client_id: process.env.VUE_APP_NAVER_CLIENT_ID,
-        redirect_uri: process.env.VUE_APP_NAVER_REDIRECT_URI,
-        response_type: 'code',
-        state: this.generateEncodedState(),
-      }
     }
+  },
+  components: {
+    SnsLogin
   },
   methods: {
     login() {
@@ -101,20 +86,6 @@ export default {
           });
         })
     },
-    kakaoLogin() {
-      const url = 'https://kauth.kakao.com/oauth/authorize';
-      location.href = `${url}?client_id=${this.kakaoLoginParams.client_id}&redirect_uri=${this.kakaoLoginParams.redirect_uri}&response_type=${this.kakaoLoginParams.response_type}`;
-    },
-    naverLogin() {
-      const url = 'https://nid.naver.com/oauth2.0/authorize';
-      location.href = `${url}?client_id=${this.naverLoginParams.client_id}&redirect_uri=${this.naverLoginParams.redirect_uri}&response_type=${this.naverLoginParams.response_type}&state=${this.naverLoginParams.state}`;
-    },
-    generateRandomState() {
-      return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-    },
-    generateEncodedState() {
-      return encodeURIComponent(this.generateRandomState());
-    },
   }
 }
 </script>
@@ -123,11 +94,5 @@ export default {
 section {
   border: 1px solid #e3e3e3;
   border-radius: 10px;
-}
-.mt-5 {
-  margin-top: 7rem !important;
-}
-img:hover {
-  cursor: pointer;
 }
 </style>

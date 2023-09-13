@@ -45,14 +45,9 @@ const routes = [
     component: () => import('@/views/Postcard.vue')
   },
   {
-    path: '/kakao-login',
-    name: 'kakao',
-    component: () => import('@/components/KaKaoLogin.vue')
-  },
-  {
-    path: '/naver-login',
-    name: 'naver',
-    component: () => import('@/components/NaverLogin.vue')
+    path: '/sns-login',
+    name: 'sns',
+    component: () => import('@/components/SnsLogin.vue')
   },
   {
     path: '/sns-register',
