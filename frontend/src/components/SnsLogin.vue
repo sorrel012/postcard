@@ -1,5 +1,5 @@
 <template>
-  <div class=" mt-4 mb-2">
+  <div class=" mt-4 mb-2" :class="{'d-none':isRedirect}">
     <div>
       <img src="@/assets/kakao_login.png" alt="kakao" @click="socialLogin($event)" class="w-25 mb-2" id="kakao">
     </div>
@@ -9,6 +9,10 @@
     <div>
       <img src="@/assets/google_login.png" alt="naver" @click="socialLogin($event)" class="w-25" id="google">
     </div>
+
+    <div class="mt-5" :class="{'d-none':!isRedirect}">
+      <img src="@/assets/banner.png" class="img-fluid" alt="main-banner">
+    </div>
   </div>
 </template>
 
@@ -17,7 +21,7 @@ import axios from 'axios';
 import Swal from "sweetalert2";
 
 export default {
-  name: 'NaverLogin',
+  name: 'SnsLogin',
   data() {
     return {
       kakaoLoginParams: {
@@ -65,65 +69,69 @@ export default {
       },
       userinfo: {
         id: '',
-      }
+      },
+      isRedirect: false,
     }
   },
   async created() {
 
-    //btn Id값 디코딩
-    const decodedState = atob(this.$route.query.state);
-    const stateObj = JSON.parse(decodedState);
+    if(this.$route.query.state != undefined) {
+      this.isRedirect = true;
 
-    console.log(stateObj.btnId);
-    //
-    // await axios.post(this.$store.state.url+'naverlogin', new URLSearchParams(this.tokenParams).toString())
-    //     .then(response => {
-    //       this.token.access_token = response.data.result.access_token;
-    //       this.token.refresh_token = response.data.result.refresh_token;
-    //     })
-    //     .catch(error => {
-    //       console.log(error);
-    //     })
-    //
-    // const userConfig = {
-    //   headers: {
-    //     'Authorization' : `Bearer ${this.token.access_token}`,
-    //   }
-    // }
-    //
-    // await axios.get(this.$store.state.url+'naverlogin', userConfig)
-    //     .then(response => {
-    //       this.$store.commit('setSnsUserId', response.data.result.response.id)
-    //       this.$store.commit('setSnsUserEmail', response.data.result.response.email)
-    //
-    //       this.userinfo.id = response.data.result.response.id;
-    //
-    //       axios.post(this.$store.state.url + 'dup', this.userinfo)
-    //           .then(response => {
-    //             if(response.data.result.length == 0) {
-    //               this.$router.push({name: 'sns'})
-    //             } else {
-    //               sessionStorage.setItem('id', this.userinfo.id);
-    //               this.getUserinfo();
-    //             }
-    //           })
-    //           .catch(error => {
-    //             console.log(error);
-    //           })
-    //
-    //     })
-    //     .catch(error => {
-    //       console.log(error);
-    //       Swal.fire({
-    //         title: '로그인에 실패했습니다.',
-    //         icon: 'error'
-    //       });
-    //     })
+      //btn Id값 디코딩
+      const decodedState = atob(this.$route.query.state);
+      const stateObj = JSON.parse(decodedState);
+      const btnId = stateObj.btnId;
 
+      // 토큰 값 얻어오기
+      const tokenConfig = {
+        headers: {
+          'btnType' : btnId
+        }
+      }
+
+      switch (btnId) {
+        case 'kakao':
+          await this.getToken(tokenConfig, this.kakaoTokenParams);
+          break;
+        case 'naver':
+          await this.getToken(tokenConfig, this.naverTokenParams);
+          break;
+        case 'google':
+          await this.getToken(tokenConfig, this.googleTokenParams);
+          break;
+        default:
+          console.error('로그인 토큰을 얻어오지 못했습니다.');
+      }
+
+
+      //유저 정보 가져오기
+      const userConfig = {
+        headers: {
+          'Authorization' : `Bearer ${this.token.access_token}`,
+          'Content-type' : 'application/x-www-form-urlencoded;charset=utf-8',
+          'btnType' : btnId
+        }
+      }
+
+      switch (btnId) {
+        case 'kakao':
+          await this.getSnsInfo(btnId, userConfig);
+          break;
+        case 'naver':
+          await this.getSnsInfo(btnId, userConfig);
+          break;
+        case 'google':
+          await this.getSnsInfo(btnId, userConfig);
+          break;
+        default:
+          console.error('회원정보를 가져오지 못했습니다.');
+      }
+
+    }
   },
   methods: {
     socialLogin(ev) {
-
       const btnId = ev.target.id;
 
       //btn id값을 redirect uri로 이동했을 때 알 수 있게 인코딩해서 보내기
@@ -168,10 +176,60 @@ export default {
     generateEncodedState() {
       return encodeURIComponent(this.generateRandomState());
     },
+    async getToken(header, tokenParams) {
+      await axios.post(this.$store.state.url+'snslogin', new URLSearchParams(tokenParams).toString(), header)
+          .then(response => {
+            this.token.access_token = response.data.result.access_token;
+            this.token.refresh_token = response.data.result.refresh_token;
+          })
+          .catch(error => {
+            console.log(error);
+          })
+    },
+    async getSnsInfo(btnId, header) {
+      await axios.get(this.$store.state.url+'snslogin', header)
+          .then(response => {
+            console.log(response);
+
+            if(btnId === 'naver') {
+              this.$store.commit('setSnsUserId', response.data.result.response.id);
+              this.$store.commit('setSnsUserEmail', response.data.result.response.email);
+              this.userinfo.id = response.data.result.response.id;
+            } else if(btnId === 'kakao') {
+              this.$store.commit('setSnsUserId', response.data.result.id);
+              this.$store.commit('setSnsUserEmail', response.data.result.kakao_account.email);
+              this.userinfo.id = response.data.result.id;
+            } else if(btnId === 'google') {
+              this.$store.commit('setSnsUserId', response.data.result.id);
+              this.$store.commit('setSnsUserEmail', response.data.result.email);
+              this.userinfo.id = response.data.result.id;
+            }
+
+            axios.post(this.$store.state.url + 'dup', this.userinfo)
+                .then(response => {
+                  if(response.data.result.length == 0) {
+                    this.$router.push({name: 'sns-register'})
+                  } else {
+                    sessionStorage.setItem('id', this.userinfo.id);
+                    this.getUserinfo();
+                  }
+                })
+                .catch(error => {
+                  console.log(error);
+                })
+
+          })
+          .catch(error => {
+            console.log(error);
+            Swal.fire({
+              title: '로그인에 실패했습니다.',
+              icon: 'error'
+            });
+          })
+    },
     getUserinfo() {
       axios.post(this.$store.state.url + 'login', this.userinfo)
           .then(response => {
-            console.log(response);
             if (response.data.state) {
               Swal.fire({
                 icon: 'success',

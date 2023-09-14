@@ -46,12 +46,12 @@ const routes = [
   },
   {
     path: '/sns-login',
-    name: 'sns',
+    name: 'sns-login',
     component: () => import('@/components/SnsLogin.vue')
   },
   {
     path: '/sns-register',
-    name: 'sns',
+    name: 'sns-register',
     component: () => import('@/views/SnsRegister.vue')
   }
 ]

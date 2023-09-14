@@ -38,6 +38,7 @@
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8">
 </script>
 <script>
+
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import SnsLogin from "@/components/SnsLogin.vue";

@@ -21,26 +21,18 @@ public class LoginController {
         return lService.login(mModel);
     }
 
-    @PostMapping("naverlogin")
-    public ResponseEntity<ResultModel> naverLogin(@RequestBody String params) {
-        return lService.naverLogin(params);
+    @PostMapping("snslogin")
+    public ResponseEntity<ResultModel> snsLogin(@RequestBody String params, HttpServletRequest request) {
+        String btnType = request.getHeader("btnType");
+        return lService.snsLogin(btnType, params);
     }
 
-    @GetMapping("naverlogin")
-    public ResponseEntity<ResultModel> getNaverUser(HttpServletRequest request) {
-        String header = request.getHeader("Authorization");
-        return lService.getNaverUser(header);
-    }
-
-    @PostMapping("googlelogin")
-    public ResponseEntity<ResultModel> googleLogin(@RequestBody String params) {
-        return lService.googleLogin(params);
-    }
-
-    @GetMapping("googlelogin")
-    public ResponseEntity<ResultModel> getGoogleUser(HttpServletRequest request) {
-        String header = request.getHeader("Authorization");
-        return lService.getGoogleUser(header);
+    @GetMapping("snslogin")
+    public ResponseEntity<ResultModel> getSnsInfo(HttpServletRequest request) {
+        String btnType = request.getHeader("btnType");
+        String authHeader = request.getHeader("Authorization");
+        String contentHeader = request.getHeader("Content-type");
+        return lService.getSnsInfo(btnType, authHeader, contentHeader);
     }
 
 }
