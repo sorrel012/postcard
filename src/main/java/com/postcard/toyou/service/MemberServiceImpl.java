@@ -119,7 +119,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public ResponseEntity<ResultModel> logout(String btnType, String authHeader, String contentHeader) {
+    public ResponseEntity<ResultModel> logout(String params) {
 
         ResultModel rModel = new ResultModel();
         RestTemplate restTemplate = new RestTemplate();

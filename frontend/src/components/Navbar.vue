@@ -60,6 +60,13 @@ export default {
         client_id: process.env.VUE_APP_KAKAO_REST_KEY,
         logout_redirect_uri: process.env.VUE_APP_SNS_LOGOUT_REDIRECT_URI,
       },
+      naverLogoutParams: {
+        client_id: process.env.VUE_APP_NAVER_CLIENT_ID,
+        client_secret: process.env.VUE_APP_NAVER_CLIENT_SECRET_ID,
+        grant_type: 'delete',
+        access_token: '',
+        service_provide: 'NAVER',
+      },
     }
   },
   created() {
@@ -98,20 +105,22 @@ export default {
         const url = 'https://kauth.kakao.com/oauth/logout';
         location.href = `${url}?client_id=${this.kakaoLogoutParams.client_id}&logout_redirect_uri=${this.kakaoLogoutParams.logout_redirect_uri}`;
       } else {
-        const headers = {
-            'Authorization': `Bearer ${accessToken}`,
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'btnType': btnType,
-        }
+        // const headers = {
+        //     'Authorization': `Bearer ${accessToken}`,
+        //     'Content-Type': 'application/x-www-form-urlencoded',
+        //     'btnType': btnType,
+        // }
+
+        this.naverLogoutParams.access_token = accessToken;
+
+        await axios.post(this.$store.state.url+'snslogout', new URLSearchParams(this.naverLogoutParams).toString())
+            .then(response => {
+              console.log(response);
+            })
+        await axios.post(this.$store.state.url+'snslogout', {}, userConfig)
       }
 
-      // const userConfig = headers;
 
-      // await axios.post(this.$store.state.url+'snslogout', new URLSearchParams(this.kakaoLogoutParams).toString())
-      //     .then(response => {
-      //       console.log(response);
-      //     })
-      //await axios.post(this.$store.state.url+'snslogout', {}, userConfig)
 
     }
   }

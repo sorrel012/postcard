@@ -37,11 +37,11 @@ public class MemberController {
     }
 
     @PostMapping("snslogout")
-    public ResponseEntity<ResultModel> logout(HttpServletRequest request ) {
-        String btnType = request.getHeader("btnType");
-        String authHeader = request.getHeader("Authorization");
-        String contentHeader = request.getHeader("Content-type");
-        return mService.logout(btnType, authHeader, contentHeader);
+    public ResponseEntity<ResultModel> logout(@RequestBody String params) {
+//        String btnType = request.getHeader("btnType");
+//        String authHeader = request.getHeader("Authorization");
+//        String contentHeader = request.getHeader("Content-type");
+        return mService.logout(params);
     }
 
     @PostMapping ("/register")
