@@ -1,7 +1,10 @@
 <template>
-  <div :class="{'d-none':!isMember, 'd-lg-flex':isMember}" class="container-fluid row align-items-sm-start p-5 pt-4 p-height mt-5" >
+  <div :class="{'d-none':!isMember, 'd-lg-flex':isMember}" class="container-fluid row d-lg-flex align-items-sm-start p-5 pt-4" >
 
-    <div class="col-sm-9 col-md-9 col-lg-12 container-lg">
+    <my-page-navbar/>
+    <my-page-sidebar/>
+
+    <div class="col-9 container-lg">
       <div class="container-lg mb-4 p-0">
         <div
             class="container-lg text-start border-bottom border-2 border-dark d-flex">
@@ -50,6 +53,9 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 
+import MyPageSidebar from '@/components/MypageSidebar.vue';
+import MyPageNavbar from "@/components/MyPageNavbar.vue";
+
 export default {
   name: 'MyPaper',
   data() {
@@ -58,11 +64,12 @@ export default {
       isMember: false,
     }
   },
+  components: {
+    MyPageNavbar,
+    MyPageSidebar
+  },
   async created() {
-    
-    console.log(this.isMember);
     const id = sessionStorage.getItem('id');
-    console.log(id);
     if(id == null || id == '') {
       await Swal.fire({
         icon: 'error',
@@ -84,9 +91,7 @@ export default {
     getPapers() {
       axios.get(this.$store.state.url + 'mypaperlist', { params: {m_seq: sessionStorage.getItem('no')} })
           .then(response => {
-            console.log(response);
             this.paperlist = response.data.result;
-            console.log(this.paperlist);
           })
           .catch(error => {
             console.log(error);

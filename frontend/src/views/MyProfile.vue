@@ -91,11 +91,11 @@
 
 <script>
 import axios from 'axios'
+import Swal from "sweetalert2";
+import _ from 'lodash';
 
 import MyPageSidebar from '@/components/MypageSidebar.vue';
 import MyPageNavbar from "@/components/MyPageNavbar.vue";
-import Swal from "sweetalert2";
-import _ from 'lodash';
 
 export default {
   name: 'MyProfile',

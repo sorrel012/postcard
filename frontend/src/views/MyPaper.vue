@@ -42,23 +42,21 @@ export default {
     }
 
     this.paper = this.$store.state.paper;
-    console.log(this.paper);
     document.body.style.backgroundColor = this.paper.bgColor;
 
     this.getPostcards(this.paper)
   },
   methods: {
     getPostcards(paper) {
+      console.log(paper.pcc_seq);
       axios.get(this.$store.state.url + 'postcardlist', {params: {pcc_seq: paper.pcc_seq}})
           .then(response => {
-            console.log('response', response);
             this.postcards = response.data.result;
           })
           .catch(error => {
             console.log(error);
           })
-    }
-    ,
+    },
     deletePostcard(postcard) {
       Swal.fire({
         title: '삭제하시겠습니까?',
