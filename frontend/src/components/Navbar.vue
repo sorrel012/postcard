@@ -117,7 +117,7 @@ export default {
             .then(response => {
               console.log(response);
             })
-        await axios.post(this.$store.state.url+'snslogout', {}, userConfig)
+        // await axios.post(this.$store.state.url+'snslogout', {}, userConfig)
       }
 
 

@@ -124,18 +124,19 @@ public class MemberServiceImpl implements MemberService {
         ResultModel rModel = new ResultModel();
         RestTemplate restTemplate = new RestTemplate();
 
-        SnsUserInfoEnum snsType = toUpperString(btnType);
+//        SnsUserInfoEnum snsType = toUpperString(btnType);
+        SnsUserInfoEnum snsType = toUpperString("naver");
 
         try {
             URI uri = new URI(snsType.getUri());
 
             // 헤더 설정
-            HttpHeaders headers = new HttpHeaders();
-            headers.set("Authorization", authHeader);
-            headers.set("Content-type", contentHeader);
-            HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
+//            HttpHeaders headers = new HttpHeaders();
+//            headers.set("Authorization", authHeader);
+//            headers.set("Content-type", contentHeader);
+//            HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
 
-            ResponseEntity<Object> response = restTemplate.exchange(uri, HttpMethod.POST, entity, Object.class);
+            ResponseEntity<Object> response = restTemplate.exchange(uri, HttpMethod.POST, null, Object.class);
 
             if (response.getBody() != null) {
                 rModel.setState(true);
