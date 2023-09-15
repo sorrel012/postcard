@@ -50,6 +50,18 @@ div {
     border-color: rgb(75, 67, 67);
 }
 
+.btn:disabled {
+    background-color: rgb(138, 134, 134);
+    border-color: rgb(131, 130, 130);
+}
+
+.c-red {
+    color: red;
+}
+.c-blue {
+    color: blue;
+}
+
 /*sweetalert2 폰트 변경*/
 .swal2-popup {
     font-family: SUITE-Regular;

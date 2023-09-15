@@ -12,5 +12,7 @@ public interface MemberService {
     public ResponseEntity<ResultModel> register(MemberModel mModel);
     public ResponseEntity<Object> selectDupId(String id);
     public ResponseEntity<ResultModel> snsRegister(MemberModel mModel);
+    public ResponseEntity<Object> updateProfile(MemberModel mModel);
+    ResponseEntity<Object> updatePw(MemberModel mModel);
 
 }

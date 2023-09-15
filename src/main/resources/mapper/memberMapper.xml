@@ -19,4 +19,21 @@
         select * from member where id=#{id}
     </select>
 
+    <update id="updateProfile" parameterType="com.postcard.toyou.model.MemberModel">
+        update member
+            set name=#{name},
+                tel=#{tel},
+                email=#{email},
+                address=#{address},
+                addressdetail=#{addressDetail},
+                birth=#{birth}
+        where id=#{id}
+    </update>
+
+    <update id="updatePw" parameterType="com.postcard.toyou.model.MemberModel">
+        update member
+            set pw=#{pw}
+        where id=#{id}
+    </update>
+
 </mapper>

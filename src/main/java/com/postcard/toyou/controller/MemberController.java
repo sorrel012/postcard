@@ -50,4 +50,14 @@ public class MemberController {
         return mService.selectDupId(mModel.getId());
     }
 
+    @PutMapping("/updateprofile")
+    public ResponseEntity<Object> updateProfile(@RequestBody MemberModel mModel) {
+        return mService.updateProfile(mModel);
+    }
+
+    @PutMapping("/updatepw")
+    public ResponseEntity<Object> updatePw(@RequestBody MemberModel mModel) {
+        return mService.updatePw(mModel);
+    }
+
 }

@@ -71,6 +71,7 @@ export default {
         sessionStorage.removeItem('id');
         sessionStorage.removeItem('name');
         sessionStorage.removeItem('no');
+        sessionStorage.removeItem('social');
         location.href = '/';
       });
     }

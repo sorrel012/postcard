@@ -81,12 +81,12 @@
                   <label for="floatingInput">-빼고 입력해 주세요.</label>
                   <input type="button" class="btn btn-primary" :disabled="isSuccess"  :value="authMsg" @click="requireAuth">
                 </div>
-                <div class="form-floating btn-group w-50 flex-start" :class="{'d-none':!wantAuth}">
+                <div class="form-floating btn-group w-50 flex-start" v-if="wantAuth">
                   <input type="text" class="form-control" placeholder="" v-model="userAuthCode" :readonly="isSuccess" ref="authRef">
                   <label for="floatingInput">인증번호를 입력해 주세요.</label>
                   <input type="button" class="btn btn-primary" value="인증" @click="confirmAuth" :disabled="isSuccess">
                 </div>
-                <div class="form-floating btn-group w-50 flex-start ps-2 mt-1" :class="{'d-none':!isAuth, 'c-red':!isSuccess, 'c-blue':isSuccess}">
+                <div class="form-floating btn-group w-50 flex-start ps-2 mt-1" v-if="isAuth" :class="{'c-red':!isSuccess, 'c-blue':isSuccess}">
                   {{confirmMsg}}
                 </div>
               </div>
@@ -329,7 +329,7 @@ export default {
       if(!this.isCorrect) {
         this.$refs.pwCorrectRef.focus();
         Swal.fire({
-          title: '비밀번호와 비밀번호 확인이 일치하지 않습니다.',
+          title: '비밀번호 확인이 일치하지 않습니다',
           icon: 'error'
         });
         return
@@ -393,7 +393,7 @@ export default {
             console.log(error);
             Swal.fire({
               icon: 'error',
-              title: '회원가입에 실패했습니다.',
+              title: '회원가입에 실패했습니다',
             });
           });
 
@@ -406,11 +406,5 @@ export default {
 section {
   border: 1px solid #e3e3e3;
   border-radius: 10px;
-}
-.c-red {
-  color: red;
-}
-.c-blue {
-  color: blue;
 }
 </style>

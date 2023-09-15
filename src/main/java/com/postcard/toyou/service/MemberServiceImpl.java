@@ -155,7 +155,7 @@ public class MemberServiceImpl implements MemberService {
         ResultModel rModel = new ResultModel();
 
         List<String> dupId = this.mMapper.selectDupId(id);
-        if(dupId.size() == 0) {
+        if(dupId.isEmpty()) {
             rModel.setState(true);
             rModel.setMessage(id + " 는 사용할 수 있는 아이디입니다.");
             rModel.setResult(dupId);
@@ -163,6 +163,40 @@ public class MemberServiceImpl implements MemberService {
             rModel.setState(false);
             rModel.setMessage(id + " 는 사용할 수 없는 아이디입니다.");
             rModel.setResult(dupId);
+        }
+
+        return ResponseEntity.ok(rModel);
+    }
+
+    @Override
+    public ResponseEntity<Object> updateProfile(MemberModel mModel) {
+
+        ResultModel rModel = new ResultModel();
+
+        int result = this.mMapper.updateProfile(mModel);
+        if(result == 1) {
+            rModel.setState(true);
+            rModel.setMessage("회원정보가 수정되었습니다.");
+        } else {
+            rModel.setState(false);
+            rModel.setMessage("회원정보를 수정하지 못했습니다.");
+        }
+
+        return ResponseEntity.ok(rModel);
+    }
+
+    @Override
+    public ResponseEntity<Object> updatePw(MemberModel mModel) {
+
+        ResultModel rModel = new ResultModel();
+
+        int result = this.mMapper.updatePw(mModel);
+        if(result == 1) {
+            rModel.setState(true);
+            rModel.setMessage("비밀번호가 수정되었습니다.");
+        } else {
+            rModel.setState(false);
+            rModel.setMessage("비밀번호를 수정하지 못했습니다.");
         }
 
         return ResponseEntity.ok(rModel);
