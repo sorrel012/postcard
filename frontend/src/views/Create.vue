@@ -81,7 +81,7 @@ export default {
     if(id == null || id == '') {
       await Swal.fire({
         icon: 'error',
-        title: '로그인 후 이용하실 수 있습니다.',
+        title: '로그인 후 이용하실 수 있습니다',
       })
       location.href='/login';
       return
@@ -134,7 +134,7 @@ export default {
             console.log(error);
             Swal.fire({
               icon: 'error',
-              title: '도화지를 만들지 못했습니다.',
+              title: '도화지를 만들지 못했습니다',
             });
           });
     }

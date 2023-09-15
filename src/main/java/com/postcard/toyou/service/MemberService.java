@@ -14,5 +14,6 @@ public interface MemberService {
     public ResponseEntity<ResultModel> snsRegister(MemberModel mModel);
     public ResponseEntity<Object> updateProfile(MemberModel mModel);
     ResponseEntity<Object> updatePw(MemberModel mModel);
+    ResponseEntity<Object> deleteAccount(String id);
 
 }

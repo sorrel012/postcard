@@ -60,4 +60,9 @@ public class MemberController {
         return mService.updatePw(mModel);
     }
 
+    @DeleteMapping("deleteaccount")
+    public ResponseEntity<Object> deleteAccount(@RequestParam String id) {
+        return mService.deleteAccount(id);
+    }
+
 }

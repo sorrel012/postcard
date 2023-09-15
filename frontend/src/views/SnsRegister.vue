@@ -206,7 +206,7 @@ export default {
             console.log(error);
             Swal.fire({
               icon: 'error',
-              title: '회원가입에 실패했습니다.',
+              title: '회원가입에 실패했습니다',
             });
           });
 
@@ -238,7 +238,7 @@ export default {
             console.log(error);
             Swal.fire({
               icon: 'error',
-              title: '로그인에 실패했습니다.',
+              title: '로그인에 실패했습니다',
             });
           })
     }

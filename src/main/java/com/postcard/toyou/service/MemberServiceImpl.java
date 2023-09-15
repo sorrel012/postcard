@@ -32,11 +32,13 @@ public class MemberServiceImpl implements MemberService {
         ResultModel rModel = new ResultModel();
 
         mModel = mMapper.login(mModel);
-        if(mModel.getName() != null) {
-            rModel.setState(true);
-            rModel.setResult(mModel);
-            rModel.setMessage(mModel.getName()+"님 반갑습니다.");
-        } else {
+        try {
+            if(mModel.getName() != null) {
+                rModel.setState(true);
+                rModel.setResult(mModel);
+                rModel.setMessage(mModel.getName()+"님 반갑습니다.");
+            }
+        } catch(Exception e) {
             rModel.setState(false);
             rModel.setMessage("아이디 비밀번호가 일치하지 않습니다.");
         }
@@ -197,6 +199,23 @@ public class MemberServiceImpl implements MemberService {
         } else {
             rModel.setState(false);
             rModel.setMessage("비밀번호를 수정하지 못했습니다.");
+        }
+
+        return ResponseEntity.ok(rModel);
+    }
+
+    @Override
+    public ResponseEntity<Object> deleteAccount(String id) {
+
+        ResultModel rModel = new ResultModel();
+
+        int result = this.mMapper.deleteAccount(id);
+        if(result == 1) {
+            rModel.setState(true);
+            rModel.setMessage("회원탈퇴를 성공했습니다.");
+        } else {
+            rModel.setState(false);
+            rModel.setMessage("회원탈퇴를 실패했습니다.");
         }
 
         return ResponseEntity.ok(rModel);

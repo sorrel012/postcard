@@ -72,7 +72,7 @@ export default {
     if(id == null || id == '') {
       await Swal.fire({
         icon: 'error',
-        title: '로그인 후 이용하실 수 있습니다.',
+        title: '로그인 후 이용하실 수 있습니다',
       })
       location.href='/login';
       return
@@ -103,7 +103,7 @@ export default {
     deletePaper(paper) {
       Swal.fire({
         title: '삭제하시겠습니까?',
-        text: "삭제한 도화지는 다시 되돌릴 수 없습니다.",
+        text: "삭제한 도화지는 다시 되돌릴 수 없습니다",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -117,7 +117,7 @@ export default {
               .catch(error => {
                 console.log(error);
                 Swal.showValidationMessage(
-                    '도화지를 삭제하지 못했습니다.'
+                    '도화지를 삭제하지 못했습니다'
                 )
               })
         }
@@ -125,7 +125,7 @@ export default {
         if (result.isConfirmed) {
           Swal.fire(
               '삭제 완료',
-              '도화지를 삭제했습니다.',
+              '도화지를 삭제했습니다',
               'success'
           )
         }

@@ -7,8 +7,9 @@ create table member (
 	addressDetail varchar(3000) not null,
 	tel varchar(15) not null,
 	email varchar(50) not null,
-	regDate timestamp not null default current_timestamp,
+	regdate timestamp not null default current_timestamp,
     birth VARCHAR(50) not null;
+	deletedate timestamp not null default current_timestamp,
 );
 
 create table paper (

@@ -15,5 +15,6 @@ public interface MemberMapper {
     public int snsRegister(MemberModel mModel);
     public int updateProfile(MemberModel mModel);
     int updatePw(MemberModel mModel);
+    int deleteAccount(String id);
 
 }

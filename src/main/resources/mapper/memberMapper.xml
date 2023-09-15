@@ -16,7 +16,7 @@
     </insert>
 
     <select id="login" parameterType="com.postcard.toyou.model.MemberModel" resultType="com.postcard.toyou.model.MemberModel">
-        select * from member where id=#{id}
+        select * from member where id=#{id} and deletedate is null
     </select>
 
     <update id="updateProfile" parameterType="com.postcard.toyou.model.MemberModel">
@@ -33,6 +33,12 @@
     <update id="updatePw" parameterType="com.postcard.toyou.model.MemberModel">
         update member
             set pw=#{pw}
+        where id=#{id}
+    </update>
+
+    <update id="deleteAccount" parameterType="java.lang.String">
+        update member
+            set deletedate=default
         where id=#{id}
     </update>
 

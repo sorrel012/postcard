@@ -98,7 +98,7 @@ export default {
               .catch(error => {
                 console.log(error);
                 Swal.showValidationMessage(
-                    '도화지가 존재하지 않습니다.'
+                    '도화지가 존재하지 않습니다'
                 )
               })
         },
@@ -106,7 +106,7 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           Swal.fire({
-            title: '도화지를 불러왔습니다.',
+            title: '도화지를 불러왔습니다',
             text: '친구에게 마음을 전해주세요!'
           });
         }
@@ -116,7 +116,7 @@ export default {
       if(this.isNew) {
         Swal.fire({
           icon: 'error',
-          title: '변경사항을 저장해 주세요.',
+          title: '변경사항을 저장해 주세요',
         });
       }
       this.isNew = true;

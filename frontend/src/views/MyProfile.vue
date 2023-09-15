@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid row d-lg-flex align-items-sm-start p-5 pt-4">
+  <div class="container-fluid row d-lg-flex align-items-sm-start p-5 pt-4 pb-3">
 
     <my-page-navbar/>
     <my-page-sidebar/>
@@ -83,6 +83,11 @@
           <button type="submit" class="btn btn-primary" style="width: 80px;">수정</button>
         </div>
       </form>
+
+      <div class="text-end">
+        <button class="btn btn-danger mt-4 btn-md" @click="deleteAccount">회원 탈퇴</button>
+      </div>
+
     </div>
 
   </div>
@@ -275,7 +280,7 @@ export default {
 
       if(eChng && bChng && adChng && addChng && tChng) {
         Swal.fire({
-          title: '변경사항이 없습니다.',
+          title: '변경사항이 없습니다',
           icon: 'error'
         });
         return
@@ -387,7 +392,7 @@ export default {
       if(!this.isSocial && this.newPw === this.userinfo.pw) {
         this.$refs.currentPwRef.focus();
         Swal.fire({
-          title: '비밀번호가 기존과 동일합니다.',
+          title: '비밀번호가 기존과 동일합니다',
           icon: 'error'
         });
         return
@@ -416,6 +421,48 @@ export default {
           .catch(error => {
             console.log(error);
           })
+    },
+    deleteAccount() {
+      Swal.fire({
+        title: '탈퇴하시겠습니까?',
+        text: "탈퇴 후 다시 되돌릴 수 없습니다",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!',
+        preConfirm: () => {
+          return axios.delete(this.$store.state.url + 'deleteaccount', {params: {id : this.userinfo.id}})
+              .catch(error => {
+                console.log(error);
+                Swal.showValidationMessage(
+                    '탈퇴하지 못했습니다'
+                )
+              })
+        }
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire(
+              '탈퇴 완료',
+              '이용해 주셔서 감사합니다',
+              'success',
+              2000,
+          ).then(async () => {
+            if (this.isSocial) {
+              sessionStorage.removeItem('id');
+              sessionStorage.removeItem('name');
+              sessionStorage.removeItem('no');
+            } else {
+              sessionStorage.removeItem('social');
+              await this.disconnect();
+            }
+            location.href = "/";
+          })
+        }
+      })
+    },
+    async disconnect() {
+      //await axios.post(this.$store.state.url + 'disconnect' + '')
     }
   }
 }
