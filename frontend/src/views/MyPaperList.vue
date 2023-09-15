@@ -1,13 +1,12 @@
 <template>
-  <div :class="{'d-none':!isMember, 'd-lg-flex':isMember}" class="container-fluid row d-lg-flex align-items-sm-start p-5 pt-4" >
+  <div v-if="isMember" class="container-fluid row d-lg-flex align-items-sm-start p-5 pt-4" >
 
     <my-page-navbar/>
     <my-page-sidebar/>
 
     <div class="col-9 container-lg">
       <div class="container-lg mb-4 p-0">
-        <div
-            class="container-lg text-start border-bottom border-2 border-dark d-flex">
+        <div class="container-lg text-start border-bottom border-2 border-dark d-flex">
           <div class="text-start">
             <h3 class="h3 pb-2 m-0 fw-bold">도화지 목록</h3>
           </div>
