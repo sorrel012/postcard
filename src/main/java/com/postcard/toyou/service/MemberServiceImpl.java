@@ -118,6 +118,45 @@ public class MemberServiceImpl implements MemberService {
         return ResponseEntity.ok(rModel);
     }
 
+    @Override
+    public ResponseEntity<ResultModel> logout(String btnType, String authHeader, String contentHeader) {
+
+        ResultModel rModel = new ResultModel();
+        RestTemplate restTemplate = new RestTemplate();
+
+        SnsUserInfoEnum snsType = toUpperString(btnType);
+
+        try {
+            URI uri = new URI(snsType.getUri());
+
+            // 헤더 설정
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", authHeader);
+            headers.set("Content-type", contentHeader);
+            HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
+
+            ResponseEntity<Object> response = restTemplate.exchange(uri, HttpMethod.POST, entity, Object.class);
+
+            if (response.getBody() != null) {
+                rModel.setState(true);
+                rModel.setMessage(snsType.getName() + " 로그아웃에 성공했습니다.");
+                rModel.setResult(response.getBody());
+            } else {
+                rModel.setState(false);
+                rModel.setMessage(snsType.getName() + " 로그아웃 응답을 받지 못했습니다.");
+            }
+        } catch (URISyntaxException e) {
+            rModel.setState(false);
+            rModel.setMessage("잘못된 URI 형식입니다.");
+        } catch (Exception e) {
+            rModel.setState(false);
+            rModel.setMessage(snsType.getName() + " 로그아웃 중 오류가 발생했습니다: " + e.getMessage());
+        }
+
+        return ResponseEntity.ok(rModel);
+
+    }
+
     public ResponseEntity<ResultModel> register(MemberModel mModel) {
 
         ResultModel rModel = new ResultModel();

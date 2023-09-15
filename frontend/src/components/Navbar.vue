@@ -48,17 +48,26 @@
 
 <script>
 import Swal from 'sweetalert2';
+import axios from "axios";
 
 export default {
   name: 'Navbar',
   data() {
     return {
       isMember: false,
+      isSocial: false,
+      kakaoLogoutParams: {
+        client_id: process.env.VUE_APP_KAKAO_REST_KEY,
+        logout_redirect_uri: process.env.VUE_APP_SNS_LOGOUT_REDIRECT_URI,
+      },
     }
   },
   created() {
     if(sessionStorage.getItem('id') != null) {
       this.isMember = true;
+    }
+    if(sessionStorage.getItem('social') != null) {
+      this.isSocial = true;
     }
   },
   methods: {
@@ -67,13 +76,43 @@ export default {
         icon: 'success',
         title: sessionStorage.getItem('name') + '님 안녕히 가세요',
         timer: 2000,
-      }).then(() => {
+      }).then(async () => {
         sessionStorage.removeItem('id');
         sessionStorage.removeItem('name');
         sessionStorage.removeItem('no');
-        sessionStorage.removeItem('social');
-        location.href = '/';
+        if(this.isSocial) {
+          await this.socialLogout();
+          sessionStorage.removeItem('social');
+          sessionStorage.removeItem('access_token');
+          sessionStorage.removeItem('socialType');
+        }
+        //location.href = '/';
       });
+    },
+    async socialLogout() {
+
+      const accessToken = JSON.parse(atob(sessionStorage.getItem('access_token')));
+      const btnType = sessionStorage.getItem('socialType');
+
+      if(btnType === 'kakao') {
+        const url = 'https://kauth.kakao.com/oauth/logout';
+        location.href = `${url}?client_id=${this.kakaoLogoutParams.client_id}&logout_redirect_uri=${this.kakaoLogoutParams.logout_redirect_uri}`;
+      } else {
+        const headers = {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'btnType': btnType,
+        }
+      }
+
+      // const userConfig = headers;
+
+      // await axios.post(this.$store.state.url+'snslogout', new URLSearchParams(this.kakaoLogoutParams).toString())
+      //     .then(response => {
+      //       console.log(response);
+      //     })
+      //await axios.post(this.$store.state.url+'snslogout', {}, userConfig)
+
     }
   }
 }

@@ -71,6 +71,7 @@ export default {
         id: '',
       },
       isRedirect: false,
+      btnId: '',
     }
   },
   async created() {
@@ -82,6 +83,7 @@ export default {
       const decodedState = atob(this.$route.query.state);
       const stateObj = JSON.parse(decodedState);
       const btnId = stateObj.btnId;
+      this.btnId = btnId;
 
       // 토큰 값 얻어오기
       const tokenConfig = {
@@ -189,8 +191,6 @@ export default {
     async getSnsInfo(btnId, header) {
       await axios.get(this.$store.state.url+'snslogin', header)
           .then(response => {
-            console.log(response);
-
             if(btnId === 'naver') {
               this.$store.commit('setSnsUserId', response.data.result.response.id);
               this.$store.commit('setSnsUserEmail', response.data.result.response.email);
@@ -238,8 +238,15 @@ export default {
               }).then(() => {
                 sessionStorage.setItem('name', response.data.result.name);
                 sessionStorage.setItem('no', response.data.result.m_seq);
-                //소셜 로그인의 경우 소셜 로그인이라는 상태 저장
+
+                //소셜 로그인의 경우 소셜 로그인이라는 상태와 종류 저장
                 sessionStorage.setItem('social', true);
+                sessionStorage.setItem('socialType', this.btnId);
+
+                //액세스 토큰 인코딩하여 저장
+                const encodedAccessToken = btoa(JSON.stringify(this.token.access_token));
+                sessionStorage.setItem('access_token', encodedAccessToken);
+
                 location.href = '/';
               });
             } else {

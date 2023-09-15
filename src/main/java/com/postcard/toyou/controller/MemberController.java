@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
@@ -33,6 +34,14 @@ public class MemberController {
         String authHeader = request.getHeader("Authorization");
         String contentHeader = request.getHeader("Content-type");
         return mService.getSnsInfo(btnType, authHeader, contentHeader);
+    }
+
+    @PostMapping("snslogout")
+    public ResponseEntity<ResultModel> logout(HttpServletRequest request ) {
+        String btnType = request.getHeader("btnType");
+        String authHeader = request.getHeader("Authorization");
+        String contentHeader = request.getHeader("Content-type");
+        return mService.logout(btnType, authHeader, contentHeader);
     }
 
     @PostMapping ("/register")
