@@ -120,38 +120,30 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public ResponseEntity<ResultModel> logout(String params) {
+    public ResponseEntity<ResultModel> naverLogout(String params) {
 
         ResultModel rModel = new ResultModel();
         RestTemplate restTemplate = new RestTemplate();
 
-        SnsLogoutEnum snsType = logoutString("naver");
-
         try {
-            URI uri = new URI(snsType.getUri()+"?"+params);
-
-            // 헤더 설정
-//            HttpHeaders headers = new HttpHeaders();
-//            headers.set("Authorization", authHeader);
-//            headers.set("Content-type", contentHeader);
-//            HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
+            URI uri = new URI("https://nid.naver.com/oauth2.0/token?"+params);
 
             ResponseEntity<Object> response = restTemplate.exchange(uri, HttpMethod.POST, null, Object.class);
 
             if (response != null) {
                 rModel.setState(true);
-                rModel.setMessage(snsType.getName() + " 로그아웃에 성공했습니다.");
+                rModel.setMessage("네이버 로그아웃에 성공했습니다.");
                 rModel.setResult(response);
             } else {
                 rModel.setState(false);
-                rModel.setMessage(snsType.getName() + " 로그아웃 응답을 받지 못했습니다.");
+                rModel.setMessage("네이버 로그아웃 응답을 받지 못했습니다.");
             }
         } catch (URISyntaxException e) {
             rModel.setState(false);
             rModel.setMessage("잘못된 URI 형식입니다.");
         } catch (Exception e) {
             rModel.setState(false);
-            rModel.setMessage(snsType.getName() + " 로그아웃 중 오류가 발생했습니다: " + e.getMessage());
+            rModel.setMessage("네이버 로그아웃 중 오류가 발생했습니다: " + e.getMessage());
         }
 
         return ResponseEntity.ok(rModel);
