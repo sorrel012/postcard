@@ -19,6 +19,7 @@ import java.util.List;
 
 import static com.postcard.toyou.service.SnsTokenEnum.fromString;
 import static com.postcard.toyou.service.SnsUserInfoEnum.toUpperString;
+import static com.postcard.toyou.service.SnsLogoutEnum.logoutString;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -124,11 +125,10 @@ public class MemberServiceImpl implements MemberService {
         ResultModel rModel = new ResultModel();
         RestTemplate restTemplate = new RestTemplate();
 
-//        SnsUserInfoEnum snsType = toUpperString(btnType);
-        SnsUserInfoEnum snsType = toUpperString("naver");
+        SnsLogoutEnum snsType = logoutString("naver");
 
         try {
-            URI uri = new URI(snsType.getUri());
+            URI uri = new URI(snsType.getUri()+"?"+params);
 
             // 헤더 설정
 //            HttpHeaders headers = new HttpHeaders();
@@ -138,10 +138,10 @@ public class MemberServiceImpl implements MemberService {
 
             ResponseEntity<Object> response = restTemplate.exchange(uri, HttpMethod.POST, null, Object.class);
 
-            if (response.getBody() != null) {
+            if (response != null) {
                 rModel.setState(true);
                 rModel.setMessage(snsType.getName() + " 로그아웃에 성공했습니다.");
-                rModel.setResult(response.getBody());
+                rModel.setResult(response);
             } else {
                 rModel.setState(false);
                 rModel.setMessage(snsType.getName() + " 로그아웃 응답을 받지 못했습니다.");

@@ -65,7 +65,7 @@ export default {
         client_secret: process.env.VUE_APP_NAVER_CLIENT_SECRET_ID,
         grant_type: 'delete',
         access_token: '',
-        service_provide: 'NAVER',
+        service_provider: 'NAVER',
       },
     }
   },

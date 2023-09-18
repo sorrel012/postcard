@@ -20,7 +20,7 @@ public enum SnsLogoutEnum {
         return uri;
     }
 
-    public static SnsLogoutEnum fromString(String btnType) {
+    public static SnsLogoutEnum logoutString(String btnType) {
         try {
             return SnsLogoutEnum.valueOf(btnType.toUpperCase());
         } catch (IllegalArgumentException e) {
