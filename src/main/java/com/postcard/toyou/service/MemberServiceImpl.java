@@ -19,7 +19,6 @@ import java.util.List;
 
 import static com.postcard.toyou.service.SnsTokenEnum.fromString;
 import static com.postcard.toyou.service.SnsUserInfoEnum.toUpperString;
-import static com.postcard.toyou.service.SnsLogoutEnum.logoutString;
 
 @Service
 public class MemberServiceImpl implements MemberService {
