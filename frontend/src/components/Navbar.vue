@@ -88,15 +88,15 @@ export default {
         sessionStorage.removeItem('name');
         sessionStorage.removeItem('no');
         if(this.isSocial) {
-          await this.socialLogout();
+          this.socialLogout();
           sessionStorage.removeItem('social');
           sessionStorage.removeItem('access_token');
           sessionStorage.removeItem('socialType');
         }
-        //location.href = '/';
+        location.href = '/';
       });
     },
-    async socialLogout() {
+    socialLogout() {
 
       const accessToken = JSON.parse(atob(sessionStorage.getItem('access_token')));
       const btnType = sessionStorage.getItem('socialType');
@@ -104,23 +104,10 @@ export default {
       if(btnType === 'kakao') {
         const url = 'https://kauth.kakao.com/oauth/logout';
         location.href = `${url}?client_id=${this.kakaoLogoutParams.client_id}&logout_redirect_uri=${this.kakaoLogoutParams.logout_redirect_uri}`;
-      } else {
-        // const headers = {
-        //     'Authorization': `Bearer ${accessToken}`,
-        //     'Content-Type': 'application/x-www-form-urlencoded',
-        //     'btnType': btnType,
-        // }
-
+      } else if(btnType === 'naver') {
         this.naverLogoutParams.access_token = accessToken;
-
-        await axios.post(this.$store.state.url+'snslogout', new URLSearchParams(this.naverLogoutParams).toString())
-            .then(response => {
-              console.log(response);
-            })
-        // await axios.post(this.$store.state.url+'snslogout', {}, userConfig)
+        axios.post(this.$store.state.url+'snslogout', new URLSearchParams(this.naverLogoutParams).toString())
       }
-
-
 
     }
   }
