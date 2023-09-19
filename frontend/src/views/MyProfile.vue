@@ -129,6 +129,13 @@ export default {
       isSame: false,
       currentPwMsg: '',
       correctPwMsg: '',
+      naverDisconnectParams: {
+        client_id: process.env.VUE_APP_NAVER_CLIENT_ID,
+        client_secret: process.env.VUE_APP_NAVER_CLIENT_SECRET_ID,
+        grant_type: 'delete',
+        access_token: '',
+        service_provider: 'NAVER',
+      },
     }
   },
   components: {
@@ -440,8 +447,10 @@ export default {
                 )
               })
         }
-      }).then((result) => {
+      }).then( async result => {
         if (result.isConfirmed) {
+          //소셜 회원 연결 끊기
+          await this.disconnect();
           Swal.fire(
               '탈퇴 완료',
               '이용해 주셔서 감사합니다',
@@ -462,7 +471,24 @@ export default {
       })
     },
     async disconnect() {
-      //await axios.post(this.$store.state.url + 'disconnect' + '')
+
+      const accessToken = JSON.parse(atob(sessionStorage.getItem('access_token')));
+      const btnType = sessionStorage.getItem('socialType');
+
+      const header = {
+        headers: {
+          'Authorization' : `Bearer ${accessToken}`,
+          'btnType' : btnType
+        }
+      }
+
+      if(btnType === 'kakao') {
+        await axios.post(this.$store.state.url + 'disconnect', {}, header)
+      } else if(btnType === 'naver') {
+        this.naverDisconnectParams.access_token = accessToken;
+        await axios.post(this.$store.state.url+'snslogout', new URLSearchParams(this.naverDisconnectParams).toString())
+      } else if(btnType === 'google') {
+      }
     }
   }
 }

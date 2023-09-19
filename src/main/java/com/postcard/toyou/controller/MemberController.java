@@ -71,4 +71,11 @@ public class MemberController {
         return mService.deleteAccount(id);
     }
 
+    @PostMapping("disconnect")
+    public ResponseEntity<Object> disconnectSns(HttpServletRequest request) {
+        String btnType = request.getHeader("btnType");
+        String authHeader = request.getHeader("Authorization");
+        return mService.disconnectSns(btnType, authHeader);
+    }
+
 }

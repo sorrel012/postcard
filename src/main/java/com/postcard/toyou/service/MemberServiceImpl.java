@@ -17,6 +17,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
+import static com.postcard.toyou.service.SnsDisconEnum.toUpper;
 import static com.postcard.toyou.service.SnsTokenEnum.fromString;
 import static com.postcard.toyou.service.SnsUserInfoEnum.toUpperString;
 
@@ -250,6 +251,43 @@ public class MemberServiceImpl implements MemberService {
         }
 
         return ResponseEntity.ok(rModel);
+    }
+
+    @Override
+    public ResponseEntity<Object> disconnectSns(String btnType, String authHeader) {
+
+        ResultModel rModel = new ResultModel();
+        RestTemplate restTemplate = new RestTemplate();
+        SnsDisconEnum snsType = toUpper(btnType);
+
+        try {
+            URI uri = new URI(snsType.getUri());
+
+            // 헤더 설정
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", authHeader);
+            HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
+
+            ResponseEntity<Object> response = restTemplate.exchange(uri, HttpMethod.POST, entity, Object.class);
+
+            if (response.getBody() != null) {
+                rModel.setState(true);
+                rModel.setMessage(snsType.getName() + " 회원 탈퇴에 성공했습니다.");
+                rModel.setResult(response.getBody());
+            } else {
+                rModel.setState(false);
+                rModel.setMessage(snsType.getName() + " 회원 탈퇴 응답을 받지 못했습니다.");
+            }
+        } catch (URISyntaxException e) {
+            rModel.setState(false);
+            rModel.setMessage("잘못된 URI 형식입니다.");
+        } catch (Exception e) {
+            rModel.setState(false);
+            rModel.setMessage(snsType.getName() + " 회원 탈퇴 중 오류가 발생했습니다: " + e.getMessage());
+        }
+
+        return ResponseEntity.ok(rModel);
+
     }
 
 }

@@ -225,6 +225,7 @@ export default {
               title: '로그인에 실패했습니다.',
               icon: 'error'
             });
+            this.$router.push({name: 'login'})
           })
     },
     getUserinfo() {
@@ -262,6 +263,7 @@ export default {
               icon: 'error',
               title: '로그인에 실패했습니다.',
             });
+            this.$router.push({name: 'login'})
           })
     },
   }
