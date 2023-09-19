@@ -204,20 +204,6 @@ export default {
               this.$store.commit('setSnsUserEmail', response.data.result.email);
               this.userinfo.id = response.data.result.id;
             }
-
-            axios.post(this.$store.state.url + 'dup', this.userinfo)
-                .then(response => {
-                  if(response.data.result.length == 0) {
-                    this.$router.push({name: 'sns-register'})
-                  } else {
-                    sessionStorage.setItem('id', this.userinfo.id);
-                    this.getUserinfo();
-                  }
-                })
-                .catch(error => {
-                  console.log(error);
-                })
-
           })
           .catch(error => {
             console.log(error);
@@ -226,6 +212,38 @@ export default {
               icon: 'error'
             });
             this.$router.push({name: 'login'})
+          })
+
+      //이전에 가입 후 탈퇴한 회원인지 확인
+      await axios.post(this.$store.state.url+'checkrejoin', this.userinfo)
+          .then(async response => {
+            if (response.data.result.length !== 0) {
+              await Swal.fire({
+                icon: 'error',
+                title: response.data.message,
+                text: '다른 계정으로 로그인해 주세요',
+                timer: 2000,
+              })
+                location.href = '/login';
+            }
+          })
+          .catch(error => {
+            console.log(error);
+          });
+
+
+      //최초 로그인인지 확인
+      await axios.post(this.$store.state.url + 'dup', this.userinfo)
+          .then(response => {
+            if(response.data.result.length === 0) {
+              this.$router.push({name: 'sns-register'})
+            } else {
+              sessionStorage.setItem('id', this.userinfo.id);
+              this.getUserinfo();
+            }
+          })
+          .catch(error => {
+            console.log(error);
           })
     },
     getUserinfo() {

@@ -184,6 +184,25 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public ResponseEntity<Object> checkRejoin(String id) {
+
+        ResultModel rModel = new ResultModel();
+
+        List<String> dupId = this.mMapper.selectRejoin(id);
+        if(dupId.isEmpty()) {
+            rModel.setState(true);
+            rModel.setMessage("사용할 수 있는 계정입니다.");
+            rModel.setResult(dupId);
+        } else {
+            rModel.setState(false);
+            rModel.setMessage("사용할 수 없는 계정입니다.");
+            rModel.setResult(dupId);
+        }
+
+        return ResponseEntity.ok(rModel);
+    }
+
+    @Override
     public ResponseEntity<Object> selectDupId(String id) {
 
         ResultModel rModel = new ResultModel();

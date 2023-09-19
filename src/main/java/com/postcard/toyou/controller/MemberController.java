@@ -51,6 +51,11 @@ public class MemberController {
         return mService.snsRegister(mModel);
     }
 
+    @PostMapping(value = "/checkrejoin")
+    public ResponseEntity<Object> checkRejoin(@RequestBody MemberModel mModel) {
+        return mService.checkRejoin(mModel.getId());
+    }
+
     @PostMapping(value = "/dup")
     public ResponseEntity<Object> selectDupId(@RequestBody MemberModel mModel) {
         return mService.selectDupId(mModel.getId());
