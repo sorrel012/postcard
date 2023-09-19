@@ -222,7 +222,7 @@ export default {
       }).open();
     },
     updateTel() {
-      if(this.userinfo.tel.length != 11) {
+      if(this.userinfo.tel.length !== 11) {
         Swal.fire({
           title: '연락처를 입력해 주세요',
           icon: 'error'
