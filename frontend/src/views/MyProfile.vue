@@ -473,6 +473,7 @@ export default {
     async disconnect() {
 
       const accessToken = JSON.parse(atob(sessionStorage.getItem('access_token')));
+      console.log(accessToken);
       const btnType = sessionStorage.getItem('socialType');
 
       const kakaoHeader = {
@@ -482,11 +483,12 @@ export default {
       }
 
       if(btnType === 'kakao') {
-        await axios.post(this.$store.state.url + 'disconnectKakao', {}, kakaoHeader)
+        await axios.post(this.$store.state.url + 'disconnectKakao', {}, kakaoHeader);
       } else if(btnType === 'naver') {
         this.naverDisconnectParams.access_token = accessToken;
-        await axios.post(this.$store.state.url+'disconnectNaver', new URLSearchParams(this.naverDisconnectParams).toString()).then(response => {console.log(response);});
+        await axios.post(this.$store.state.url+'disconnectNaver', new URLSearchParams(this.naverDisconnectParams).toString());
       } else if(btnType === 'google') {
+        await axios.post(this.$store.state.url+'disconnectGoogle', new URLSearchParams({token: accessToken}).toString()).then(response => {console.log(response);})
       }
 
     }

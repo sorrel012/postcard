@@ -305,7 +305,6 @@ public class MemberServiceImpl implements MemberService {
         }
 
         return ResponseEntity.ok(rModel);
-
     }
 
     @Override
@@ -336,7 +335,36 @@ public class MemberServiceImpl implements MemberService {
         }
 
         return ResponseEntity.ok(rModel);
+    }
 
+    @Override
+    public ResponseEntity<Object> disconnectGoogle(String token) {
+
+        ResultModel rModel = new ResultModel();
+        RestTemplate restTemplate = new RestTemplate();
+
+        try {
+            URI uri = new URI("https://oauth2.googleapis.com/revoke?"+token);
+
+            ResponseEntity<Object> response = restTemplate.exchange(uri, HttpMethod.POST, null, Object.class);
+
+            if (response != null) {
+                rModel.setState(true);
+                rModel.setMessage("구글 연동 해제에 성공했습니다.");
+                rModel.setResult(response);
+            } else {
+                rModel.setState(false);
+                rModel.setMessage("구글 연동 해제 응답을 받지 못했습니다.");
+            }
+        } catch (URISyntaxException e) {
+            rModel.setState(false);
+            rModel.setMessage("잘못된 URI 형식입니다.");
+        } catch (Exception e) {
+            rModel.setState(false);
+            rModel.setMessage("구글 연동 해제 중 오류가 발생했습니다: " + e.getMessage());
+        }
+
+        return ResponseEntity.ok(rModel);
     }
 
 }

@@ -87,4 +87,9 @@ public class MemberController {
         return mService.disconnectNaver(params);
     }
 
+    @PostMapping("disconnectGoogle")
+    public ResponseEntity<Object> disconnectGoogle(@RequestBody String token) {
+        return mService.disconnectGoogle(token);
+    }
+
 }
