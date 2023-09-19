@@ -10,15 +10,15 @@ public interface MemberService {
     ResponseEntity<ResultModel> snsLogin(String btnType, String params);
     ResponseEntity<ResultModel> getSnsInfo( String btnType, String authHeader, String contentHeader);
     ResponseEntity<ResultModel> naverLogout(String params);
-    public ResponseEntity<ResultModel> register(MemberModel mModel);
-    public ResponseEntity<Object> checkRejoin(String id);
-    public ResponseEntity<Object> selectDupId(String id);
-    public ResponseEntity<ResultModel> snsRegister(MemberModel mModel);
-    public ResponseEntity<Object> updateProfile(MemberModel mModel);
-    public ResponseEntity<Object> updatePw(MemberModel mModel);
-    public ResponseEntity<Object> deleteAccount(String id);
-    public ResponseEntity<Object> disconnectKakao(String authHeader);
-    public ResponseEntity<Object> disconnectNaver(String params);
-    public ResponseEntity<Object> disconnectGoogle(String token);
+    ResponseEntity<ResultModel> register(MemberModel mModel);
+    ResponseEntity<Object> checkRejoin(String id);
+    ResponseEntity<Object> selectDupId(String id);
+    ResponseEntity<ResultModel> snsRegister(MemberModel mModel);
+    ResponseEntity<Object> updateProfile(MemberModel mModel);
+    ResponseEntity<Object> updatePw(MemberModel mModel);
+    ResponseEntity<Object> deleteAccount(String id);
+    ResponseEntity<Object> disconnectKakao(String authHeader);
+    ResponseEntity<Object> disconnectNaver(String params);
+    ResponseEntity<Object> disconnectGoogle(String token);
 
 }

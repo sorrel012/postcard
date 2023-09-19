@@ -17,7 +17,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
-import static com.postcard.toyou.service.SnsDisconEnum.toUpper;
 import static com.postcard.toyou.service.SnsTokenEnum.fromString;
 import static com.postcard.toyou.service.SnsUserInfoEnum.toUpperString;
 
@@ -164,7 +163,7 @@ public class MemberServiceImpl implements MemberService {
         }
 
         return ResponseEntity.ok(rModel);
-    };
+    }
 
     @Override
     public ResponseEntity<ResultModel> snsRegister(MemberModel mModel) {
