@@ -71,11 +71,15 @@ public class MemberController {
         return mService.deleteAccount(id);
     }
 
-    @PostMapping("disconnect")
-    public ResponseEntity<Object> disconnectSns(HttpServletRequest request) {
-        String btnType = request.getHeader("btnType");
+    @PostMapping("disconnectKakao")
+    public ResponseEntity<Object> disconnectKakao(HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");
-        return mService.disconnectSns(btnType, authHeader);
+        return mService.disconnectKakao(authHeader);
+    }
+
+    @PostMapping("disconnectNaver")
+    public ResponseEntity<Object> disconnectNaver(@RequestBody String params) {
+        return mService.disconnectNaver(params);
     }
 
 }

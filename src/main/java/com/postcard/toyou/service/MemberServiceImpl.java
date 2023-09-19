@@ -254,14 +254,13 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public ResponseEntity<Object> disconnectSns(String btnType, String authHeader) {
+    public ResponseEntity<Object> disconnectKakao(String authHeader) {
 
         ResultModel rModel = new ResultModel();
         RestTemplate restTemplate = new RestTemplate();
-        SnsDisconEnum snsType = toUpper(btnType);
 
         try {
-            URI uri = new URI(snsType.getUri());
+            URI uri = new URI("https://kapi.kakao.com/v1/user/unlink");
 
             // 헤더 설정
             HttpHeaders headers = new HttpHeaders();
@@ -272,18 +271,49 @@ public class MemberServiceImpl implements MemberService {
 
             if (response.getBody() != null) {
                 rModel.setState(true);
-                rModel.setMessage(snsType.getName() + " 회원 탈퇴에 성공했습니다.");
+                rModel.setMessage("카카오 연동 해제에 성공했습니다.");
                 rModel.setResult(response.getBody());
             } else {
                 rModel.setState(false);
-                rModel.setMessage(snsType.getName() + " 회원 탈퇴 응답을 받지 못했습니다.");
+                rModel.setMessage("카카오 연동 해제 응답을 받지 못했습니다.");
             }
         } catch (URISyntaxException e) {
             rModel.setState(false);
             rModel.setMessage("잘못된 URI 형식입니다.");
         } catch (Exception e) {
             rModel.setState(false);
-            rModel.setMessage(snsType.getName() + " 회원 탈퇴 중 오류가 발생했습니다: " + e.getMessage());
+            rModel.setMessage("카카오 연동 해제 중 오류가 발생했습니다: " + e.getMessage());
+        }
+
+        return ResponseEntity.ok(rModel);
+
+    }
+
+    @Override
+    public ResponseEntity<Object> disconnectNaver(String params) {
+
+        ResultModel rModel = new ResultModel();
+        RestTemplate restTemplate = new RestTemplate();
+
+        try {
+            URI uri = new URI("https://nid.naver.com/oauth2.0/token?"+params);
+
+            ResponseEntity<Object> response = restTemplate.exchange(uri, HttpMethod.POST, null, Object.class);
+
+            if (response != null) {
+                rModel.setState(true);
+                rModel.setMessage("네이버 연동 해제에 성공했습니다.");
+                rModel.setResult(response);
+            } else {
+                rModel.setState(false);
+                rModel.setMessage("네이버 연동 해제 응답을 받지 못했습니다.");
+            }
+        } catch (URISyntaxException e) {
+            rModel.setState(false);
+            rModel.setMessage("잘못된 URI 형식입니다.");
+        } catch (Exception e) {
+            rModel.setState(false);
+            rModel.setMessage("네이버 연동 해제 중 오류가 발생했습니다: " + e.getMessage());
         }
 
         return ResponseEntity.ok(rModel);

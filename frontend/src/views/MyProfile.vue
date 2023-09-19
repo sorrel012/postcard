@@ -134,7 +134,7 @@ export default {
         client_secret: process.env.VUE_APP_NAVER_CLIENT_SECRET_ID,
         grant_type: 'delete',
         access_token: '',
-        service_provider: 'NAVER',
+        service_provider: 'NAVER'
       },
     }
   },
@@ -465,7 +465,7 @@ export default {
               sessionStorage.removeItem('social');
               await this.disconnect();
             }
-            location.href = "/";
+            //location.href = "/";
           })
         }
       })
@@ -475,20 +475,20 @@ export default {
       const accessToken = JSON.parse(atob(sessionStorage.getItem('access_token')));
       const btnType = sessionStorage.getItem('socialType');
 
-      const header = {
+      const kakaoHeader = {
         headers: {
-          'Authorization' : `Bearer ${accessToken}`,
-          'btnType' : btnType
+          'Authorization' : `Bearer ${accessToken}`
         }
       }
 
       if(btnType === 'kakao') {
-        await axios.post(this.$store.state.url + 'disconnect', {}, header)
+        await axios.post(this.$store.state.url + 'disconnectKakao', {}, kakaoHeader)
       } else if(btnType === 'naver') {
         this.naverDisconnectParams.access_token = accessToken;
-        await axios.post(this.$store.state.url+'snslogout', new URLSearchParams(this.naverDisconnectParams).toString())
+        await axios.post(this.$store.state.url+'disconnectNaver', new URLSearchParams(this.naverDisconnectParams).toString()).then(response => {console.log(response);});
       } else if(btnType === 'google') {
       }
+
     }
   }
 }

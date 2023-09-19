@@ -16,6 +16,7 @@ public interface MemberService {
     public ResponseEntity<Object> updateProfile(MemberModel mModel);
     public ResponseEntity<Object> updatePw(MemberModel mModel);
     public ResponseEntity<Object> deleteAccount(String id);
-    ResponseEntity<Object> disconnectSns(String btnType, String authHeader);
+    ResponseEntity<Object> disconnectKakao(String authHeader);
+    ResponseEntity<Object> disconnectNaver(String params);
 
 }
