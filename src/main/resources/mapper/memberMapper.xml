@@ -3,6 +3,10 @@
 
 <mapper namespace="com.postcard.toyou.dao.MemberMapper">
 
+    <select id="selectRejoin" parameterType="java.util.ArrayList">
+        select id from member where id=#{id} and deletedate is not null
+    </select>
+
     <select id="selectDupId" parameterType="java.util.ArrayList">
         select id from member where id=#{id} and deletedate is null
     </select>

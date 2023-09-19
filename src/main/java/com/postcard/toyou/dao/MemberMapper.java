@@ -11,10 +11,11 @@ public interface MemberMapper {
 
     public int register(MemberModel mModel);
     public MemberModel login(MemberModel mModel);
+    public List<String> selectRejoin(String id);
     public List<String> selectDupId(String id);
     public int snsRegister(MemberModel mModel);
     public int updateProfile(MemberModel mModel);
-    int updatePw(MemberModel mModel);
-    int deleteAccount(String id);
+    public int updatePw(MemberModel mModel);
+    public int deleteAccount(String id);
 
 }
