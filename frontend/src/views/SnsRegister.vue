@@ -222,7 +222,6 @@ export default {
                 timer: 2000,
               }).then(() => {
                 sessionStorage.setItem('name', response.data.result.name);
-                sessionStorage.setItem('no', response.data.result.m_seq);
                 location.href = '/';
                 //소셜 로그인의 경우 소셜 로그인이라는 상태 저장
                 sessionStorage.setItem('social', true);

@@ -23,7 +23,7 @@
         </tr>
         </thead>
         <tbody>
-          <tr class="text-center align-middle" v-for="paper in paperlist" :key="paper.m_seq">
+          <tr class="text-center align-middle" v-for="paper in paperlist">
             <td class="col-3 text-wrap">
               <div class="text-dark text-wrap text-decoration-none text-hover" @click="mypaper(paper)">{{ paper.title }}</div>
             </td>
@@ -88,7 +88,7 @@ export default {
   },
   methods: {
     getPapers() {
-      axios.get(this.$store.state.url + 'mypaperlist', { params: {m_seq: sessionStorage.getItem('no')} })
+      axios.get(this.$store.state.url + 'mypaperlist', { params: {id: sessionStorage.getItem('id')} })
           .then(response => {
             this.paperlist = response.data.result;
           })

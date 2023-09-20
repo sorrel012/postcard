@@ -59,11 +59,11 @@ public class PaperServiceImpl implements PaperService {
     }
 
     @Override
-    public ResponseEntity<ResultModel> getList(int mSeq) {
+    public ResponseEntity<ResultModel> getList(String id) {
 
         ResultModel rModel = new ResultModel();
 
-        List<PaperModel> plist = pMapper.getList(mSeq);
+        List<PaperModel> plist = pMapper.getList(id);
         for(PaperModel p : plist) {
 
             int seq = p.getPcc_seq();

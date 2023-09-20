@@ -205,7 +205,7 @@ export default {
       this.isCheckDup = true;
       axios.post(this.$store.state.url + 'dup', this.userinfo)
           .then(response => {
-            this.dupMsg = result.data.message;
+            this.dupMsg = response.data.message;
 
             if(response.data.state) {
               this.isDup = false;

@@ -22,8 +22,8 @@ public class PaperController {
     }
 
     @GetMapping("/mypaperlist")
-    public ResponseEntity<ResultModel> getList(@RequestParam int m_seq) {
-        return pService.getList(m_seq);
+    public ResponseEntity<ResultModel> getList(@RequestParam String id) {
+        return pService.getList(id);
     }
 
     @GetMapping("/paper")

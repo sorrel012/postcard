@@ -4,46 +4,62 @@
 <mapper namespace="com.postcard.toyou.dao.MemberMapper">
 
     <select id="selectRejoin" parameterType="java.util.ArrayList">
-        select id from member where id=#{id} and deletedate is not null
+        <![CDATA[
+            select m_id from member where m_id=#{id} and deletedate is not null
+        ]]>
     </select>
 
     <select id="selectDupId" parameterType="java.util.ArrayList">
-        select id from member where id=#{id} and deletedate is null
+        <![CDATA[
+            select m_id from member where m_id=#{id} and deletedate is null
+        ]]>
     </select>
 
     <insert id="register" parameterType="com.postcard.toyou.model.MemberModel">
-        insert into member (id, pw, name, tel, email, address, addressdetail, birth) values (#{id}, #{pw}, #{name}, #{tel}, #{email}, #{address}, #{addressDetail}, #{birth})
+        <![CDATA[
+            insert into member (m_id, pw, name, tel, email, address, addressdetail, birth) values (#{id}, #{pw}, #{name}, #{tel}, #{email}, #{address}, #{addressDetail}, #{birth})
+        ]]>
     </insert>
 
     <insert id="snsRegister" parameterType="com.postcard.toyou.model.MemberModel">
-        insert into member (id, name, tel, email, address, addressdetail, birth) values (#{id}, #{name}, #{tel}, #{email}, #{address}, #{addressDetail}, #{birth})
+        <![CDATA[
+            insert into member (m_id, name, tel, email, address, addressdetail, birth) values (#{id}, #{name}, #{tel}, #{email}, #{address}, #{addressDetail}, #{birth})
+        ]]>
     </insert>
 
     <select id="login" parameterType="com.postcard.toyou.model.MemberModel" resultType="com.postcard.toyou.model.MemberModel">
-        select * from member where id=#{id} and deletedate is null
+        <![CDATA[
+            select * from member where m_id=#{id} and deletedate is null
+        ]]>
     </select>
 
     <update id="updateProfile" parameterType="com.postcard.toyou.model.MemberModel">
-        update member
-            set name=#{name},
-                tel=#{tel},
-                email=#{email},
-                address=#{address},
-                addressdetail=#{addressDetail},
-                birth=#{birth}
-        where id=#{id}
+        <![CDATA[
+            update member
+                set name=#{name},
+                    tel=#{tel},
+                    email=#{email},
+                    address=#{address},
+                    addressdetail=#{addressDetail},
+                    birth=#{birth}
+            where m_id=#{id}
+        ]]>
     </update>
 
     <update id="updatePw" parameterType="com.postcard.toyou.model.MemberModel">
-        update member
-            set pw=#{pw}
-        where id=#{id}
+        <![CDATA[
+            update member
+                set pw=#{pw}
+            where m_id=#{id}
+        ]]>
     </update>
 
     <update id="deleteAccount" parameterType="java.lang.String">
-        update member
-            set deletedate=default
-        where id=#{id}
+        <![CDATA[
+            update member
+                set deletedate=default
+            where m_id=#{id}
+        ]]>
     </update>
 
 </mapper>

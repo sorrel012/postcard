@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 @Data
 public class MemberModel {
 
-    private int m_seq;
     private String id;
     private String pw;
     private String name;

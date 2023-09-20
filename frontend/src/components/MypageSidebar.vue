@@ -8,12 +8,12 @@
           </li>
         </ul>
         <div class="mt-3 mb-1 f-bold">내가 쓴 글</div>
-        <ul class="list-unstyled mb-2">
+        <ul class="list-unstyled mb-2 text-start">
           <li class="nav-item pb-1">
             <router-link class="text-decoration-none text-secondary" to="/mypaperlist" active-class="active">도화지</router-link>
           </li>
           <li class="nav-item pb-1">
-            <router-link class="text-decoration-none text-secondary" to="/myp" active-class="active">게시판</router-link>
+            <router-link class="text-decoration-none text-secondary" to="/myp" active-class="active">보물상자</router-link>
           </li>
         </ul>
         <div class="mt-3 mb-1 f-bold">내가 쓴 댓글</div>

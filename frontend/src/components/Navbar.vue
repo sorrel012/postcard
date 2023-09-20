@@ -17,7 +17,7 @@
             </li>
 
             <li class="nav-item">
-              <router-link class="nav-link ms-4" to="/board" active-class="active">게시판</router-link>
+              <router-link class="nav-link ms-4" to="/treasure" active-class="active">보물상자</router-link>
             </li>
           </ul>
         </div>

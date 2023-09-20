@@ -4,28 +4,40 @@
 <mapper namespace="com.postcard.toyou.dao.PaperMapper">
 
     <select id="isUnique" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-        select count(*) as cnt from paper where code=#{code} and isdelete='N'
+        <![CDATA[
+            select count(*) as cnt from paper where code=#{code} and isdelete='N'
+        ]]>
     </select>
 
     <insert id="create" parameterType="com.postcard.toyou.model.PaperModel">
-        insert into paper(m_seq, title, bgcolor, pccolor, pcborderpx, pcbcolor, pcbradiuspx, code)
-            values(#{m_seq}, #{title}, #{bgColor}, #{pcColor}, #{pcBorderPx}, #{pcbColor}, #{pcbRadiusPx}, #{code})
+        <![CDATA[
+            insert into paper(m_id, title, bgcolor, pccolor, pcborderpx, pcbcolor, pcbradiuspx, code)
+                values(#{id}, #{title}, #{bgColor}, #{pcColor}, #{pcBorderPx}, #{pcbColor}, #{pcbRadiusPx}, #{code})
+        ]]>
     </insert>
 
-    <select id="getList" parameterType="java.lang.Integer" resultType="com.postcard.toyou.model.PaperModel">
-        select * from paper where m_seq=#{m_seq} and isdelete='N' order by regdate
+    <select id="getList" parameterType="java.lang.String" resultType="com.postcard.toyou.model.PaperModel">
+        <![CDATA[
+            select * from paper where m_id=#{id} and isdelete='N' order by regdate
+        ]]>
     </select>
 
     <select id="getCnt" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-        select count(*) from postcard where pcc_seq=#{seq} and isdelete='N'
+        <![CDATA[
+            select count(*) from postcard where pcc_seq=#{seq} and isdelete='N'
+        ]]>
     </select>
 
     <select id="getPaper" parameterType="java.lang.Integer" resultType="com.postcard.toyou.model.PaperModel">
-        select * from paper where code=#{code} and isdelete='N'
+        <![CDATA[
+            select * from paper where code=#{code} and isdelete='N'
+        ]]>
     </select>
 
     <update id="deletePaper" parameterType="java.lang.Integer">
-        update paper set isdelete='Y' where pcc_seq=#{pcc_seq}
+        <![CDATA[
+            update paper set isdelete='Y' where pcc_seq=#{pcc_seq}
+        ]]>
     </update>
 
 </mapper>

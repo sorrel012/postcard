@@ -10,7 +10,7 @@ public interface PaperMapper {
 
     public int create(PaperModel pModel);
     public int isUnique(int code);
-    List<PaperModel> getList(int mSeq);
+    List<PaperModel> getList(String id);
     int getCnt(int seq);
     List<PaperModel> getPaper(int code);
     int deletePaper(int pccSeq);

@@ -488,7 +488,7 @@ export default {
         this.naverDisconnectParams.access_token = accessToken;
         await axios.post(this.$store.state.url+'disconnectNaver', new URLSearchParams(this.naverDisconnectParams).toString());
       } else if(btnType === 'google') {
-        await axios.post(this.$store.state.url+'disconnectGoogle', new URLSearchParams({token: accessToken}).toString()).then(response => {console.log(response);})
+        await axios.post(this.$store.state.url+'disconnectGoogle', new URLSearchParams({token: accessToken}).toString());
       }
 
     }
