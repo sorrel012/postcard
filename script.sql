@@ -1,5 +1,6 @@
 create table member (
 	m_id varchar(100) primary key,
+	
 	pw varchar(500) null,
 	name varchar(50) not null,
 	address varchar(1000) not null,
@@ -14,6 +15,7 @@ create table member (
 
 create table paper (
 	pcc_seq serial primary key,
+	
 	bgcolor VARCHAR(50) DEFAULT '#FFFFFF';
 	pccolor VARCHAR(50) DEFAULT '#FFFFFF';
 	pcbcolor VARCHAR(50) DEFAULT '#000000';
@@ -29,9 +31,9 @@ create table paper (
 );
 
 
-
 create table postcard (
-	pc_seq serial not null,
+	pc_seq serial primary key,
+	
 	content varchar(3000) not null,
 	regDate timestamp not null default current_timestamp,
 	textcolor VARCHAR(50) DEFAULT '#FFFFFF';
@@ -40,6 +42,75 @@ create table postcard (
 	pcc_seq int not null,
 	constraint fk_pcc_seq foreign key(pcc_seq) references paper(pcc_seq)
 );
+
+
+
+create table TreasureBox (
+	b_seq	serial primary key,
+	
+	title	varchar(300)	not null,
+	content	varchar(5000)	not null,
+	regdate	timestamp	not null,
+	hit	int	not null,
+	
+	m_id	varchar(100)	not null,
+	constraint fk_m_id foreign key(m_id) references member(m_id)
+);
+
+
+create table TbPic (
+	pic_name	varchar(100)	primary key,
+	
+	b_seq		int	not null,
+	constraint fk_b_seq foreign key(b_seq) references TreasureBox(b_seq)
+);
+
+
+create table TbComment (
+	c_seq	serial primary key,
+	
+	content	varchar(1000)	not null,
+	regdate	timestamp	not null default current_timestamp,	
+	
+	b_seq	int	not null,
+	constraint fk_b_seq foreign key(b_seq) references TreasureBox(b_seq),
+	
+	m_id	varchar(100)	not null,	
+	constraint fk_m_id foreign key(m_id) references member(m_id)
+	
+);
+
+
+create table TbcPic (
+	pic_name	varchar(100) primary key,
+	
+	c_seq	int	not null,
+	constraint fk_c_seq foreign key(c_seq) references TbComment(c_seq)
+);
+
+
+create table TbcReply (
+	r_seq	serial primary key,
+	
+	content	varchar(5000)	not null,
+	regdate	timestamp	not null default current_timestamp,	
+	
+	c_seq	int	not null,
+	constraint fk_c_seq foreign key(c_seq) references TbComment(c_seq),	
+	
+	m_id	varchar(100)	not null,
+	constraint fk_m_id foreign key(m_id) references member(m_id)
+); 
+
+
+select * from member;
+select * from paper;
+select * from postcard;
+
+
+
+
+
 
 ALTER TABLE public.paper ADD bgcolor VARCHAR(50) DEFAULT '#FFFFFF';
 ALTER TABLE public.paper ADD regdate timestamp not null default current_timestamp;
@@ -52,7 +123,3 @@ update postcard  set isdelete='N' where pcc_seq=5;
 select count(*) from postcard where pcc_seq=5;
 
 select count(1) as cnt from paper;
-
-select * from member;
-select * from paper;
-select * from postcard;
