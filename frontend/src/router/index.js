@@ -53,6 +53,11 @@ const routes = [
     path: '/sns-register',
     name: 'sns-register',
     component: () => import('@/views/SnsRegister.vue')
+  },
+  {
+    path: '/treasure',
+    name: 'treasure-box',
+    component: () => import('@/views/TreasureBox.vue')
   }
 ]
 
