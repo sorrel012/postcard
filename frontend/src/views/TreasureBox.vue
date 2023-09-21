@@ -24,45 +24,31 @@
       </div>
     </div>
 
-    <c:if test="${count != 0}">
-      <div
-          class="container-sm border border-1 border-dark border-opacity-25 rounded h-100">
-
-
-        <c:forEach items="${list}" var="dto">
-
-          <div class="container-fluid list p-2 border-bottom " onclick="location.href='/listendetail.do?seq=${dto.hr_seq}'">
-            <div class="d-flex align-items-center mb-2">
-              <img class="profile" src="/resources/img/로고.png">
-              <div class="profile-detail">
-                <p class="name">${dto.m_name}(${dto.m_id})</p>
-                <p class="time">${dto.hr_regdate}</p>
-              </div>
-            </div>
-            <div class="d-flex flex-column">
-              <h4 class="fs-3 fw-bold title">
-                ${dto.hr_subject}</h4>
-            </div>
-            <div class="d-flex align-items-center pb-2" >
-              <i class="bi bi-chat-left-dots me-2"></i> <span
-                style="margin-right: 20px;">${dto.cnt}</span>
-              <i class="bi bi-eye me-2">
-                <span class="fst-normal"style="margin-right: 20px;">${dto.hr_hit}</span>
-              </i>
-
-
-
-              <div class="bg-danger bg-opacity-25 px-3">
-                ${dto.fd_name}
-              </div>
-
-            </div>
-
-          </div>
-
-        </c:forEach>
-      </div>
-    </c:if>
+    <div>
+      <table class="container-lg table table-hover mt-4">
+        <thead class="table-light">
+        <tr class="text-center">
+          <th class="col-7 text-wrap">제목</th>
+          <th class="col-2 text-wrap">작성자</th>
+          <th class="col-2 text-wrap">작성일</th>
+          <th class="col-1 text-wrap">조회수</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="text-center align-middle">
+          <td class="col-7 text-wrap">
+            <span>892827</span>
+            <span>광활한 우주 속 티끌, 인간을 생각한다:베르크손의 「창조적 진화」 읽기</span>
+            <span>사진</span>
+            <span>[1]</span>
+          </td>
+          <td class="col-2 text-wrap">스위트자몽</td>
+          <td class="col-2 text-wrap">2023.09.13</td>
+          <td class="col-1 text-wrap">50</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
 
 
 <!--    <c:if test="${count == 0}">-->
