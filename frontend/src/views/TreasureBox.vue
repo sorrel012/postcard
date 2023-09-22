@@ -11,10 +11,10 @@
       </div>
     </div>
 
-    <div class="side-headline mb-1">
+    <div class="side-headline mt-4">
       <div class="d-flex justify-content-between">
         <p style="text-align:left" class="fs-5">총 <span class="fw-bold">3</span>건</p>
-        <div class="me-3">
+        <div>
           <select class="form-select w-100" id="sortList" aria-label="Default select example">
             <option value="1">최신순</option>
             <option value="2">오래된순</option>
@@ -25,7 +25,7 @@
     </div>
 
     <div>
-      <table class="container-lg table table-hover mt-4">
+      <table class="container-lg table table-hover mt-1">
         <thead class="table-light">
         <tr class="text-center">
           <th class="col-7 text-wrap">제목</th>

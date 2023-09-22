@@ -68,8 +68,7 @@ export default {
     MyPageSidebar
   },
   async created() {
-    // const id = sessionStorage.getItem('id');
-    const id = 'sorrel012'
+    const id = sessionStorage.getItem('id');
     if(id == null || id == '') {
       await Swal.fire({
         icon: 'error',
