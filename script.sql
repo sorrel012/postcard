@@ -8,23 +8,23 @@ create table member (
 	tel varchar(15) not null,
 	email varchar(50) not null,
 	regdate timestamp not null default current_timestamp,
-    birth VARCHAR(50) not null;
-	deletedate timestamp not null default current_timestamp,
-);
+    birth VARCHAR(50) not null,
+	deletedate timestamp null default current_timestamp
+)
 
 
 create table paper (
 	pcc_seq serial primary key,
 	
-	bgcolor VARCHAR(50) DEFAULT '#FFFFFF';
-	pccolor VARCHAR(50) DEFAULT '#FFFFFF';
-	pcbcolor VARCHAR(50) DEFAULT '#000000';
-	pcborderpx VARCHAR(50) not null;
-	pcbradiuspx VARCHAR(50) not null;
-	title VARCHAR(5000) not null;
-	code int unique not null; 
-	regdate timestamp not null default current_timestamp;
-	isDelete varchar(1) not null default 'N';
+	bgcolor VARCHAR(50) DEFAULT '#FFFFFF',
+	pccolor VARCHAR(50) DEFAULT '#FFFFFF',
+	pcbcolor VARCHAR(50) DEFAULT '#000000',
+	pcborderpx VARCHAR(50) not null,
+	pcbradiuspx VARCHAR(50) not null,
+	title VARCHAR(5000) not null,
+	code int unique not null,
+	regdate timestamp not null default current_timestamp,
+	isDelete varchar(1) not null default 'N',
 	
 	m_id varchar(100) not null,	
 	constraint fk_mId foreign key(m_id) references member(m_id)
@@ -36,8 +36,8 @@ create table postcard (
 	
 	content varchar(3000) not null,
 	regDate timestamp not null default current_timestamp,
-	textcolor VARCHAR(50) DEFAULT '#FFFFFF';
-	isDelete varchar(1) not null default 'N';
+	textcolor VARCHAR(50) DEFAULT '#FFFFFF',
+	isDelete varchar(1) not null default 'N',
 	
 	pcc_seq int not null,
 	constraint fk_pcc_seq foreign key(pcc_seq) references paper(pcc_seq)
