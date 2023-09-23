@@ -11,16 +11,15 @@
       </div>
     </div>
 
-    <div class="side-headline mt-4">
-      <div class="d-flex justify-content-between">
-        <p style="text-align:left" class="fs-5">총 <span class="fw-bold">3</span>건</p>
+    <div class="side-headline mt-4 mb-3">
+      <div class="d-flex justify-content-between align-items-end">
+        <p class="mb-0">총 <span class="fw-bold">3</span>건</p>
         <div>
           <select class="form-select w-100" id="sortList" aria-label="Default select example">
             <option value="1">최신순</option>
             <option value="2">오래된순</option>
           </select>
         </div>
-
       </div>
     </div>
 
@@ -80,5 +79,4 @@
 </script>
 
 <style>
-
 </style>
