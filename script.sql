@@ -9,7 +9,7 @@ create table member (
 	email varchar(50) not null,
 	regdate timestamp not null default current_timestamp,
     birth VARCHAR(50) not null,
-	deletedate timestamp null default current_timestamp
+	deletedate timestamp null
 )
 
 
