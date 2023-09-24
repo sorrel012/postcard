@@ -68,7 +68,7 @@
         <button class="btn w-10" id="previous-button">&lt;&lt;</button>
       </div>
     </div>
-    <button type="button" class="btn btn-primary" style="width: 100px; height: 40px;" onclick="location.href='/listenadd.do'">글쓰기</button>
+    <button type="button" class="btn btn-primary" style="width: 100px; height: 40px;" @lick="location.href='/listenadd.do'"><font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #ffffff;" /> 글쓰기</button>
 
   </section>
 

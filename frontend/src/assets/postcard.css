@@ -30,6 +30,10 @@ div {
     font-family: SUITE-ExtraBold ;
 }
 
+button {
+    font-family: SUITE-Regular !important;
+}
+
 .btn-primary {
     background-color: rgb(122, 107, 107);
     border-color: rgb(122, 107, 107);
