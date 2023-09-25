@@ -14,24 +14,12 @@
     font-style: normal;
 }
 
-.nav-link, .navbar-brand {
+.nav-link, .navbar-brand, h1, .f-bold {
     font-family: SUITE-ExtraBold ;
 }
 
-h1 {
-    font-family: SUITE-ExtraBold ;
-}
-
-div {
+div, button, form {
     font-family: SUITE-Regular;
-}
-
-.f-bold {
-    font-family: SUITE-ExtraBold ;
-}
-
-button {
-    font-family: SUITE-Regular !important;
 }
 
 .btn-primary {

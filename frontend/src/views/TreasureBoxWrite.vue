@@ -1,5 +1,24 @@
 <template>
+  <section class="container-md mt-5 pt-5">
+    <div class="d-flex justify-content-between mb-5">
+      <div class="headline text-start border-bottom border-black w-100">
+        <h2 class="fw-bold ">글쓰기</h2>
+      </div>
+    </div>
 
+
+    <form class="w-100 h-100 mh-100" @submit.prevent="registWriting">
+
+      <input type="text" placeholder="제목을 입력해 주세요" class="form-control h-75 mb-4" style="height: 50px">
+
+      <input type="text" placeholder="제목을 입력해 주세요." class="form-control h-75">
+
+      <div class="text-end mt-4">
+        <button type="submit" class="btn btn-primary"><font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #ffffff;" /> 등록</button>
+      </div>
+    </form>
+
+  </section>
 </template>
 
 <script>
@@ -24,10 +43,17 @@ export default {
     } else {
       this.isMember = true;
     }
+  },
+  methods: {
+    registWriting() {
+
+    }
   }
 }
 </script>
 
 <style>
-
+.input-height {
+  height: 50px !important;
+}
 </style>
