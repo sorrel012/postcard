@@ -48,8 +48,18 @@
         </tbody>
       </table>
     </div>
+    <div class="text-end mt-4">
+      <button type="button" class="btn btn-primary" @click="write"><font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #ffffff;" /> 글쓰기</button>
+    </div>
 
+<!--    페이징-->
+<!--    <div class="d-flex justify-content-center mt-4">-->
+<!--      <div id="pagination-buttons">-->
+<!--        <button class="btn w-10" id="previous-button">&lt;&lt;</button>-->
+<!--      </div>-->
+<!--    </div>-->
 
+<!--    검색 -->
 <!--    <c:if test="${count == 0}">-->
 
 <!--      <hr>-->
@@ -63,19 +73,38 @@
 <!--      </div>-->
 <!--    </c:if>-->
 
-    <div class="d-flex justify-content-center mt-4">
-      <div id="pagination-buttons">
-        <button class="btn w-10" id="previous-button">&lt;&lt;</button>
-      </div>
-    </div>
-    <button type="button" class="btn btn-primary" style="width: 100px; height: 40px;" @lick="location.href='/listenadd.do'"><font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #ffffff;" /> 글쓰기</button>
-
   </section>
 
 </template>
 
 <script>
-
+import Swal from "sweetalert2";
+export default {
+  name:'TreasureBox',
+  data() {
+    return {
+      isMember: false,
+    }
+  },
+  async created() {
+    const id = sessionStorage.getItem('id');
+    if(id == null || id == '') {
+      await Swal.fire({
+        icon: 'error',
+        title: '로그인 후 이용하실 수 있습니다',
+      })
+      location.href='/login';
+      return
+    } else {
+      this.isMember = true;
+    }
+  },
+  methods: {
+    write() {
+      location.href='/treasure-write'
+    }
+  }
+}
 </script>
 
 <style>
