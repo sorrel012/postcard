@@ -9,9 +9,9 @@
 
     <form class="w-100 h-100 mh-100" @submit.prevent="registWriting">
 
-      <input type="text" placeholder="제목을 입력해 주세요" class="form-control h-75 mb-4" style="height: 50px">
+      <input type="text" placeholder="제목을 입력해 주세요" class="form-control mb-4" style="height: 40px">
 
-      <input type="text" placeholder="제목을 입력해 주세요." class="form-control h-75">
+      <tiptap :swMenubar="true"></tiptap>
 
       <div class="text-end mt-4">
         <button type="submit" class="btn btn-primary"><font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #ffffff;" /> 등록</button>
@@ -23,6 +23,7 @@
 
 <script>
 import Swal from "sweetalert2";
+import Tiptap from "@/components/TipTap.vue";
 
 export default {
   name:'TreasureBoxWrite',
@@ -30,6 +31,9 @@ export default {
     return {
       isMember: false,
     }
+  },
+  components: {
+    Tiptap,
   },
   async created() {
     const id = sessionStorage.getItem('id');
@@ -48,12 +52,9 @@ export default {
     registWriting() {
 
     }
-  }
+  },
 }
 </script>
 
 <style>
-.input-height {
-  height: 50px !important;
-}
 </style>
