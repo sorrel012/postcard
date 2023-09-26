@@ -18,6 +18,8 @@
     "core-js": "^3.8.3",
     "lodash": "^4.17.21",
     "sweetalert2": "^11.7.23",
+    "tiptap": "^1.32.2",
+    "tiptap-extensions": "^1.35.2",
     "vue": "^2.6.14",
     "vue-router": "^3.5.1",
     "vuex": "^3.6.2"
@@ -27,6 +29,8 @@
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-plugin-vuex": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
+    "sass": "^1.68.0",
+    "sass-loader": "^13.3.2",
     "vue-template-compiler": "^2.6.14"
   },
   "browserslist": [
