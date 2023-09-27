@@ -11,7 +11,7 @@
 
       <input type="text" placeholder="제목을 입력해 주세요" class="form-control mb-4" style="height: 40px">
 
-      <tiptap :swMenubar="true"></tiptap>
+      <tiptap/>
 
       <div class="text-end mt-4">
         <button type="submit" class="btn btn-primary"><font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #ffffff;" /> 등록</button>
@@ -30,28 +30,39 @@ export default {
   data() {
     return {
       isMember: false,
+      content: '',
     }
   },
   components: {
     Tiptap,
   },
   async created() {
-    const id = sessionStorage.getItem('id');
-    if(id == null || id == '') {
-      await Swal.fire({
-        icon: 'error',
-        title: '로그인 후 이용하실 수 있습니다',
-      })
-      location.href='/login';
-      return
-    } else {
-      this.isMember = true;
-    }
+    // const id = sessionStorage.getItem('id');
+    // if(id == null || id == '') {
+    //   await Swal.fire({
+    //     icon: 'error',
+    //     title: '로그인 후 이용하실 수 있습니다',
+    //   })
+    //   location.href='/login';
+    //   return
+    // } else {
+    //   this.isMember = true;
+    // }
+
+    // 수정일 경우 content 값을 넣어주기 위한 로직
+    // if (수정일경우) {
+    //   this.$api.GET_CONTENT_DATA(this.$route.params.id).then((res) => {
+    //     this.content = res.data.content;
+    //   });
+    // }
   },
   methods: {
     registWriting() {
 
-    }
+    },
+    saveHandler() {
+      // 서버 저장 요청 로직
+    },
   },
 }
 </script>
