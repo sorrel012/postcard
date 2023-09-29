@@ -23,7 +23,7 @@
 
 <script>
 import Swal from "sweetalert2";
-import Tiptap from "@/components/TipTap.vue";
+import CkEditor from "@/components/CkEditor.vue";
 
 export default {
   name:'TreasureBoxWrite',
