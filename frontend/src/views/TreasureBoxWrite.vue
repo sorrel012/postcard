@@ -11,7 +11,7 @@
 
       <input type="text" placeholder="제목을 입력해 주세요" class="form-control mb-4" style="height: 40px">
 
-      <tiptap/>
+      <CkEditor/>
 
       <div class="text-end mt-4">
         <button type="submit" class="btn btn-primary"><font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #ffffff;" /> 등록</button>
@@ -34,7 +34,7 @@ export default {
     }
   },
   components: {
-    Tiptap,
+    CkEditor,
   },
   async created() {
     // const id = sessionStorage.getItem('id');
