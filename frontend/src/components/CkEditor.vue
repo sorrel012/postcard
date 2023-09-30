@@ -14,7 +14,7 @@ export default {
       editor: ClassicEditor,
       editorData: '',
       editorConfig: {
-        // The configuration of the editor.
+        toolbar: [ 'bold', 'italic', '|', 'link' ]
       }
     };
   }
