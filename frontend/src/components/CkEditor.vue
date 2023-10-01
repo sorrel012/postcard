@@ -14,7 +14,16 @@ export default {
       editor: ClassicEditor,
       editorData: '',
       editorConfig: {
-        toolbar: [ 'bold', 'italic', '|', 'link' ]
+        toolbar: {
+          items: [
+            'bold',
+            'italic',
+            'underline',
+            '|',
+            'undo',
+            'redo'
+          ]
+        }
       }
     };
   }
