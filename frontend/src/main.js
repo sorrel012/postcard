@@ -9,14 +9,11 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
-import CKEditor from '@ckeditor/ckeditor5-vue2';
-
 
 library.add(faSearch)
 library.add(faPenToSquare)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
-Vue.use( CKEditor )
 
 Vue.config.productionTip = false
 
