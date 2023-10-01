@@ -12,12 +12,11 @@
     "@ckeditor/ckeditor5-editor-classic": "39.0.2",
     "@ckeditor/ckeditor5-essentials": "39.0.2",
     "@ckeditor/ckeditor5-font": "39.0.2",
-    "@ckeditor/ckeditor5-heading": "39.0.2",
-    "@ckeditor/ckeditor5-highlight": "39.0.2",
     "@ckeditor/ckeditor5-image": "39.0.2",
     "@ckeditor/ckeditor5-list": "39.0.2",
     "@ckeditor/ckeditor5-paragraph": "39.0.2",
-    "@ckeditor/ckeditor5-select-all": "39.0.2"
+    "@ckeditor/ckeditor5-select-all": "39.0.2",
+    "@ckeditor/ckeditor5-upload": "39.0.2"
   },
   "devDependencies": {
     "@ckeditor/ckeditor5-dev-translations": "^32.1.2",

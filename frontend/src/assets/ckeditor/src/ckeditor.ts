@@ -8,12 +8,11 @@ import { ClassicEditor } from '@ckeditor/ckeditor5-editor-classic';
 import { Bold, Italic, Strikethrough, Underline } from '@ckeditor/ckeditor5-basic-styles';
 import { Essentials } from '@ckeditor/ckeditor5-essentials';
 import { FontBackgroundColor, FontColor, FontSize } from '@ckeditor/ckeditor5-font';
-import { Heading, Title } from '@ckeditor/ckeditor5-heading';
-import { Highlight } from '@ckeditor/ckeditor5-highlight';
 import { AutoImage, Image, ImageResize, ImageUpload } from '@ckeditor/ckeditor5-image';
 import { List, ListProperties } from '@ckeditor/ckeditor5-list';
 import { Paragraph } from '@ckeditor/ckeditor5-paragraph';
 import { SelectAll } from '@ckeditor/ckeditor5-select-all';
+import { SimpleUploadAdapter } from '@ckeditor/ckeditor5-upload';
 
 // You can read more about extending the build with additional plugins in the "Installing plugins" guide.
 // See https://ckeditor.com/docs/ckeditor5/latest/installation/plugins/installing-plugins.html for details.
@@ -26,8 +25,6 @@ class Editor extends ClassicEditor {
 		FontBackgroundColor,
 		FontColor,
 		FontSize,
-		Heading,
-		Highlight,
 		Image,
 		ImageResize,
 		ImageUpload,
@@ -36,8 +33,8 @@ class Editor extends ClassicEditor {
 		ListProperties,
 		Paragraph,
 		SelectAll,
+		SimpleUploadAdapter,
 		Strikethrough,
-		Title,
 		Underline
 	];
 
