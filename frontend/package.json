@@ -7,8 +7,6 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
-    "@ckeditor/ckeditor5-build-classic": "^39.0.2",
-    "@ckeditor/ckeditor5-vue2": "^3.0.1",
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-brands-svg-icons": "^6.4.2",
     "@fortawesome/free-regular-svg-icons": "^6.4.2",
