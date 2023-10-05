@@ -13,13 +13,13 @@ export default {
   data() {
     return {
       editor: null,
-      initialData: '내용을 입력하세요.', // 이곳에 초기 데이터를 넣으세요.
+      initialData: '',
     };
   },
   mounted() {
     CustomEditor.create(document.querySelector('#editor'), {
       simpleUpload: {
-        uploadUrl: 'treasure-image', // 예: http://yourserver.com/upload
+        uploadUrl: '/treasure-image',
       },
     })
         .then(editor => {
@@ -33,7 +33,9 @@ export default {
             this.initialData = editor.getData();
           });
         })
-        .catch(error => console.error('There was a problem initializing the editor.', error));
+        .catch(error => {
+          console.error('There was a problem initializing the editor.', error)
+        });
   },
   beforeDestroy() {
     // 에디터 인스턴스 제거
