@@ -13,7 +13,7 @@
 
       <CkEditor @write="content=$event" @images="images=$event"/>
 
-      <div class="text-end mt-4">
+      <div class="text-end mt-4 mb-4">
         <button type="submit" class="btn btn-primary"><font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #ffffff;" /> 등록</button>
       </div>
     </form>

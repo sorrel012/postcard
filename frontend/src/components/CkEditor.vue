@@ -85,7 +85,8 @@ export default {
 </script>
 
 <style>
-.editor-container {
-  height: 70vh;
+.ck-editor__editable_inline {
+  height: 60vh;
+  overflow-y: auto;
 }
 </style>
