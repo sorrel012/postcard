@@ -60,6 +60,7 @@ create table TreasureBox (
 
 create table TbPic (
 	pic_name	varchar(100)	primary key,
+	pic_origin  varchar(100)	not null,
 	
 	b_seq		int	not null,
 	constraint fk_b_seq foreign key(b_seq) references TreasureBox(b_seq)

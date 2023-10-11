@@ -20,7 +20,7 @@ export default {
   mounted() {
     CustomEditor.create(document.querySelector('#editor'), {
       simpleUpload: {
-        uploadUrl: '/treasure-image',
+        uploadUrl: this.$store.state.url + 'treasure/image',
       },
     })
         .then(editor => {
@@ -50,3 +50,9 @@ export default {
   },
 }
 </script>
+
+<style>
+.editor-container {
+  height: 70vh;
+}
+</style>
