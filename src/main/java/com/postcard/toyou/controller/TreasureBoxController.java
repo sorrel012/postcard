@@ -51,8 +51,6 @@ public class TreasureBoxController {
         tbModel.setContent(content);
         tbModel.setM_id(id);
 
-        System.out.println(tbModel);
-
         return tbService.registWriting(tbModel);
     }
 
