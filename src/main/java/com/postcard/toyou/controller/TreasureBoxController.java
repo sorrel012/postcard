@@ -3,8 +3,7 @@ package com.postcard.toyou.controller;
 import com.postcard.toyou.model.ResultModel;
 import com.postcard.toyou.model.TreasureBoxModel;
 import com.postcard.toyou.service.TreasureBoxService;
-import com.postcard.toyou.service.S3UploadService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.postcard.toyou.service.S3FileUploadService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +15,9 @@ import java.util.Map;
 public class TreasureBoxController {
 
     private final TreasureBoxService tbService;
-    private final S3UploadService s3Service;
+    private final S3FileUploadService s3Service;
 
-    public TreasureBoxController(TreasureBoxService tbService, S3UploadService s3UploadService) {
+    public TreasureBoxController(TreasureBoxService tbService, S3FileUploadService s3UploadService) {
         this.s3Service = s3UploadService;
         this.tbService = tbService;
     }
