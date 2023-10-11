@@ -8,42 +8,75 @@
 
 <script>
 import CustomEditor from '@/assets/ckeditor/build/ckeditor.js';
+import axios from 'axios';
+
+class MyUploadAdapter {
+  constructor(loader, uploadUrl, component) {
+    this.loader = loader;
+    this.uploadUrl = uploadUrl;
+    this.component = component;
+  }
+
+  upload() {
+    return new Promise(async (resolve, reject) => {
+      const data = new FormData();
+      const file = await this.loader.file;
+      data.append('upload', file);
+
+      axios.post(this.uploadUrl, data)
+          .then(response => {
+            this.component.images.push({
+              originName: response.data.originName,
+              fileName: response.data.fileName,
+              url: response.data.url,
+            });
+            resolve({
+              default: response.data.url
+            });
+          })
+          .catch(error => {
+            console.error('File upload error:', error);
+            reject(error);
+          });
+    });
+  }
+}
 
 export default {
-  name:'CKEditor',
+  name: 'CKEditor',
   data() {
     return {
       editor: null,
       initialData: '',
+      images: [],
     };
   },
   mounted() {
-    CustomEditor.create(document.querySelector('#editor'), {
-      simpleUpload: {
-        uploadUrl: this.$store.state.url + 'treasure/image',
-      },
-    })
+    const component = this;
+    const uploadUrl = this.$store.state.url + 'treasure/image';
+
+    CustomEditor.create(document.querySelector('#editor'), {})
         .then(editor => {
-          this.editor = editor;
+          component.editor = editor;
 
-          // 초기 데이터 설정
-          editor.setData(this.initialData);
+          editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+            return new MyUploadAdapter(loader, uploadUrl, component);
+          };
 
-          // 데이터 변경을 감지하여 변수를 업데이트합니다.
+          editor.setData(component.initialData);
+
           editor.model.document.on('change:data', () => {
-            this.initialData = editor.getData();
-
-            //상위 컴포넌트로 이벤트 발생
-            this.$emit('write', this.initialData);
-
+            component.initialData = editor.getData();
+            component.$emit('write', component.initialData);
+            component.$emit('images', component.images);
           });
+
         })
         .catch(error => {
-          console.error('There was a problem initializing the editor.', error)
+          console.error('There was a problem initializing the editor.', error);
         });
   },
   beforeDestroy() {
-    // 에디터 인스턴스 제거
     if (this.editor) {
       this.editor.destroy();
     }

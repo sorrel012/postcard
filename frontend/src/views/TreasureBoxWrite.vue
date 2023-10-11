@@ -11,7 +11,7 @@
 
       <input type="text" placeholder="제목을 입력해 주세요" class="form-control mb-4" style="height: 40px" required v-model="title">
 
-      <CkEditor @write="content=$event"/>
+      <CkEditor @write="content=$event" @images="images=$event"/>
 
       <div class="text-end mt-4">
         <button type="submit" class="btn btn-primary"><font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #ffffff;" /> 등록</button>
@@ -33,6 +33,7 @@ export default {
       isMember: false,
       content: '',
       title: '',
+      images: [],
     }
   },
   components: {
@@ -54,51 +55,53 @@ export default {
   },
   methods: {
     registWriting() {
-
-      //공백 제거
-      this.content = this.content.trim();
-
-      if(this.content !== null && this.content !== '') {
-
-        const formData = new FormData();
-        formData.append('content', this.content);
-        formData.append('title', this.title);
-        formData.append('id', sessionStorage.getItem('id'));
-
-        axios.post(this.$store.state.url + 'writing', formData, {
-              headers: {
-                'Content-Type': 'multipart/form-data',
-              },
-            })
-            .then(response => {
-              console.log(response);
-              if (response.data.state) {
-                Swal.fire({
-                  icon: 'success',
-                  title: response.data.message,
-                });
-                this.$router.push({name: 'treasure'});
-              } else {
-                Swal.fire({
-                  icon: 'error',
-                  title: response.data.message,
-                });
-              }
-            })
-            .catch(error => {
-              console.log(error);
-              Swal.fire({
-                icon: 'error',
-                title: '게시글 작성에 실패했습니다',
-              });
-            });
-      } else {
-        Swal.fire({
-          icon: 'error',
-          title: '내용을 입력해 주세요',
-        });
-      }
-
+      console.log(this.content);
+      console.log('regist', this.images);
+    //
+    //   //공백 제거
+    //   this.content = this.content.trim();
+    //
+    //   if(this.content !== null && this.content !== '') {
+    //
+    //     const formData = new FormData();
+    //     formData.append('content', this.content);
+    //     formData.append('title', this.title);
+    //     formData.append('id', sessionStorage.getItem('id'));
+    //
+    //     axios.post(this.$store.state.url + 'writing', formData, {
+    //           headers: {
+    //             'Content-Type': 'multipart/form-data',
+    //           },
+    //         })
+    //         .then(response => {
+    //           console.log(response);
+    //           if (response.data.state) {
+    //             Swal.fire({
+    //               icon: 'success',
+    //               title: response.data.message,
+    //             });
+    //             this.$router.push({name: 'treasure'});
+    //           } else {
+    //             Swal.fire({
+    //               icon: 'error',
+    //               title: response.data.message,
+    //             });
+    //           }
+    //         })
+    //         .catch(error => {
+    //           console.log(error);
+    //           Swal.fire({
+    //             icon: 'error',
+    //             title: '게시글 작성에 실패했습니다',
+    //           });
+    //         });
+    //   } else {
+    //     Swal.fire({
+    //       icon: 'error',
+    //       title: '내용을 입력해 주세요',
+    //     });
+    //   }
+    //
 
     },
     saveHandler() {
