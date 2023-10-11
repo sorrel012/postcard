@@ -9,7 +9,7 @@
 
     <form class="w-100 h-100 mh-100" @submit.prevent="registWriting">
 
-      <input type="text" placeholder="제목을 입력해 주세요" class="form-control mb-4" style="height: 40px" required>
+      <input type="text" placeholder="제목을 입력해 주세요" class="form-control mb-4" style="height: 40px" required v-model="title">
 
       <CkEditor @write="content=$event"/>
 
@@ -32,6 +32,7 @@ export default {
     return {
       isMember: false,
       content: '',
+      title: '',
     }
   },
   components: {
@@ -58,7 +59,17 @@ export default {
       this.content = this.content.trim();
 
       if(this.content !== null && this.content !== '') {
-        axios.post(this.$store.state.url + 'writing', this.content)
+
+        const formData = new FormData();
+        formData.append('content', this.content);
+        formData.append('title', this.title);
+        formData.append('id', sessionStorage.getItem('id'));
+
+        axios.post(this.$store.state.url + 'writing', formData, {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+            })
             .then(response => {
               console.log(response);
               if (response.data.state) {

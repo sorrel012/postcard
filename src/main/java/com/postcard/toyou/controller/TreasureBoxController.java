@@ -40,11 +40,20 @@ public class TreasureBoxController {
     }
 
     @PostMapping("/writing")
-    public ResponseEntity<ResultModel> registWriting(@RequestBody TreasureBoxModel writing) {
+    public ResponseEntity<ResultModel> registWriting(
+            @RequestParam("content") String content,
+            @RequestParam("title") String title,
+            @RequestParam("id") String id
+            ) {
 
-        System.out.println(writing);
+        TreasureBoxModel tbModel = new TreasureBoxModel();
+        tbModel.setTitle(title);
+        tbModel.setContent(content);
+        tbModel.setM_id(id);
 
-        return tbService.registWriting(writing);
+        System.out.println(tbModel);
+
+        return tbService.registWriting(tbModel);
     }
 
 
