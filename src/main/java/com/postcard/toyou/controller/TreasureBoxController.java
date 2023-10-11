@@ -1,21 +1,23 @@
 package com.postcard.toyou.controller;
 
 import com.postcard.toyou.model.ResultModel;
-import com.postcard.toyou.service.PostcardService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.postcard.toyou.model.TreasureBoxModel;
+import com.postcard.toyou.service.TreasureBoxService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.xml.transform.Result;
 import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
 public class TreasureBoxController {
 
-    @Autowired
-    private TreasureBoxService tbService;
+    private final TreasureBoxService tbService;
+
+    public TreasureBoxController(TreasureBoxService tbService) {
+        this.tbService = tbService;
+    }
 
     @PostMapping("/treasure-image")
     public ResponseEntity<?> uploadImage(@RequestParam("upload") MultipartFile file) {
@@ -38,7 +40,10 @@ public class TreasureBoxController {
     }
 
     @PostMapping("/writing")
-    public ResponseEntity<ResultModel> registWriting(@RequestBody TbWritingModel writing) {
+    public ResponseEntity<ResultModel> registWriting(@RequestBody TreasureBoxModel writing) {
+
+        System.out.println(writing);
+
         return tbService.registWriting(writing);
     }
 

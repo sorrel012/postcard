@@ -10,6 +10,7 @@
 import CustomEditor from '@/assets/ckeditor/build/ckeditor.js';
 
 export default {
+  name:'CKEditor',
   data() {
     return {
       editor: null,
@@ -31,6 +32,10 @@ export default {
           // 데이터 변경을 감지하여 변수를 업데이트합니다.
           editor.model.document.on('change:data', () => {
             this.initialData = editor.getData();
+
+            //상위 컴포넌트로 이벤트 발생
+            this.$emit('write', this.initialData);
+
           });
         })
         .catch(error => {
@@ -45,9 +50,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-.editor-container {
-  /* 필요한 스타일을 여기에 추가하세요. */
-}
-</style>
