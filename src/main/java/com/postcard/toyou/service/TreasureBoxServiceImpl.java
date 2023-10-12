@@ -30,8 +30,11 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
 
         ResultModel rModel = new ResultModel();
         
-        //이미지를 업로드 한 적 있는지 확인
-        if(!imageList.isEmpty()){
+        //게시글 저장
+        int writingResult = tbMapper.registWriting(writing);
+        
+        //본문 내용 저장 성공 && 이미지를 업로드 한 적 있는지 확인
+        if(writingResult>0 && !imageList.isEmpty()){
 
             //게시글 이미지 추출
             List<String> contentImages = new ArrayList<>();
@@ -50,11 +53,11 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
             //AWS S3에서 이미지 삭제
             s3Service.deleteImage(deletedImg);
 
-
         }
 
-//
-//        //사진 o
+        // 본문 저장
+
+
 //
 //        rModel.setState(true);
 //        rModel.setMessage("쪽지 목록을 불러왔습니다.");

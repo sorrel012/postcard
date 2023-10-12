@@ -50,7 +50,7 @@ create table TreasureBox (
 	
 	title	varchar(300)	not null,
 	content	varchar(5000)	not null,
-	regdate	timestamp	not null,
+	regdate	timestamp	default current_timestamp,
 	hit	int	default 0,
 	
 	m_id	varchar(100)	not null,
