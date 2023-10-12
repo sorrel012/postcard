@@ -3,6 +3,7 @@ package com.postcard.toyou.service;
 import com.postcard.toyou.dao.TreasureBoxMapper;
 import com.postcard.toyou.model.PostcardModel;
 import com.postcard.toyou.model.ResultModel;
+import com.postcard.toyou.model.TbPicModel;
 import com.postcard.toyou.model.TreasureBoxModel;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -30,7 +31,7 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
 
         ResultModel rModel = new ResultModel();
         
-        //게시글 저장
+        //게시글 DB 저장
         int writingResult = tbMapper.registWriting(writing);
         
         //본문 내용 저장 성공 && 이미지를 업로드 한 적 있는지 확인
@@ -52,6 +53,20 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
 
             //AWS S3에서 이미지 삭제
             s3Service.deleteImage(deletedImg);
+
+            //게시글 이미지 DB 저장
+            int picResult = 0;
+            for(String url : contentImages) {
+                url = s3Service.decodeUrl(url);
+                String imgName = s3Service.extractFileName(url).split("@")[1];
+
+                TbPicModel tbpModel = new TbPicModel();
+                tbpModel.setB_seq(writingResult);
+                tbpModel.setPic_url(url);
+                tbpModel.setPic_name(imgName);
+
+                picResult = tbMapper.registPic(tbpModel);
+            }
 
         }
 

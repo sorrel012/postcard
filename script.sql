@@ -44,7 +44,6 @@ create table postcard (
 );
 
 
-
 create table TreasureBox (
 	b_seq	serial primary key,
 	
@@ -107,6 +106,10 @@ create table TbcReply (
 select * from member;
 select * from paper;
 select * from postcard;
+select * from treasurebox;
+select * from tbpic;
+
+
 
 ALTER TABLE public.paper ADD bgcolor VARCHAR(50) DEFAULT '#FFFFFF';
 ALTER TABLE public.paper ADD regdate timestamp not null default current_timestamp;

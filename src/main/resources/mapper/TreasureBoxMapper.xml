@@ -3,10 +3,18 @@
 
 <mapper namespace="com.postcard.toyou.dao.TreasureBoxMapper">
 
-    <insert id="registWriting" parameterType="com.postcard.toyou.model.TreasureBoxModel">
+    <select id="registWriting" parameterType="com.postcard.toyou.model.TreasureBoxModel" resultType="java.lang.Integer">
         <![CDATA[
             insert into treasurebox (title, content, m_id)
-                values (#{title}, #{content}, #{m_id})
+            values (#{title}, #{content}, #{m_id})
+            returning b_seq
+        ]]>
+    </select>
+
+    <insert id="registPic" parameterType="com.postcard.toyou.model.TbPicModel">
+        <![CDATA[
+            insert into tbpic (pic_url, pic_name, b_seq)
+                values (#{pic_url}, #{pic_name}, #{b_seq})
         ]]>
     </insert>
 
