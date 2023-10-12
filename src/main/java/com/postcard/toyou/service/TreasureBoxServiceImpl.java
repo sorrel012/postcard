@@ -11,6 +11,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
     }
 
     @Override
+    @Transactional
     public ResponseEntity<ResultModel> registWriting(TreasureBoxModel writing, List<String> imageList) {
 
         ResultModel rModel = new ResultModel();
@@ -66,6 +68,10 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
                 tbpModel.setPic_name(imgName);
 
                 picResult = tbMapper.registPic(tbpModel);
+                if(picResult != 1) {
+                    throw new RuntimeException("Image saving failed");
+                }
+
             }
 
         }
