@@ -25,11 +25,7 @@ class MyUploadAdapter {
 
       axios.post(this.uploadUrl, data)
           .then(response => {
-            this.component.images.push({
-              originName: response.data.originName,
-              fileName: response.data.fileName,
-              url: response.data.url,
-            });
+            this.component.images.push(response.data.url);
             resolve({
               default: response.data.url
             });
