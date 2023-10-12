@@ -55,53 +55,53 @@ export default {
   },
   methods: {
     registWriting() {
-      console.log(this.content);
-      console.log('regist', this.images);
-    //
-    //   //공백 제거
-    //   this.content = this.content.trim();
-    //
-    //   if(this.content !== null && this.content !== '') {
-    //
-    //     const formData = new FormData();
-    //     formData.append('content', this.content);
-    //     formData.append('title', this.title);
-    //     formData.append('id', sessionStorage.getItem('id'));
-    //
-    //     axios.post(this.$store.state.url + 'writing', formData, {
-    //           headers: {
-    //             'Content-Type': 'multipart/form-data',
-    //           },
-    //         })
-    //         .then(response => {
-    //           console.log(response);
-    //           if (response.data.state) {
-    //             Swal.fire({
-    //               icon: 'success',
-    //               title: response.data.message,
-    //             });
-    //             this.$router.push({name: 'treasure'});
-    //           } else {
-    //             Swal.fire({
-    //               icon: 'error',
-    //               title: response.data.message,
-    //             });
-    //           }
-    //         })
-    //         .catch(error => {
-    //           console.log(error);
-    //           Swal.fire({
-    //             icon: 'error',
-    //             title: '게시글 작성에 실패했습니다',
-    //           });
-    //         });
-    //   } else {
-    //     Swal.fire({
-    //       icon: 'error',
-    //       title: '내용을 입력해 주세요',
-    //     });
-    //   }
-    //
+
+
+      //공백 제거
+      this.content = this.content.trim();
+
+      if(this.content !== null && this.content !== '') {
+
+        const formData = new FormData();
+        formData.append('content', this.content);
+        formData.append('title', this.title);
+        formData.append('id', sessionStorage.getItem('id'));
+        formData.append('images', JSON.stringify(this.images));
+
+        axios.post(this.$store.state.url + 'writing', formData, {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+            })
+            .then(response => {
+              console.log(response);
+              if (response.data.state) {
+                Swal.fire({
+                  icon: 'success',
+                  title: response.data.message,
+                });
+                this.$router.push({name: 'treasure'});
+              } else {
+                Swal.fire({
+                  icon: 'error',
+                  title: response.data.message,
+                });
+              }
+            })
+            .catch(error => {
+              console.log(error);
+              Swal.fire({
+                icon: 'error',
+                title: '게시글 작성에 실패했습니다',
+              });
+            });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: '내용을 입력해 주세요',
+        });
+      }
+
 
     },
     saveHandler() {
