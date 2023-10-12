@@ -1,5 +1,6 @@
 package com.postcard.toyou.service;
 
+import com.postcard.toyou.dao.TreasureBoxMapper;
 import com.postcard.toyou.model.PostcardModel;
 import com.postcard.toyou.model.ResultModel;
 import com.postcard.toyou.model.TreasureBoxModel;
@@ -11,24 +12,24 @@ import java.util.List;
 @Service
 public class TreasureBoxServiceImpl implements TreasureBoxService {
 
-    @Override
-    public ResponseEntity<ResultModel> registWriting(TreasureBoxModel writing) {
+    private final TreasureBoxMapper tbMapper;
 
-//        ResultModel rModel = new ResultModel();
+    public TreasureBoxServiceImpl(TreasureBoxMapper tbMapper) {
+        this.tbMapper = tbMapper;
+    }
+
+    @Override
+    public ResponseEntity<ResultModel> registWriting(TreasureBoxModel writing, List<String> imageList) {
+
+        ResultModel rModel = new ResultModel();
 //
-//        List<PostcardModel> pcList = pcMapper.getList(pccSeq);
-//        for(PostcardModel pc : pcList) {
-//            String regdate = pc.getRegDate();
-//            regdate = regdate.split(" ")[0];
-//            pc.setRegDate(regdate);
-//        }
+//        //사진 o
 //
 //        rModel.setState(true);
 //        rModel.setMessage("쪽지 목록을 불러왔습니다.");
 //        rModel.setResult(pcList);
 
-        //return ResponseEntity.ok(rModel);
-        return null;
+        return ResponseEntity.ok(rModel);
     }
 
 }
