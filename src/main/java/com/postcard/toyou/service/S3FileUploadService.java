@@ -8,6 +8,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +29,27 @@ public class S3FileUploadService {
 
         amazonS3.putObject(bucket, newFileName, multipartFile.getInputStream(), metadata);
         return amazonS3.getUrl(bucket, newFileName).toString();
+    }
+
+    public void deleteImage(List<String> deletedImg)  {
+
+        for (String img : deletedImg) {
+
+            String decodedUrl = "";
+            
+            //URL 디코딩
+            try {
+                decodedUrl = URLDecoder.decode(img, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+            String awsUrl = "https://postcard17.s3.ap-northeast-2.amazonaws.com/";
+            img = decodedUrl.substring(awsUrl.length());
+
+            amazonS3.deleteObject(bucket, img);
+        }
+
     }
 
 }
