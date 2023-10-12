@@ -68,6 +68,14 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
                 picResult = tbMapper.registPic(tbpModel);
             }
 
+            if (picResult == 1) {
+                rModel.setState(true);
+                rModel.setMessage("게시글이 작성되었습니다.");
+            } else {
+                rModel.setState(false);
+                rModel.setMessage("게시글 작성에 실패하였습니다.");
+            }
+
         }
 
         // 본문 저장
