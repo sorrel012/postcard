@@ -4,10 +4,14 @@ import com.postcard.toyou.model.ResultModel;
 import com.postcard.toyou.model.TreasureBoxModel;
 import com.postcard.toyou.service.TreasureBoxService;
 import com.postcard.toyou.service.S3FileUploadService;
+import org.json.JSONArray;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:8080")
@@ -29,11 +33,8 @@ public class TreasureBoxController {
             // 원본 파일명
             String originName = file.getOriginalFilename();
 
-            // 확장자
-            String fileExtension = StringUtils.getFilenameExtension(file.getOriginalFilename());
-
             // 저장될 새 파일명 생성
-            String newFileName = java.util.UUID.randomUUID().toString() + "." + fileExtension;
+            String newFileName = java.util.UUID.randomUUID().toString() + "@" + originName;
 
             //aws s3에 저장 후 이미지 url 반환 받기
             String imageUrl = s3Service.saveFile(file, newFileName);
@@ -57,7 +58,8 @@ public class TreasureBoxController {
     public ResponseEntity<ResultModel> registWriting(
             @RequestParam("content") String content,
             @RequestParam("title") String title,
-            @RequestParam("id") String id
+            @RequestParam("id") String id,
+            @RequestParam("images") String images
             ) {
 
         TreasureBoxModel tbModel = new TreasureBoxModel();
@@ -65,8 +67,17 @@ public class TreasureBoxController {
         tbModel.setContent(content);
         tbModel.setM_id(id);
 
-        return tbService.registWriting(tbModel);
-    }
+        JSONArray jsonArray = new JSONArray(images);
+        List<String> imageList = new ArrayList<>();
 
+        if(jsonArray.length() > 0) {
+            for(int i = 0; i < jsonArray.length(); i++){
+                String imageUrl = jsonArray.getString(i);
+                imageList.add(imageUrl);
+            }
+        }
+
+        return tbService.registWriting(tbModel, imageList);
+    }
 
 }
