@@ -24,27 +24,28 @@
     </div>
 
     <div>
-      <table class="container-lg table table-hover mt-1">
+      <table class="container-lg table table-hover mt-1 truncLayout">
         <thead class="table-light">
         <tr class="text-center">
-          <th class="col-7 text-wrap">제목</th>
-          <th class="col-2 text-wrap">작성자</th>
-          <th class="col-2 text-wrap">작성일</th>
+          <th class="col-1 text-wrap">번호</th>
+          <th class="col-6 text-wrap">제목</th>
+          <th class="col-1 text-wrap">작성자</th>
+          <th class="col-1 text-wrap">작성일</th>
+          <th class="col-1 text-wrap">댓글수</th>
           <th class="col-1 text-wrap">조회수</th>
         </tr>
         </thead>
         <tbody>
-        <tr class="text-center align-middle">
-          <td class="col-7 text-wrap">
-            <span>892827</span>
-            <span>광활한 우주 속 티끌, 인간을 생각한다:베르크손의 「창조적 진화」 읽기</span>
-            <span>사진</span>
-            <span>[1]</span>
-          </td>
-          <td class="col-2 text-wrap">스위트자몽</td>
-          <td class="col-2 text-wrap">2023.09.13</td>
-          <td class="col-1 text-wrap">50</td>
-        </tr>
+          <tr class="text-center align-middle">
+            <td class="col-1 text-truncate">892827</td>
+            <td class="col-6 text-truncate">
+                광활한 우주 속 티끌, 인간을 생각한다:베르크손의 「창조적 진화」 읽기 광활한 우주 속 티끌, 인간을 생각한다:베르크손의 「창조적 진화」 읽기활한 우주 속 티끌, 인간을 생각한다:베르크손의 「창조적 진화」 읽기 광활한 우주 속 티끌, 인간을 생각한다:베르크손의 「창조적 진화」 읽기활한 우주 속 티끌, 인간을 생각한다:베르크손의 「창조적 진화」 읽기 광활한 우주 속 티끌, 인간을 생각한다:베르크손의 「창조적 진화」 읽기
+            </td>
+            <td class="col-1 text-truncate">스위트자몽</td>
+            <td class="col-1 text-truncate">2023.09.13</td>
+            <td class="col-1 text-truncate">0</td>
+            <td class="col-1 text-truncate">50</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -125,6 +126,8 @@ export default {
   }
 }
 </script>
-
 <style>
+.truncLayout {
+  table-layout: fixed;
+}
 </style>
