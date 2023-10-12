@@ -82,8 +82,6 @@ public class TreasureBoxController {
 
     @GetMapping("/writinglist")
     public ResponseEntity<ResultModel> getWritingList(@RequestParam int selectedOption) {
-        System.out.println("들어왔다");
-        System.out.println(selectedOption);
         return tbService.getWritingList(selectedOption);
     }
 
