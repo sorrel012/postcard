@@ -35,6 +35,7 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
         int writingResult = tbMapper.registWriting(writing);
         
         //본문 내용 저장 성공 && 이미지를 업로드 한 적 있는지 확인
+        int picResult = 1;
         if(writingResult>0 && !imageList.isEmpty()){
 
             //게시글 이미지 추출
@@ -55,7 +56,6 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
             s3Service.deleteImage(deletedImg);
 
             //게시글 이미지 DB 저장
-            int picResult = 0;
             for(String url : contentImages) {
                 url = s3Service.decodeUrl(url);
                 String imgName = s3Service.extractFileName(url).split("@")[1];
@@ -68,23 +68,15 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
                 picResult = tbMapper.registPic(tbpModel);
             }
 
-            if (picResult == 1) {
-                rModel.setState(true);
-                rModel.setMessage("게시글이 작성되었습니다.");
-            } else {
-                rModel.setState(false);
-                rModel.setMessage("게시글 작성에 실패하였습니다.");
-            }
-
         }
 
-        // 본문 저장
-
-
-//
-//        rModel.setState(true);
-//        rModel.setMessage("쪽지 목록을 불러왔습니다.");
-//        rModel.setResult(pcList);
+        if (writingResult>0 && picResult==1) {
+            rModel.setState(true);
+            rModel.setMessage("게시글이 작성되었습니다.");
+        } else {
+            rModel.setState(false);
+            rModel.setMessage("게시글 작성에 실패하였습니다.");
+        }
 
         return ResponseEntity.ok(rModel);
     }

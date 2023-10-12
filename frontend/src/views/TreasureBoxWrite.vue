@@ -80,7 +80,7 @@ export default {
                   icon: 'success',
                   title: response.data.message,
                 });
-                this.$router.push({name: 'treasure'});
+                this.$router.push({name: 'treasure-box'});
               } else {
                 Swal.fire({
                   icon: 'error',
