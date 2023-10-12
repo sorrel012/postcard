@@ -51,7 +51,7 @@ create table TreasureBox (
 	title	varchar(300)	not null,
 	content	varchar(5000)	not null,
 	regdate	timestamp	not null,
-	hit	int	not null,
+	hit	int	default 0,
 	
 	m_id	varchar(100)	not null,
 	constraint fk_m_id foreign key(m_id) references member(m_id)
