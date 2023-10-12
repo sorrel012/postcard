@@ -1,10 +1,7 @@
 package com.postcard.toyou.service;
 
 import com.postcard.toyou.dao.TreasureBoxMapper;
-import com.postcard.toyou.model.PostcardModel;
-import com.postcard.toyou.model.ResultModel;
-import com.postcard.toyou.model.TbPicModel;
-import com.postcard.toyou.model.TreasureBoxModel;
+import com.postcard.toyou.model.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -85,6 +82,26 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
         }
 
         return ResponseEntity.ok(rModel);
+    }
+
+    @Override
+    public ResponseEntity<ResultModel> getWritingList(int selectedOption) {
+
+        ResultModel rModel = new ResultModel();
+
+        List<TreasureBoxModel> wList = tbMapper.getWritingList(selectedOption);
+        for(TreasureBoxModel tb : wList) {
+            String regdate = tb.getRegdate();
+            regdate = regdate.split(" ")[0];
+            tb.setRegdate(regdate);
+        }
+
+        rModel.setState(true);
+        rModel.setMessage("게시글 목록을 불러왔습니다.");
+        rModel.setResult(wList);
+
+        return ResponseEntity.ok(rModel);
+
     }
 
 }

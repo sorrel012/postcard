@@ -9,5 +9,6 @@ import java.util.List;
 public interface TreasureBoxService {
 
     ResponseEntity<ResultModel> registWriting(TreasureBoxModel writing, List<String> imageList);
+    ResponseEntity<ResultModel> getWritingList(int selectedOption);
 
 }

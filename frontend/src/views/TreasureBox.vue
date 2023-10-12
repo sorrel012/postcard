@@ -15,7 +15,7 @@
       <div class="d-flex justify-content-between align-items-end">
         <p class="mb-0">총 <span class="fw-bold">3</span>건</p>
         <div>
-          <select class="form-select w-100" id="sortList" aria-label="Default select example">
+          <select class="form-select w-100" v-model="selectedOption" @change="getWritings">
             <option value="1">최신순</option>
             <option value="2">오래된순</option>
           </select>
@@ -79,14 +79,17 @@
 
 <script>
 import Swal from "sweetalert2";
+import axios from "axios";
 export default {
   name:'TreasureBox',
   data() {
     return {
       isMember: false,
+      selectedOption: 1,
     }
   },
   async created() {
+
     const id = sessionStorage.getItem('id');
     if(id == null || id == '') {
       await Swal.fire({
@@ -98,11 +101,27 @@ export default {
     } else {
       this.isMember = true;
     }
+
+    //게시글 목록 받아오기
+    this.getWritings(this.selectedOption);
+
   },
   methods: {
     write() {
       location.href='/treasure-write'
-    }
+    },
+    //게시글 목록 받아오기
+    getWritings() {
+      axios.get(this.$store.state.url + 'writinglist', {params: {selectedOption: this.selectedOption}})
+          .then(response => {
+            console.log(response);
+
+
+          })
+          .catch(error => {
+            console.log(error);
+          })
+    },
   }
 }
 </script>

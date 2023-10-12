@@ -18,4 +18,16 @@
         ]]>
     </insert>
 
+    <select id="getWritingList" parameterType="java.lang.Integer">
+        <![CDATA[
+            select * from treasurebox
+        ]]>
+        <if test="selectedOption == 1">
+            order by regdate desc
+        </if>
+        <if test="selectedOption == 2">
+            order by regdate asc
+        </if>
+    </select>
+
 </mapper>
