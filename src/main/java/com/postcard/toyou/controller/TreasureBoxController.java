@@ -1,5 +1,6 @@
 package com.postcard.toyou.controller;
 
+import com.postcard.toyou.config.TagFilterUtil;
 import com.postcard.toyou.model.ResultModel;
 import com.postcard.toyou.model.TreasureBoxModel;
 import com.postcard.toyou.service.TreasureBoxService;
@@ -61,6 +62,9 @@ public class TreasureBoxController {
             @RequestParam("id") String id,
             @RequestParam("images") String images
             ) {
+        
+        // 태그 필터링
+        content = TagFilterUtil.filter(content);
 
         TreasureBoxModel tbModel = new TreasureBoxModel();
         tbModel.setTitle(title);
