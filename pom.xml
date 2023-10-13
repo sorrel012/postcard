@@ -78,6 +78,13 @@
 			<artifactId>jsoup</artifactId>
 			<version>1.16.1</version>
 		</dependency>
+		<!--OWASP HTML Sanitizer-->
+		<dependency>
+			<groupId>com.googlecode.owasp-java-html-sanitizer</groupId>
+			<artifactId>owasp-java-html-sanitizer</artifactId>
+			<version>20211018.2</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
