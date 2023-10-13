@@ -1,4 +1,4 @@
-package com.postcard.toyou;
+package com.postcard.toyou.config;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
