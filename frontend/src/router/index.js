@@ -63,6 +63,11 @@ const routes = [
     path: '/treasure-write',
     name: 'treasure-write',
     component: () => import('@/views/TreasureBoxWrite.vue')
+  },
+  {
+    path: '/treasure-detail',
+    name: 'treasure-detail',
+    component: () => import('@/views/TbDetail.vue')
   }
 ]
 

@@ -36,15 +36,13 @@
         </tr>
         </thead>
         <tbody>
-          <tr class="text-center align-middle">
-            <td class="col-1 text-truncate">892827</td>
-            <td class="col-6 text-truncate">
-                광활한 우주 속 티끌, 인간을 생각한다:베르크손의 「창조적 진화」 읽기 광활한 우주 속 티끌, 인간을 생각한다:베르크손의 「창조적 진화」 읽기활한 우주 속 티끌, 인간을 생각한다:베르크손의 「창조적 진화」 읽기 광활한 우주 속 티끌, 인간을 생각한다:베르크손의 「창조적 진화」 읽기활한 우주 속 티끌, 인간을 생각한다:베르크손의 「창조적 진화」 읽기 광활한 우주 속 티끌, 인간을 생각한다:베르크손의 「창조적 진화」 읽기
-            </td>
-            <td class="col-1 text-truncate">스위트자몽</td>
-            <td class="col-1 text-truncate">2023.09.13</td>
-            <td class="col-1 text-truncate">0</td>
-            <td class="col-1 text-truncate">50</td>
+          <tr class="text-center align-middle" v-for="writing in writingList" :key="writing.b_seq" @click="writingDetail(writing)">
+            <td class="col-1 text-truncate">{{ writing.b_seq }}</td>
+            <td class="col-6 text-truncate hover">{{ writing.title }}</td>
+            <td class="col-1 text-truncate">{{ writing.m_id }}</td>
+            <td class="col-1 text-truncate">{{ writing.regdate }}</td>
+            <td class="col-1 text-truncate">1</td>
+            <td class="col-1 text-truncate">{{ writing.hit }}</td>
           </tr>
         </tbody>
       </table>
@@ -87,10 +85,10 @@ export default {
     return {
       isMember: false,
       selectedOption: 1,
+      writingList: []
     }
   },
   async created() {
-
     const id = sessionStorage.getItem('id');
     if(id == null || id == '') {
       await Swal.fire({
@@ -105,7 +103,6 @@ export default {
 
     //게시글 목록 받아오기
     this.getWritings(this.selectedOption);
-
   },
   methods: {
     write() {
@@ -115,19 +112,25 @@ export default {
     getWritings() {
       axios.get(this.$store.state.url + 'writinglist', {params: {selectedOption: this.selectedOption}})
           .then(response => {
-            console.log(response);
-
-
+            this.writingList = response.data.result
           })
           .catch(error => {
             console.log(error);
           })
     },
+    //상세페이지로 이동
+    writingDetail(writing) {
+      this.$store.commit('setWritingDetail', writing)
+      this.$router.push({ name: 'treasure-detail' })
+    }
   }
 }
 </script>
 <style>
 .truncLayout {
   table-layout: fixed;
+}
+.hover {
+  cursor: pointer;
 }
 </style>

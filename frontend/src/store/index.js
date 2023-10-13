@@ -12,6 +12,14 @@ export default new Vuex.Store({
       snsUser: {
         id: '',
         email: '',
+      },
+      writingDetail: {
+        b_seq: 0,
+        m_id: '',
+        title: '',
+        regdate: '',
+        hit: 0,
+        comment: 0
       }
     }
   },
@@ -27,6 +35,9 @@ export default new Vuex.Store({
     },
     setSnsUserEmail(state, value) {
       state.snsUser.email = value;
+    },
+    setWritingDetail(state, value) {
+      state.writingDetail = value;
     }
   },
 })
