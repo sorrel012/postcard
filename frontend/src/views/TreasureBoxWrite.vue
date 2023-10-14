@@ -23,7 +23,7 @@
 
 <script>
 import Swal from "sweetalert2";
-import CkEditor from "@/components/CkEditor.vue";
+import CkEditor from "@/components/CKEditor.vue";
 import axios from "axios";
 
 export default {
