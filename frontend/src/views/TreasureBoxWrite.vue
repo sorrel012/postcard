@@ -101,12 +101,7 @@ export default {
           title: '내용을 입력해 주세요',
         });
       }
-
-
-    },
-    saveHandler() {
-      // 서버 저장 요청 로직
-    },
+    }
   },
 }
 </script>
