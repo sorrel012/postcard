@@ -2,7 +2,6 @@ package com.postcard.toyou.config;
 
 import org.owasp.html.HtmlPolicyBuilder;
 import org.owasp.html.PolicyFactory;
-import org.owasp.html.Sanitizers;
 
 public class TagFilterUtil {
     private static final PolicyFactory POLICY = new HtmlPolicyBuilder()
