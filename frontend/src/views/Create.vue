@@ -41,7 +41,7 @@
         </div>
 
         <div class="container-fluid p-0 mt-5">
-          <button type="submit" class="btn btn-primary mt-5 w-100" id="btnCreate">만들기</button>
+          <button type="submit" class="btn btn-primary mt-5 w-100 mb-4" id="btnCreate">만들기</button>
         </div>
 
       </form>
