@@ -18,6 +18,7 @@ public class MemberController {
 
     @PostMapping("/login")
     public ResponseEntity<ResultModel> login(@RequestBody MemberModel mModel) {
+        System.out.println(mModel);
         return mService.login(mModel);
     }
 
@@ -70,18 +71,18 @@ public class MemberController {
         return mService.updatePw(mModel);
     }
 
-    @DeleteMapping("deleteaccount")
+    @DeleteMapping("/deleteaccount")
     public ResponseEntity<Object> deleteAccount(@RequestParam String id) {
         return mService.deleteAccount(id);
     }
 
-    @PostMapping("disconnectKakao")
+    @PostMapping("/disconnectKakao")
     public ResponseEntity<Object> disconnectKakao(HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");
         return mService.disconnectKakao(authHeader);
     }
 
-    @PostMapping("disconnectNaver")
+    @PostMapping("/disconnectNaver")
     public ResponseEntity<Object> disconnectNaver(@RequestBody String params) {
         return mService.disconnectNaver(params);
     }
