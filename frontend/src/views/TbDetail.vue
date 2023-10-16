@@ -10,8 +10,9 @@ export default {
       writingDetail: {},
     }
   },
-  mounted() {
-    console.log();
+  created() {
+    this.writingDetail = this.$store.state.writingDetail;
+    console.log('writing: ', this.writingDetail);
   }
 }
 </script>
