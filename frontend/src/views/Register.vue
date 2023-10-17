@@ -15,12 +15,12 @@
             <div class="col-10">
               <div class="d-flex flex-column">
                 <div class="form-floating btn-group w-100 mb-2">
-                  <input type="text" class="form-control" :readonly="!isDupId" placeholder="" v-model="userinfo.id" ref="idRef" required>
+                  <input type="text" class="form-control" :readonly="!dupData.id.isDup" placeholder="" v-model="userinfo.id" ref="idRef" required>
                   <label for="floatingInput">6~12자로 입력해 주세요</label>
-                  <input type="button" class="btn btn-primary" :value="idCheckBtnMsg" @click="dupOrMod('id')">
+                  <input type="button" class="btn btn-primary" :value="dupData.id.checkBtnMsg" @click="dupOrMod('id')">
                 </div>
-                <div v-if="isCheckIdDup" class="form-floating btn-group w-50 flex-start ps-2" :class="{'c-red':isDupId, 'c-blue':!isDupId}">
-                  {{idDupMsg}}
+                <div v-if="dupData.id.isCheckDup" class="form-floating btn-group w-50 flex-start ps-2" :class="{'c-red':dupData.id.isDup, 'c-blue':!dupData.id.isDup}">
+                  {{dupData.id.dupMsg}}
                 </div>
               </div>
             </div>
@@ -56,12 +56,12 @@
             <div class="col-10">
               <div class="d-flex flex-column">
                 <div class="form-floating btn-group w-100 mb-2">
-                  <input type="text" class="form-control" :readonly="!isDupName" placeholder="" v-model="userinfo.name" ref="nameRef" required>
+                  <input type="text" class="form-control" :readonly="!dupData.name.isDup" placeholder="" v-model="userinfo.name" ref="nameRef" required>
                   <label for="floatingInput">이름은 10자까지 입력할 수 있습니다</label>
-                  <input type="button" class="btn btn-primary" :value="nameCheckBtnMsg" @click="dupOrMod('name')">
+                  <input type="button" class="btn btn-primary" :value="dupData.name.checkBtnMsg" @click="dupOrMod('name')">
                 </div>
-                <div v-if="isCheckNameDup" class="form-floating btn-group w-50 flex-start ps-2" :class="{'c-red':isDupName, 'c-blue':!isDupName}">
-                  {{nameDupMsg}}
+                <div v-if="dupData.name.isCheckDup" class="form-floating btn-group w-50 flex-start ps-2" :class="{'c-red':dupData.name.isDup, 'c-blue':!dupData.name.isDup}">
+                  {{dupData.name.dupMsg}}
                 </div>
               </div>
             </div>
@@ -159,15 +159,26 @@ export default {
       wantAuth: false,                //본인인증 버튼 클릭 여부
       isAuth: false,                  //본인인증 확인 버튼 클릭 여부
       isSuccess: false,               //본인인증 성공 여부
-      isCheckIdDup: false,            //아이디 중복체크 버튼 클릭 여부
-      isDupId: true,                  //아이디 중복 여부
-      idCheckBtnMsg: '중복 확인',      //아이디 중복확인 버튼 문구
-      isCheckNameDup: false,          //이름 중복확인 버튼 클릭 여부
-      isDupName: true,                //이름 중복 여부
-      nameCheckBtnMsg: '중복 확인',    //이름 중복확인 버튼 문구
-
-      idDupMsg: '',                   //아이디 중복확인 결과
-      nameDupMsg: '',                 //이름 중복확인 결과
+      dupData: {
+        id: {
+          isCheckDup: false,        //중복 확인 클릭 여부
+          isDup: true,              //중복 여부
+          checkBtnMsg: '중복 확인',
+          dupMsg: '',
+          minLength: 6,
+          maxLength: 12,
+          apiUrl: 'dup-id',
+        },
+        name: {
+          isCheckDup: false,
+          isDup: true,
+          checkBtnMsg: '중복 확인',
+          dupMsg: '',
+          minLength: 2,
+          maxLength: 10,
+          apiUrl: 'dup-name',
+        }
+      },
       matchMsg: '',                   //비밀번호 확인 일치 여부 안내 문구
       correctPw: '',
       isCorrect: false,
@@ -185,94 +196,52 @@ export default {
     }
   },
   methods: {
-    //아이디 중복확인을 눌렀을 때 실행
     dupOrMod(dupType) {
-      if(dupType === 'id') {
-        if(!this.isDupId) {
-          this.isCheckIdDup = false;
-          this.isDupId = true;
-          this.userinfo.id = '';
-          this.idCheckBtnMsg = '중복 확인';
-        } else {
-          this.checkDup('id');
-        }
-      } else if(dupType === 'name') {
-        if(!this.isDupName) {
-          this.isCheckNameDup = false;
-          this.isDupName = true;
-          this.userinfo.name = '';
-          this.nameCheckBtnMsg = '중복 확인';
-        } else {
-          this.checkDup('name');
-        }
+      let data = this.dupData[dupType];
+
+      if (!data.isDup) {
+        data.isCheckDup = false;
+        data.isDup = true;
+        this.userinfo[dupType] = '';
+        data.checkBtnMsg = '중복 확인';
+
+      } else {
+        this.checkDup(dupType);
       }
     },
     checkDup(dupType) {
-      if(dupType === 'id') {
+      let data = this.dupData[dupType];
+      let typeNm = dupType === 'id' ? '아이디를' : '이름을';
 
-        if(this.userinfo.id.length < 6) {
-          Swal.fire({
-            title: '아이디를 6자 이상으로 입력해 주세요',
-            icon: 'error'
-          });
-          return
-        }
-
-        if(this.userinfo.id.length > 12) {
-          Swal.fire({
-            title: '아이디를 12자 이하로 입력해 주세요',
-            icon: 'error'
-          });
-          return
-        }
-
-        this.isCheckIdDup = true;
-        axios.post(this.$store.state.url + 'dup-id', this.userinfo)
-            .then(response => {
-              this.idDupMsg = response.data.message;
-
-              if(response.data.state) {
-                this.isDupId = false;
-                this.idCheckBtnMsg = '수정하기'
-              }
-
-            })
-            .catch(error => {
-              console.log(error);
-            })
-      } else if(dupType === 'name') {
-
-        if(this.userinfo.name.length < 2) {
-          Swal.fire({
-            title: '이름을 2자 이상으로 입력해 주세요',
-            icon: 'error'
-          });
-          return
-        }
-
-        if(this.userinfo.name.length > 10) {
-          Swal.fire({
-            title: '이름을 10자 이하로 입력해 주세요',
-            icon: 'error'
-          });
-          return
-        }
-
-        this.isCheckNameDup = true;
-        axios.post(this.$store.state.url + 'dup-name', this.userinfo)
-            .then(response => {
-              this.nameDupMsg = response.data.message;
-
-              if(response.data.state) {
-                this.isDupName = false;
-                this.nameCheckBtnMsg = '수정하기'
-              }
-
-            })
-            .catch(error => {
-              console.log(error);
-            })
+      if (this.userinfo[dupType].length < data.minLength) {
+        Swal.fire({
+          title: `${typeNm} ${data.minLength}자 이상으로 입력해 주세요`,
+          icon: 'error'
+        });
+        return;
       }
+
+      if (this.userinfo[dupType].length > data.maxLength) {
+        Swal.fire({
+          title: `${typeNm} ${data.maxLength}자 이하로 입력해 주세요`,
+          icon: 'error'
+        });
+        return;
+      }
+
+      data.isCheckDup = true;
+      axios.post(this.$store.state.url + data.apiUrl, this.userinfo)
+          .then(response => {
+            data.dupMsg = response.data.message;
+
+            if(response.data.state) {
+              data.isDup = false;
+              data.checkBtnMsg = '수정하기';
+            }
+          })
+          .catch(error => {
+            console.log(error);
+          });
     },
     requireAuth() {
       if(this.userinfo.tel.length != 11) {
@@ -358,7 +327,7 @@ export default {
       }
 
       //아이디 중복확인 완료 검사
-      if(this.isDupId) {
+      if(this.dupData.id.isDup) {
         this.$refs.idRef.focus();
         Swal.fire({
           title: '아이디 중복 검사를 완료해 주세요',
@@ -368,7 +337,7 @@ export default {
       }
 
       //이름 중복확인 완료 검사
-      if(this.isDupName) {
+      if(this.dupData.name.isDup) {
         this.$refs.nameRef.focus();
         Swal.fire({
           title: '이름(닉네임) 중복 검사를 완료해 주세요',
