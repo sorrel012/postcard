@@ -239,11 +239,34 @@ public class MemberServiceImpl implements MemberService {
         List<String> dupId = this.mMapper.selectDupId(id);
         if(dupId.isEmpty()) {
             rModel.setState(true);
-            rModel.setMessage(id + " 는 사용할 수 있는 아이디입니다.");
+            rModel.setMessage(id + " 은/는 사용할 수 있는 아이디입니다.");
             rModel.setResult(dupId);
         } else {
             rModel.setState(false);
-            rModel.setMessage(id + " 는 사용할 수 없는 아이디입니다.");
+            rModel.setMessage(id + " 은/는 사용할 수 없는 아이디입니다.");
+            rModel.setResult(dupId);
+        }
+
+        return ResponseEntity.ok(rModel);
+    }
+
+    @Override
+    public ResponseEntity<Object> selectDupName(String name) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: selectDupName ::: String : {}",  name);
+        }
+
+        ResultModel rModel = new ResultModel();
+
+        List<String> dupId = this.mMapper.selectDupName(name);
+        if(dupId.isEmpty()) {
+            rModel.setState(true);
+            rModel.setMessage(name + " 은/는 사용할 수 있는 이름(닉네임)입니다.");
+            rModel.setResult(dupId);
+        } else {
+            rModel.setState(false);
+            rModel.setMessage(name + " 은/는 이미 사용 중인 이름(닉네임)입니다.");
             rModel.setResult(dupId);
         }
 

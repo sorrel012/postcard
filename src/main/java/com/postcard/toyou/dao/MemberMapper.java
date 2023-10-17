@@ -13,6 +13,7 @@ public interface MemberMapper {
     public MemberModel login(MemberModel mModel);
     public List<String> selectRejoin(String id);
     public List<String> selectDupId(String id);
+    public List<String> selectDupName(String name);
     public int snsRegister(MemberModel mModel);
     public int updateProfile(MemberModel mModel);
     public int updatePw(MemberModel mModel);

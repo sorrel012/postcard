@@ -28,7 +28,7 @@ public class MemberController {
         return mService.login(mModel);
     }
 
-    @PostMapping("snslogin")
+    @PostMapping("/snslogin")
     public ResponseEntity<ResultModel> snsLogin(@RequestBody String params, HttpServletRequest request) {
         String btnType = request.getHeader("btnType");
 
@@ -39,7 +39,7 @@ public class MemberController {
         return mService.snsLogin(btnType, params);
     }
 
-    @GetMapping("snslogin")
+    @GetMapping("/snslogin")
     public ResponseEntity<ResultModel> getSnsInfo(HttpServletRequest request) {
         String btnType = request.getHeader("btnType");
         String authHeader = request.getHeader("Authorization");
@@ -47,7 +47,7 @@ public class MemberController {
         return mService.getSnsInfo(btnType, authHeader, contentHeader);
     }
 
-    @PostMapping("snslogout")
+    @PostMapping("/snslogout")
     public ResponseEntity<ResultModel> naverLogout(@RequestBody String params) {
 
         if ( log.isDebugEnabled() ) {
@@ -87,7 +87,7 @@ public class MemberController {
         return mService.checkRejoin(mModel.getId());
     }
 
-    @PostMapping(value = "/dup")
+    @PostMapping(value = "/dup-id")
     public ResponseEntity<Object> selectDupId(@RequestBody MemberModel mModel) {
 
         if ( log.isDebugEnabled() ) {
@@ -95,6 +95,16 @@ public class MemberController {
         }
 
         return mService.selectDupId(mModel.getId());
+    }
+
+    @PostMapping(value = "/dup-name")
+    public ResponseEntity<Object> selectDupName(@RequestBody MemberModel mModel) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: selectDupName ::: MemberModel : {}",  mModel.toString());
+        }
+
+        return mService.selectDupName(mModel.getName());
     }
 
     @PutMapping("/updateprofile")

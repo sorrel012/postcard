@@ -13,6 +13,7 @@ public interface MemberService {
     ResponseEntity<ResultModel> register(MemberModel mModel);
     ResponseEntity<Object> checkRejoin(String id);
     ResponseEntity<Object> selectDupId(String id);
+    ResponseEntity<Object> selectDupName(String name);
     ResponseEntity<ResultModel> snsRegister(MemberModel mModel);
     ResponseEntity<Object> updateProfile(MemberModel mModel);
     ResponseEntity<Object> updatePw(MemberModel mModel);

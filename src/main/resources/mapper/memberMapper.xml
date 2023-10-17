@@ -15,6 +15,12 @@
         ]]>
     </select>
 
+    <select id="selectDupName" parameterType="java.util.ArrayList">
+        <![CDATA[
+            select name from member where name=#{name} and deletedate is null
+        ]]>
+    </select>
+
     <insert id="register" parameterType="com.postcard.toyou.model.MemberModel">
         <![CDATA[
             insert into member (m_id, pw, name, tel, email, address, addressdetail, birth) values (#{id}, #{pw}, #{name}, #{tel}, #{email}, #{address}, #{addressDetail}, #{birth})
