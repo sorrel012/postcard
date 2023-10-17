@@ -233,7 +233,7 @@ export default {
 
 
       //최초 로그인인지 확인
-      await axios.post(this.$store.state.url + 'dup', this.userinfo)
+      await axios.post(this.$store.state.url + 'dup-id', this.userinfo)
           .then(response => {
             if(response.data.result.length === 0) {
               this.$router.push({name: 'sns-register'})

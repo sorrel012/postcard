@@ -19,12 +19,18 @@
             </div>
           </div>
 
-          <div class="row mb-4">
-            <div class="col-2 f-bold text-start d-flex align-items-center ps-4">이름(닉네임)</div>
+          <div class="row mb-4 mt-4">
+            <div class="col-2 f-bold text-start d-flex align-items-center ps-4" style="height: 50px;">이름(닉네임)</div>
             <div class="col-10">
-              <div class="form-floating">
-                <input type="text" class="form-control" placeholder="" required v-model="userinfo.name">
-                <label for="floatingInput">이름은 10자까지 입력할 수 있습니다.</label>
+              <div class="d-flex flex-column">
+                <div class="form-floating btn-group w-100 mb-2">
+                  <input type="text" class="form-control" :readonly="!isDupName" placeholder="" v-model="userinfo.name" ref="nameRef" required>
+                  <label for="floatingInput">이름은 10자까지 입력할 수 있습니다</label>
+                  <input type="button" class="btn btn-primary" :value="nameCheckBtnMsg" @click="dupOrMod">
+                </div>
+                <div v-if="isCheckNameDup" class="form-floating btn-group w-50 flex-start ps-2" :class="{'c-red':isDupName, 'c-blue':!isDupName}">
+                  {{nameDupMsg}}
+                </div>
               </div>
             </div>
           </div>
@@ -104,6 +110,10 @@ export default {
         addressDetail: ''
       },
       hasEmail: true,
+      isCheckNameDup: false,          //이름 중복확인 버튼 클릭 여부
+      isDupName: true,                //이름 중복 여부
+      nameCheckBtnMsg: '중복 확인',    //이름 중복확인 버튼 문구
+      nameDupMsg: '',                 //이름 중복확인 결과
     }
   },
   created() {
@@ -139,7 +149,59 @@ export default {
         }
       }).open();
     },
+    dupOrMod() {
+      if(!this.isDupName) {
+        this.isCheckNameDup = false;
+        this.isDupName = true;
+        this.userinfo.name = '';
+        this.nameCheckBtnMsg = '중복 확인';
+      } else {
+        this.checkDup();
+      }
+    },
+    checkDup() {
+      if(this.userinfo.name.length < 2) {
+        Swal.fire({
+          title: '이름을 2자 이상으로 입력해 주세요',
+          icon: 'error'
+        });
+        return
+      }
+
+      if(this.userinfo.name.length > 10) {
+        Swal.fire({
+          title: '이름을 10자 이하로 입력해 주세요',
+          icon: 'error'
+        });
+        return
+      }
+
+      this.isCheckNameDup = true;
+      axios.post(this.$store.state.url + 'dup-name', this.userinfo)
+          .then(response => {
+            this.nameDupMsg = response.data.message;
+
+            if(response.data.state) {
+              this.isDupName = false;
+              this.nameCheckBtnMsg = '수정하기'
+            }
+
+          })
+          .catch(error => {
+            console.log(error);
+          })
+    },
     register() {
+
+      //이름 중복확인 완료 검사
+      if(this.isDupName) {
+        this.$refs.nameRef.focus();
+        Swal.fire({
+          title: '이름(닉네임) 중복 검사를 완료해 주세요',
+          icon: 'error'
+        });
+        return
+      }
 
       //이메일 유효성 검사
       const emailPattern = new RegExp('^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$');
