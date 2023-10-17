@@ -125,6 +125,7 @@
 
           <div class="container-fluid p-0 mt-3">
             <button type="submit" class="btn btn-primary mt-4 w-100">회원가입</button>
+            <div class="mt-2">* 아이디와 이름(닉네임)은 가입 후 변경할 수 없습니다.</div>
           </div>
         </form>
 

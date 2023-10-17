@@ -18,7 +18,7 @@
         <div class="row mb-4 pe-3">
           <div class="col-2 f-bold text-start d-flex align-items-center ps-4">이름(닉네임)</div>
           <div class="col-10">
-            <input type="text" class="form-control" required v-model="newUserinfo.name">
+            <input type="text" class="form-control" disabled :value="newUserinfo.name">
           </div>
         </div>
         <div class="row mb-4 pe-3">
