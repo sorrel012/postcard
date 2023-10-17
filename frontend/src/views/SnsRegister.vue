@@ -20,11 +20,11 @@
           </div>
 
           <div class="row mb-4">
-            <div class="col-2 f-bold text-start d-flex align-items-center ps-4">이름</div>
+            <div class="col-2 f-bold text-start d-flex align-items-center ps-4">이름(닉네임)</div>
             <div class="col-10">
               <div class="form-floating">
                 <input type="text" class="form-control" placeholder="" required v-model="userinfo.name">
-                <label for="floatingInput">이름을 입력해 주세요</label>
+                <label for="floatingInput">이름은 10자까지 입력할 수 있습니다.</label>
               </div>
             </div>
           </div>

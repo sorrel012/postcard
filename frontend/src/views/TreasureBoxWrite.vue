@@ -56,7 +56,6 @@ export default {
   methods: {
     registWriting() {
 
-
       //공백 제거
       this.content = this.content.trim();
 
