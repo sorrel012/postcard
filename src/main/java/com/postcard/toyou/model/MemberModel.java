@@ -14,7 +14,7 @@ public class MemberModel {
     private String email;
     private String address;
     private String addressDetail;
-    private LocalDateTime regDate;
+    private String regDate;
     private String birth;
 
 }
