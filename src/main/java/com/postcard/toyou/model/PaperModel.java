@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class PaperModel {
 
     private int pcc_seq;            //도화지 번호
-    private String id;                 //회원 아이디
+    private String id;              //회원 아이디
     private String title;           //도화지 제목
     private String bgColor;         //도화지 배경 색상
     private String pcColor;         //쪽지 배경 색상
