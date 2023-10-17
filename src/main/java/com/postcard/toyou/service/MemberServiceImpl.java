@@ -443,4 +443,17 @@ public class MemberServiceImpl implements MemberService {
         return ResponseEntity.ok(rModel);
     }
 
+    @Override
+    public ResponseEntity<Object> getName(String id) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: getName ::: String : {}",  id);
+        }
+
+        ResultModel rModel = new ResultModel();
+
+
+        return null;
+    }
+
 }

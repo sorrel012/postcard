@@ -35,6 +35,7 @@
 
 <script>
 import CkEditor from "@/components/CKEditor.vue";
+import axios from "axios";
 
 export default {
   name: 'TbDetail',
@@ -42,11 +43,21 @@ export default {
   data() {
     return {
       writingDetail: {},
+      user: '',
     }
   },
-  created() {
+  async created() {
     this.writingDetail = this.$store.state.writingDetail;
     this.$store.commit('setWritingDetail', {})
+
+    await axios.post(this.$store.state.url + 'getName', this.writingDetail.id)
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error);
+        })
+
   },
   methods: {
     backToList() {

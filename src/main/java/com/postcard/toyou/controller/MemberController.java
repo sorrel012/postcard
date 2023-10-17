@@ -153,7 +153,7 @@ public class MemberController {
         return mService.disconnectNaver(params);
     }
 
-    @PostMapping("disconnectGoogle")
+    @PostMapping("/disconnectGoogle")
     public ResponseEntity<Object> disconnectGoogle(@RequestBody String token) {
 
         if ( log.isDebugEnabled() ) {
@@ -161,6 +161,16 @@ public class MemberController {
         }
 
         return mService.disconnectGoogle(token);
+    }
+
+    @PostMapping("/getName")
+    public ResponseEntity<Object> getName(@RequestBody String id) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: getName ::: String : {}",  id);
+        }
+
+        return mService.getName(id);
     }
 
 }
