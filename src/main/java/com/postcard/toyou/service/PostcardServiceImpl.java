@@ -3,12 +3,14 @@ package com.postcard.toyou.service;
 import com.postcard.toyou.dao.PostcardMapper;
 import com.postcard.toyou.model.PostcardModel;
 import com.postcard.toyou.model.ResultModel;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class PostcardServiceImpl implements PostcardService {
 
@@ -17,6 +19,10 @@ public class PostcardServiceImpl implements PostcardService {
 
     @Override
     public ResponseEntity<ResultModel> getList(int pccSeq) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: getList ::: int : {}",  pccSeq);
+        }
         
         ResultModel rModel = new ResultModel();
 
@@ -37,6 +43,10 @@ public class PostcardServiceImpl implements PostcardService {
     @Override
     public ResponseEntity<ResultModel> writePostcard(PostcardModel pmodel) {
 
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: writePostcard ::: PostcardModel : {}",  pmodel.toString());
+        }
+
         ResultModel rModel = new ResultModel();
 
         int result = pcMapper.writePostcard(pmodel);
@@ -56,6 +66,10 @@ public class PostcardServiceImpl implements PostcardService {
 
     @Override
     public ResponseEntity<ResultModel> deletePostcard(int pcSeq) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: deletePostcard ::: int : {}",  pcSeq);
+        }
 
         ResultModel rModel = new ResultModel();
 

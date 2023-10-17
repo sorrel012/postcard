@@ -3,6 +3,7 @@ package com.postcard.toyou.service;
 import com.postcard.toyou.dao.MemberMapper;
 import com.postcard.toyou.model.MemberModel;
 import com.postcard.toyou.model.ResultModel;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -20,6 +21,7 @@ import java.util.List;
 import static com.postcard.toyou.service.SnsTokenEnum.fromString;
 import static com.postcard.toyou.service.SnsUserInfoEnum.toUpperString;
 
+@Slf4j
 @Service
 public class MemberServiceImpl implements MemberService {
 
@@ -28,6 +30,10 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public ResponseEntity<ResultModel> login(MemberModel mModel) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: login ::: MemberModel : {}",  mModel.toString());
+        }
 
         ResultModel rModel = new ResultModel();
 
@@ -48,6 +54,10 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public ResponseEntity<ResultModel> snsLogin(String btnType, String params) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: snsLogin ::: String : {}",  params);
+        }
 
         ResultModel rModel = new ResultModel();
         RestTemplate restTemplate = new RestTemplate();
@@ -121,6 +131,10 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public ResponseEntity<ResultModel> naverLogout(String params) {
 
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: naverLogout ::: String : {}",  params);
+        }
+
         ResultModel rModel = new ResultModel();
         RestTemplate restTemplate = new RestTemplate();
 
@@ -151,6 +165,10 @@ public class MemberServiceImpl implements MemberService {
 
     public ResponseEntity<ResultModel> register(MemberModel mModel) {
 
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: register ::: MemberModel : {}",  mModel.toString());
+        }
+
         ResultModel rModel = new ResultModel();
 
         int result = mMapper.register(mModel);
@@ -168,6 +186,10 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public ResponseEntity<ResultModel> snsRegister(MemberModel mModel) {
 
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: snsRegister ::: MemberModel : {}",  mModel.toString());
+        }
+
         ResultModel rModel = new ResultModel();
 
         int result = mMapper.snsRegister(mModel);
@@ -184,6 +206,10 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public ResponseEntity<Object> checkRejoin(String id) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: checkRejoin ::: String : {}",  id);
+        }
 
         ResultModel rModel = new ResultModel();
 
@@ -204,6 +230,10 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public ResponseEntity<Object> selectDupId(String id) {
 
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: selectDupId ::: String : {}",  id);
+        }
+
         ResultModel rModel = new ResultModel();
 
         List<String> dupId = this.mMapper.selectDupId(id);
@@ -223,6 +253,10 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public ResponseEntity<Object> updateProfile(MemberModel mModel) {
 
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: updateProfile ::: MemberModel : {}",  mModel.toString());
+        }
+
         ResultModel rModel = new ResultModel();
 
         int result = this.mMapper.updateProfile(mModel);
@@ -239,6 +273,10 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public ResponseEntity<Object> updatePw(MemberModel mModel) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: updatePw ::: MemberModel : {}",  mModel.toString());
+        }
 
         ResultModel rModel = new ResultModel();
 
@@ -257,6 +295,10 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public ResponseEntity<Object> deleteAccount(String id) {
 
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: deleteAccount ::: String : {}",  id);
+        }
+
         ResultModel rModel = new ResultModel();
 
         int result = this.mMapper.deleteAccount(id);
@@ -273,6 +315,10 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public ResponseEntity<Object> disconnectKakao(String authHeader) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: disconnectKakao ::: String : {}",  authHeader);
+        }
 
         ResultModel rModel = new ResultModel();
         RestTemplate restTemplate = new RestTemplate();
@@ -309,6 +355,10 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public ResponseEntity<Object> disconnectNaver(String params) {
 
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: disconnectNaver ::: String : {}",  params);
+        }
+
         ResultModel rModel = new ResultModel();
         RestTemplate restTemplate = new RestTemplate();
 
@@ -338,6 +388,10 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public ResponseEntity<Object> disconnectGoogle(String token) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: disconnectGoogle ::: String : {}",  token);
+        }
 
         ResultModel rModel = new ResultModel();
         RestTemplate restTemplate = new RestTemplate();

@@ -107,6 +107,10 @@ public class SmsAuthServiceImpl implements SmsAuthService {
         String body = objectMapper.writeValueAsString(request);
         HttpEntity<String> httpBody = new HttpEntity<>(body, headers);
 
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: sendSms ::: SmsMessageDTO : {}",  request.toString());
+        }
+
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
         SmsResponseDTO response = restTemplate.postForObject(new URI("https://sens.apigw.ntruss.com/sms/v2/services/"+ serviceId +"/messages"), httpBody, SmsResponseDTO.class);

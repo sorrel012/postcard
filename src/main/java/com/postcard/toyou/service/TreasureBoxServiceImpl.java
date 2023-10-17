@@ -2,6 +2,7 @@ package com.postcard.toyou.service;
 
 import com.postcard.toyou.dao.TreasureBoxMapper;
 import com.postcard.toyou.model.*;
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class TreasureBoxServiceImpl implements TreasureBoxService {
 
@@ -27,6 +29,11 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
     @Override
     @Transactional
     public ResponseEntity<ResultModel> registWriting(TreasureBoxModel writing, List<String> imageList) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: registWriting ::: TreasureBoxModel : {}",  writing.toString());
+            log.debug("::: registWriting ::: List<String> : {}",  imageList.toString());
+        }
 
         ResultModel rModel = new ResultModel();
         
@@ -64,6 +71,10 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
                 tbpModel.setPic_url(url);
                 tbpModel.setPic_name(imgName);
 
+                if ( log.isDebugEnabled() ) {
+                    log.debug("::: registWriting ::: TbPicModel : {}",  tbpModel.toString());
+                }
+
                 picResult = tbMapper.registPic(tbpModel);
                 if(picResult != 1) {
                     throw new RuntimeException("Image saving failed");
@@ -86,6 +97,10 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
 
     @Override
     public ResponseEntity<ResultModel> getWritingList(int selectedOption) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: getWritingList ::: int : {}",  selectedOption);
+        }
 
         ResultModel rModel = new ResultModel();
 

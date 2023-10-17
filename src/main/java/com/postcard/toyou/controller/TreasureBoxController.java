@@ -5,6 +5,7 @@ import com.postcard.toyou.model.ResultModel;
 import com.postcard.toyou.model.TreasureBoxModel;
 import com.postcard.toyou.service.TreasureBoxService;
 import com.postcard.toyou.service.S3FileUploadService;
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:8080")
+@Slf4j
 @RestController
 public class TreasureBoxController {
 
@@ -29,8 +31,12 @@ public class TreasureBoxController {
 
     @PostMapping("/treasure/image")
     public ResponseEntity<?> uploadImage(@RequestParam("upload") MultipartFile file) {
-        try {
 
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: uploadImage ::: MultipartFile : {}",  file);
+        }
+
+        try {
             // 원본 파일명
             String originName = file.getOriginalFilename();
 
@@ -46,7 +52,6 @@ public class TreasureBoxController {
                     "originName", originName,
                     "url", imageUrl
             ));
-
         } catch (Exception e) {
             return ResponseEntity.status(500).body(Map.of(
                     "uploaded", 0,
@@ -62,7 +67,7 @@ public class TreasureBoxController {
             @RequestParam("id") String id,
             @RequestParam("images") String images
             ) {
-        
+
         // 태그 필터링
         content = TagFilterUtil.filter(content);
 
@@ -70,6 +75,10 @@ public class TreasureBoxController {
         tbModel.setTitle(title);
         tbModel.setContent(content);
         tbModel.setM_id(id);
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: registWriting ::: TreasureBoxModel : {}",  tbModel.toString());
+        }
 
         JSONArray jsonArray = new JSONArray(images);
         List<String> imageList = new ArrayList<>();
@@ -86,6 +95,11 @@ public class TreasureBoxController {
 
     @GetMapping("/writinglist")
     public ResponseEntity<ResultModel> getWritingList(@RequestParam int selectedOption) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: getWritingList ::: int : {}",  selectedOption);
+        }
+
         return tbService.getWritingList(selectedOption);
     }
 

@@ -4,12 +4,14 @@ import com.postcard.toyou.dao.PaperMapper;
 import com.postcard.toyou.dao.PostcardMapper;
 import com.postcard.toyou.model.PaperModel;
 import com.postcard.toyou.model.ResultModel;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class PaperServiceImpl implements PaperService {
 
@@ -33,6 +35,10 @@ public class PaperServiceImpl implements PaperService {
         }
 
         pModel.setCode(code);
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: create ::: PaperModel : {}",  pModel.toString());
+        }
 
         ResultModel rModel = new ResultModel();
         int result = pMapper.create(pModel);
@@ -76,6 +82,10 @@ public class PaperServiceImpl implements PaperService {
 
         }
 
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: getList ::: String : {}",  id);
+        }
+
         rModel.setState(true);
         rModel.setMessage("도화지 목록을 불러왔습니다.");
         rModel.setResult(plist);
@@ -95,6 +105,10 @@ public class PaperServiceImpl implements PaperService {
             p.setRegdate(regdate);
         }
 
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: getPaper ::: int : {}",  code);
+        }
+
         rModel.setState(true);
         rModel.setMessage("도화지를 불러왔습니다.");
         rModel.setResult(plist);
@@ -104,6 +118,10 @@ public class PaperServiceImpl implements PaperService {
 
     @Override
     public ResponseEntity<ResultModel> deletePaper(int pccSeq) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: deletePaper ::: int : {}",  pccSeq);
+        }
 
         ResultModel rModel = new ResultModel();
 
