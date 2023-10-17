@@ -259,15 +259,15 @@ public class MemberServiceImpl implements MemberService {
 
         ResultModel rModel = new ResultModel();
 
-        List<String> dupId = this.mMapper.selectDupName(name);
-        if(dupId.isEmpty()) {
+        List<String> dupName = this.mMapper.selectDupName(name);
+        if(dupName.isEmpty()) {
             rModel.setState(true);
             rModel.setMessage(name + " 은/는 사용할 수 있는 이름(닉네임)입니다.");
-            rModel.setResult(dupId);
+            rModel.setResult(dupName);
         } else {
             rModel.setState(false);
             rModel.setMessage(name + " 은/는 이미 사용 중인 이름(닉네임)입니다.");
-            rModel.setResult(dupId);
+            rModel.setResult(dupName);
         }
 
         return ResponseEntity.ok(rModel);
