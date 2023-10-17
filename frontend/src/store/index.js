@@ -17,6 +17,7 @@ export default new Vuex.Store({
         b_seq: 0,
         m_id: '',
         title: '',
+        content: '',
         regdate: '',
         hit: 0,
         comment: 0

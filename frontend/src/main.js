@@ -9,9 +9,11 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
+import { faBars } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faSearch)
 library.add(faPenToSquare)
+library.add(faBars)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

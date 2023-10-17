@@ -7,14 +7,14 @@
         <div class="mt-3 d-flex justify-content-between text-secondary">
           <div>
             <span class="me-3">스위트자몽(swt***)</span>
-            <span>2023.08.21</span>
+            <span>{{ writingDetail.regdate }}</span>
           </div>
-          <div>20</div>
+          <div>{{ writingDetail.hit }}</div>
         </div>
 
-        <div class="border-bottom pb-2 mt-2 text-start fs-4 fw-bold">제목</div>
+        <div class="border-bottom pb-3 mt-4 text-start fs-4 fw-bold">{{ writingDetail.title }}</div>
 
-        <div class="mt-4 text-start fs-5">본문</div>
+        <div class="mt-4 text-start fs-5" v-html="writingDetail.content"></div>
 
         <div class="text-end mt-5 mb-4">
           <button type="button" class="btn btn-lg btn-primary me-2">수정</button>
@@ -27,7 +27,7 @@
     </div>
 
     <div class="text-end mb-2">
-      <button type="button" class="btn btn-lg btn-border"><font-awesome-icon :icon="['fas', 'bars']" style="color: black;" /> 목록</button>
+      <button type="button" class="btn btn-lg btn-border" @click="backToList"><font-awesome-icon :icon="['fas', 'bars']" style="color: black;" /> 목록</button>
     </div>
 
   </section>
@@ -46,10 +46,12 @@ export default {
   },
   created() {
     this.writingDetail = this.$store.state.writingDetail;
-    console.log('writing: ', this.writingDetail);
     this.$store.commit('setWritingDetail', {})
-    this.writingDetail = this.$store.state.writingDetail;
-    console.log('writing: ', this.writingDetail);
+  },
+  methods: {
+    backToList() {
+      location.href = '/treasure';
+    }
   }
 }
 </script>
