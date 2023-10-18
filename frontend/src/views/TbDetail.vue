@@ -102,6 +102,7 @@ export default {
           .then(response => {
             console.log(response);
             this.getCommentList();
+            this.newComment = '';
           })
           .catch(error => {
             console.log(error);
