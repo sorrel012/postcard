@@ -18,9 +18,16 @@
         ]]>
     </insert>
 
-    <select id="getWritingList" parameterType="java.lang.Integer">
+    <select id="getWritingList" parameterType="java.lang.Integer" resultType="com.postcard.toyou.model.TreasureBoxModel">
         <![CDATA[
-            select * from treasurebox
+            select
+                b_seq,
+                title,
+                content,
+                regdate,
+                hit,
+                m_id
+            from treasurebox
         ]]>
         <if test="selectedOption == 1">
             order by regdate desc
@@ -28,6 +35,27 @@
         <if test="selectedOption == 2">
             order by regdate asc
         </if>
+    </select>
+
+    <insert id="registComment" parameterType="com.postcard.toyou.model.TbCommentModel">
+        <![CDATA[
+        insert into tbcomment (c_seq, content, b_seq, m_id)
+        values (#{c_seq}, #{content}, #{b_seq}, #{m_id})
+        ]]>
+    </insert>
+
+    <select id="getCommentList" parameterType="java.lang.Integer" resultType="com.postcard.toyou.model.TbCommentModel">
+        <![CDATA[
+            select
+                c_seq,
+                content,
+                regdate,
+                b_seq,
+                m_id
+            from tbcomment
+                where b_seq=#{seq}
+            order by regdate asc
+        ]]>
     </select>
 
 </mapper>

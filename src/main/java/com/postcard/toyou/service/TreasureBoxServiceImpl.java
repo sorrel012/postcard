@@ -99,6 +99,26 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
     }
 
     @Override
+    public ResponseEntity<ResultModel> registComment(TbCommentModel tbcModel) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: registComment ::: TbCommentModel : {}",  tbcModel.toString());
+        }
+
+        ResultModel rModel = new ResultModel();
+        int result = tbMapper.registComment(tbcModel);
+        if (result == 1) {
+            rModel.setState(true);
+            rModel.setMessage("댓글이 등록되었습니다.");
+        } else {
+            rModel.setState(false);
+            rModel.setMessage("댓글을 등록하지 못했습니다.");
+        }
+
+        return ResponseEntity.ok(rModel);
+    }
+
+    @Override
     public ResponseEntity<ResultModel> getWritingList(int selectedOption) {
 
         if ( log.isDebugEnabled() ) {
@@ -124,6 +144,33 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
 
         return ResponseEntity.ok(rModel);
 
+    }
+
+    @Override
+    public ResponseEntity<ResultModel> getCommentList(int seq) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: getCommentList ::: int : {}",  seq);
+        }
+
+        ResultModel rModel = new ResultModel();
+
+        List<TbCommentModel> wList = tbMapper.getCommentList(seq);
+        for(TbCommentModel c : wList) {
+
+            String regdate = c.getRegdate();
+            regdate = regdate.split(" ")[0];
+            c.setRegdate(regdate);
+
+            c.setName(mMapper.getName(c.getM_id()));
+
+        }
+
+        rModel.setState(true);
+        rModel.setMessage("댓글 목록을 불러왔습니다.");
+        rModel.setResult(wList);
+
+        return ResponseEntity.ok(rModel);
     }
 
 }

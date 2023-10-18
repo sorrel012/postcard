@@ -2,6 +2,7 @@ package com.postcard.toyou.controller;
 
 import com.postcard.toyou.config.TagFilterUtil;
 import com.postcard.toyou.model.ResultModel;
+import com.postcard.toyou.model.TbCommentModel;
 import com.postcard.toyou.model.TreasureBoxModel;
 import com.postcard.toyou.service.TreasureBoxService;
 import com.postcard.toyou.service.S3FileUploadService;
@@ -101,6 +102,26 @@ public class TreasureBoxController {
         }
 
         return tbService.getWritingList(selectedOption);
+    }
+
+    @PostMapping("/comment")
+    public ResponseEntity<ResultModel> registComment(@RequestBody TbCommentModel tbcModel) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: registComment ::: TbCommentModel : {}",  tbcModel.toString());
+        }
+
+        return tbService.registComment(tbcModel);
+    }
+
+    @GetMapping("/commentlist")
+    public ResponseEntity<ResultModel> getCommentList(@RequestParam int seq) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: getCommentList ::: int : {}",  seq);
+        }
+
+        return tbService.getCommentList(seq);
     }
 
 }
