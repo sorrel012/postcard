@@ -197,4 +197,48 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
         return ResponseEntity.ok(rModel);
     }
 
+    @Transactional
+    @Override
+    public ResponseEntity<ResultModel> deletePost(int seq) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: deletePaper ::: int : {}",  seq);
+        }
+
+        ResultModel rModel = new ResultModel();
+
+        //게시글 삭제
+        int result1 = tbMapper.deletePost(seq);
+
+        if(result1 > 0) {
+            
+            //댓글 list먼저 select하고 삭제, select한 댓글 seq 넘겨서 답글도 삭제
+            List<TbCommentModel> comments = tbMapper.getCommentList(seq);
+
+            for (TbCommentModel comment : comments) {
+                tbMapper.deleteComment(seq);
+            }
+
+//            int result3 = tbMapper.deleteReply(pccSeq);
+
+//            if (result2>0 && result3 > 0) {
+//                rModel.setState(true);
+//                rModel.setMessage("게시글을 삭제했습니다.");
+//                rModel.setResult(true);
+//
+//            } else {
+//                rModel.setState(false);
+//                rModel.setMessage("게시글을 삭제하지 못했습니다.");
+//                rModel.setResult(false);
+//            }
+
+        } else {
+            rModel.setState(false);
+            rModel.setMessage("게시글을 삭제하지 못했습니다.");
+            rModel.setResult(false);
+        }
+
+        return ResponseEntity.ok(rModel);
+    }
+
 }

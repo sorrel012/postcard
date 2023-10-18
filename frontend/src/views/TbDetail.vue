@@ -17,8 +17,8 @@
         <div class="mt-5 text-start fs-5" v-html="postDetail.content"></div>
 
         <div class="text-end mt-5 mb-4" v-if="postDetail.m_id===loginUser">
-          <button type="button" class="btn btn-lg btn-success me-2">수정</button>
-          <button type="button" class="btn btn-lg btn-danger">삭제</button>
+          <button type="button" class="btn btn-lg btn-success me-2" @click="editPost">수정</button>
+          <button type="button" class="btn btn-lg btn-danger" @click="deletePost">삭제</button>
         </div>
 
         <div class="text-end border-bottom pb-1 text-secondary">
@@ -37,7 +37,7 @@
 
           <div class="text-end mt-2" v-if="comment.m_id===loginUser">
             <button type="button" class="btn btn-sm btn-border me-2">수정</button>
-            <button type="button" class="btn btn-sm btn-border">삭제</button>
+            <button type="button" class="btn btn-sm btn-border"">삭제</button>
           </div>
         </div>
 
@@ -61,6 +61,8 @@
 <script>
 import CkEditor from "@/components/CKEditor.vue";
 import axios from "axios";
+import Swal from "sweetalert2";
+import router from "@/router";
 
 export default {
   name: 'TbDetail',
@@ -131,7 +133,42 @@ export default {
           .catch(error => {
             console.log(error);
           })
-    }
+    },
+    editPost() {
+
+    },
+    deletePost() {
+      Swal.fire({
+        title: '삭제하시겠습니까?',
+        text: "삭제한 게시글은 다시 되돌릴 수 없습니다",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Delete',
+        preConfirm: () => {
+          return axios.delete(this.$store.state.url + 'post', {params: {seq : this.postDetail.b_seq}})
+              .then(response => {
+                console.log(response);
+                router.push({name: 'treasure-box'});
+              })
+              .catch(error => {
+                console.log(error);
+                Swal.showValidationMessage(
+                    '게시글을 삭제하지 못했습니다'
+                )
+              })
+        }
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire(
+              '삭제 완료',
+              '게시글을 삭제했습니다',
+              'success'
+          )
+        }
+      })
+    },
   }
 }
 </script>

@@ -68,4 +68,22 @@
         ]]>
     </update>
 
+    <update id="deletePost" parameterType="java.lang.Integer">
+        <![CDATA[
+            update treasurebox
+                set is_deleted='Y'
+            where b_seq=#{seq}
+        ]]>
+    </update>
+
+    <update id="deleteComment" parameterType="java.lang.Integer">
+        <![CDATA[
+            update tbcomment
+                set is_deleted='Y'
+            where b_seq=#{seq}
+        ]]>
+    </update>
+
+
+
 </mapper>

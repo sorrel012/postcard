@@ -14,5 +14,6 @@ public interface TreasureBoxService {
     ResponseEntity<ResultModel> registComment(TbCommentModel tbcModel);
     ResponseEntity<ResultModel> getCommentList(int seq);
     ResponseEntity<ResultModel> increaseHit(int seq);
+    ResponseEntity<ResultModel> deletePost(int seq);
 
 }

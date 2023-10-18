@@ -134,4 +134,16 @@ public class TreasureBoxController {
         return tbService.increaseHit(Integer.valueOf(seq));
     }
 
+    @DeleteMapping("/post")
+    public ResponseEntity<ResultModel> deletePost(@RequestParam String seq) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: deletePost ::: String : {}",  seq);
+        }
+
+        return tbService.deletePost(Integer.valueOf(seq));
+    }
+
+
+
 }
