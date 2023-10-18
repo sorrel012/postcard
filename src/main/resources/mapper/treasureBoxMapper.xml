@@ -3,7 +3,7 @@
 
 <mapper namespace="com.postcard.toyou.dao.TreasureBoxMapper">
 
-    <select id="registWriting" parameterType="com.postcard.toyou.model.TreasureBoxModel" resultType="java.lang.Integer">
+    <select id="registPost" parameterType="com.postcard.toyou.model.TreasureBoxModel" resultType="java.lang.Integer">
         <![CDATA[
             insert into treasurebox (title, content, m_id)
             values (#{title}, #{content}, #{m_id})
@@ -18,7 +18,7 @@
         ]]>
     </insert>
 
-    <select id="getWritingList" parameterType="java.lang.Integer" resultType="com.postcard.toyou.model.TreasureBoxModel">
+    <select id="getPostList" parameterType="java.lang.Integer" resultType="com.postcard.toyou.model.TreasureBoxModel">
         <![CDATA[
             select
                 b_seq,

@@ -10,9 +10,9 @@ import java.util.List;
 @Mapper
 public interface TreasureBoxMapper {
 
-    int registWriting(TreasureBoxModel writing);
+    int registPost(TreasureBoxModel post);
     int registPic(TbPicModel tbpModel);
-    List<TreasureBoxModel> getWritingList(int selectedOption);
+    List<TreasureBoxModel> getPostList(int selectedOption);
     int registComment(TbCommentModel tbcModel);
     List<TbCommentModel> getCommentList(int seq);
     int increaseHit(int seq);

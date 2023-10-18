@@ -61,8 +61,8 @@ public class TreasureBoxController {
         }
     }
 
-    @PostMapping("/writing")
-    public ResponseEntity<ResultModel> registWriting(
+    @PostMapping("/post")
+    public ResponseEntity<ResultModel> registPost(
             @RequestParam("content") String content,
             @RequestParam("title") String title,
             @RequestParam("id") String id,
@@ -78,7 +78,7 @@ public class TreasureBoxController {
         tbModel.setM_id(id);
 
         if ( log.isDebugEnabled() ) {
-            log.debug("::: registWriting ::: TreasureBoxModel : {}",  tbModel.toString());
+            log.debug("::: registPost ::: TreasureBoxModel : {}",  tbModel.toString());
         }
 
         JSONArray jsonArray = new JSONArray(images);
@@ -91,17 +91,17 @@ public class TreasureBoxController {
             }
         }
 
-        return tbService.registWriting(tbModel, imageList);
+        return tbService.registPost(tbModel, imageList);
     }
 
-    @GetMapping("/writinglist")
-    public ResponseEntity<ResultModel> getWritingList(@RequestParam int selectedOption) {
+    @GetMapping("/postlist")
+    public ResponseEntity<ResultModel> getPostList(@RequestParam int selectedOption) {
 
         if ( log.isDebugEnabled() ) {
-            log.debug("::: getWritingList ::: int : {}",  selectedOption);
+            log.debug("::: getPostList ::: int : {}",  selectedOption);
         }
 
-        return tbService.getWritingList(selectedOption);
+        return tbService.getPostList(selectedOption);
     }
 
     @PostMapping("/comment")

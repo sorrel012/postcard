@@ -7,16 +7,16 @@
         <div class="d-flex justify-content-between text-secondary">
           <div>
             <span class="me-3">{{ writer }}</span>
-            <span>{{ writingDetail.regdate }}</span>
+            <span>{{ postDetail.regdate }}</span>
           </div>
-          <div>{{ writingDetail.hit }}</div>
+          <div>{{ postDetail.hit }}</div>
         </div>
 
-        <div class="border-bottom pb-3 mt-3 text-start fs-4 fw-bold">{{ writingDetail.title }}</div>
+        <div class="border-bottom pb-3 mt-3 text-start fs-4 fw-bold">{{ postDetail.title }}</div>
 
-        <div class="mt-5 text-start fs-5" v-html="writingDetail.content"></div>
+        <div class="mt-5 text-start fs-5" v-html="postDetail.content"></div>
 
-        <div class="text-end mt-5 mb-4" v-if="writingDetail.m_id===loginUser">
+        <div class="text-end mt-5 mb-4" v-if="postDetail.m_id===loginUser">
           <button type="button" class="btn btn-lg btn-success me-2">수정</button>
           <button type="button" class="btn btn-lg btn-danger">삭제</button>
         </div>
@@ -67,7 +67,7 @@ export default {
   components: {CkEditor},
   data() {
     return {
-      writingDetail: {},
+      postDetail: {},
       writer: '',
       commentCnt: 0,
       commentList: {},
@@ -79,11 +79,11 @@ export default {
     this.loginUser =sessionStorage.getItem('id');
 
     //게시글 정보 받기
-    this.writingDetail = this.$store.state.writingDetail;
-    this.$store.commit('setWritingDetail', {})
+    this.postDetail = this.$store.state.postDetail;
+    this.$store.commit('setPostDetail', {})
 
     //조회수 올리기
-    axios.put(this.$store.state.url + 'hit', this.writingDetail.b_seq , {
+    axios.put(this.$store.state.url + 'hit', this.postDetail.b_seq , {
             headers: {
               'Content-Type': 'application/json'
             }
@@ -96,8 +96,8 @@ export default {
         })
 
     //작성자 이름
-    const maskingId = this.writingDetail.m_id.substring(0, 3);
-    this.writer = `${this.writingDetail.name}(${maskingId}***)`;
+    const maskingId = this.postDetail.m_id.substring(0, 3);
+    this.writer = `${this.postDetail.name}(${maskingId}***)`;
 
     //댓글
     this.getCommentList();
@@ -108,7 +108,7 @@ export default {
     },
     writeComment() {
       const comment = {
-        b_seq: this.writingDetail.b_seq,
+        b_seq: this.postDetail.b_seq,
         m_id: this.loginUser,
         content: this.newComment
       }
@@ -123,7 +123,7 @@ export default {
           })
     },
     getCommentList() {
-      axios.get(this.$store.state.url + 'commentlist', {params: {seq: this.writingDetail.b_seq}})
+      axios.get(this.$store.state.url + 'commentlist', {params: {seq: this.postDetail.b_seq}})
           .then(response => {
             this.commentList = response.data.result;
             this.commentCnt = this.commentList.length;

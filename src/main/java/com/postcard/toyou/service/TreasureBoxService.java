@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface TreasureBoxService {
 
-    ResponseEntity<ResultModel> registWriting(TreasureBoxModel writing, List<String> imageList);
-    ResponseEntity<ResultModel> getWritingList(int selectedOption);
+    ResponseEntity<ResultModel> registPost(TreasureBoxModel post, List<String> imageList);
+    ResponseEntity<ResultModel> getPostList(int selectedOption);
     ResponseEntity<ResultModel> registComment(TbCommentModel tbcModel);
     ResponseEntity<ResultModel> getCommentList(int seq);
     ResponseEntity<ResultModel> increaseHit(int seq);

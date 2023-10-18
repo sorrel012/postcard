@@ -31,25 +31,25 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
 
     @Override
     @Transactional
-    public ResponseEntity<ResultModel> registWriting(TreasureBoxModel writing, List<String> imageList) {
+    public ResponseEntity<ResultModel> registPost(TreasureBoxModel post, List<String> imageList) {
 
         if ( log.isDebugEnabled() ) {
-            log.debug("::: registWriting ::: TreasureBoxModel : {}",  writing.toString());
-            log.debug("::: registWriting ::: List<String> : {}",  imageList.toString());
+            log.debug("::: registPost ::: TreasureBoxModel : {}",  post.toString());
+            log.debug("::: registPost ::: List<String> : {}",  imageList.toString());
         }
 
         ResultModel rModel = new ResultModel();
         
         //게시글 DB 저장
-        int writingResult = tbMapper.registWriting(writing);
+        int postResult = tbMapper.registPost(post);
         
         //본문 내용 저장 성공 && 이미지를 업로드 한 적 있는지 확인
         int picResult = 1;
-        if(writingResult>0 && !imageList.isEmpty()){
+        if(postResult>0 && !imageList.isEmpty()){
 
             //게시글 이미지 추출
             List<String> contentImages = new ArrayList<>();
-            Document doc = Jsoup.parse(writing.getContent());
+            Document doc = Jsoup.parse(post.getContent());
             Elements imageElements = doc.select("img");
 
             for (Element imageElement : imageElements) {
@@ -70,12 +70,12 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
                 String imgName = s3Service.extractFileName(url).split("@")[1];
 
                 TbPicModel tbpModel = new TbPicModel();
-                tbpModel.setB_seq(writingResult);
+                tbpModel.setB_seq(postResult);
                 tbpModel.setPic_url(url);
                 tbpModel.setPic_name(imgName);
 
                 if ( log.isDebugEnabled() ) {
-                    log.debug("::: registWriting ::: TbPicModel : {}",  tbpModel.toString());
+                    log.debug("::: registPost ::: TbPicModel : {}",  tbpModel.toString());
                 }
 
                 picResult = tbMapper.registPic(tbpModel);
@@ -87,7 +87,7 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
 
         }
 
-        if (writingResult>0 && picResult==1) {
+        if (postResult>0 && picResult==1) {
             rModel.setState(true);
             rModel.setMessage("게시글이 작성되었습니다.");
         } else {
@@ -119,15 +119,15 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
     }
 
     @Override
-    public ResponseEntity<ResultModel> getWritingList(int selectedOption) {
+    public ResponseEntity<ResultModel> getPostList(int selectedOption) {
 
         if ( log.isDebugEnabled() ) {
-            log.debug("::: getWritingList ::: int : {}",  selectedOption);
+            log.debug("::: getPostList ::: int : {}",  selectedOption);
         }
 
         ResultModel rModel = new ResultModel();
 
-        List<TreasureBoxModel> wList = tbMapper.getWritingList(selectedOption);
+        List<TreasureBoxModel> wList = tbMapper.getPostList(selectedOption);
         for(TreasureBoxModel tb : wList) {
 
             String regdate = tb.getRegdate();

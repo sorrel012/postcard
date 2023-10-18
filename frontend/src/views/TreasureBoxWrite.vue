@@ -7,7 +7,7 @@
     </div>
 
 
-    <form class="w-100 h-100 mh-100" @submit.prevent="registWriting">
+    <form class="w-100 h-100 mh-100" @submit.prevent="registPost">
 
       <input type="text" placeholder="제목을 입력해 주세요" class="form-control mb-4" style="height: 40px" required v-model="title">
 
@@ -54,7 +54,7 @@ export default {
 
   },
   methods: {
-    registWriting() {
+    registPost() {
 
       //공백 제거
       this.content = this.content.trim();
@@ -66,7 +66,7 @@ export default {
         formData.append('id', sessionStorage.getItem('id'));
         formData.append('images', JSON.stringify(this.images));
 
-        axios.post(this.$store.state.url + 'writing', formData, {
+        axios.post(this.$store.state.url + 'post', formData, {
               headers: {
                 'Content-Type': 'multipart/form-data',
               },

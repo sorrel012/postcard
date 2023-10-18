@@ -15,7 +15,7 @@
       <div class="d-flex justify-content-between align-items-end">
         <p class="mb-0">총 <span class="fw-bold">3</span>건</p>
         <div>
-          <select class="form-select w-100" v-model="selectedOption" @change="getWritings">
+          <select class="form-select w-100" v-model="selectedOption" @change="getPosts">
             <option value="1">최신순</option>
             <option value="2">오래된순</option>
           </select>
@@ -35,12 +35,12 @@
         </tr>
         </thead>
         <tbody>
-          <tr class="text-center align-middle" v-for="writing in writingList" :key="writing.b_seq" @click="writingDetail(writing)">
-            <td class="col-1 text-truncate">{{ writing.b_seq }}</td>
-            <td class="col-5 text-truncate hover">{{ writing.title }}</td>
-            <td class="col-2 text-truncate">{{ writing.name }}</td>
-            <td class="col-2 text-truncate">{{ writing.regdate }}</td>
-            <td class="col-1 text-truncate">{{ writing.hit }}</td>
+          <tr class="text-center align-middle" v-for="post in postList" :key="post.b_seq" @click="postDetail(post)">
+            <td class="col-1 text-truncate">{{ post.b_seq }}</td>
+            <td class="col-5 text-truncate hover">{{ post.title }}</td>
+            <td class="col-2 text-truncate">{{ post.name }}</td>
+            <td class="col-2 text-truncate">{{ post.regdate }}</td>
+            <td class="col-1 text-truncate">{{ post.hit }}</td>
           </tr>
         </tbody>
       </table>
@@ -83,7 +83,7 @@ export default {
     return {
       isMember: false,
       selectedOption: 1,
-      writingList: []
+      postList: []
     }
   },
   async created() {
@@ -100,25 +100,25 @@ export default {
     }
 
     //게시글 목록 받아오기
-    this.getWritings(this.selectedOption);
+    this.getPosts(this.selectedOption);
   },
   methods: {
     write() {
       location.href='/treasure-write'
     },
     //게시글 목록 받아오기
-    getWritings() {
-      axios.get(this.$store.state.url + 'writinglist', {params: {selectedOption: this.selectedOption}})
+    getPosts() {
+      axios.get(this.$store.state.url + 'postlist', {params: {selectedOption: this.selectedOption}})
           .then(response => {
-            this.writingList = response.data.result
+            this.postList = response.data.result
           })
           .catch(error => {
             console.log(error);
           })
     },
     //상세페이지로 이동
-    writingDetail(writing) {
-      this.$store.commit('setWritingDetail', writing)
+    postDetail(post) {
+      this.$store.commit('setPostDetail', post)
       this.$router.push({ name: 'treasure-detail' })
     }
   }
