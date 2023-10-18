@@ -14,7 +14,7 @@
 
         <div class="border-bottom pb-3 mt-3 text-start fs-4 fw-bold">{{ writingDetail.title }}</div>
 
-        <div class="mt-4 text-start fs-5" v-html="writingDetail.content"></div>
+        <div class="mt-5 text-start fs-5" v-html="writingDetail.content"></div>
 
         <div class="text-end mt-5 mb-4">
           <button type="button" class="btn btn-lg btn-success me-2">수정</button>
