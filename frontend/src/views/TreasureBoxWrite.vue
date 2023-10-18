@@ -60,7 +60,6 @@ export default {
       this.content = this.content.trim();
 
       if(this.content !== null && this.content !== '') {
-
         const formData = new FormData();
         formData.append('content', this.content);
         formData.append('title', this.title);
