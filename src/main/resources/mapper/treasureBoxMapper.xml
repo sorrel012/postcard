@@ -28,7 +28,7 @@
                 hit,
                 m_id
             from treasurebox
-                where is_deleted == 'N'
+                where is_deleted='N'
         ]]>
         <if test="selectedOption == 1">
             order by regdate desc
@@ -55,7 +55,7 @@
                 m_id
             from tbcomment
                 where b_seq=#{seq}
-                and is_deleted == 'N'
+                and is_deleted='N'
             order by regdate asc
         ]]>
     </select>
