@@ -18,5 +18,6 @@ public interface MemberMapper {
     public int updateProfile(MemberModel mModel);
     public int updatePw(MemberModel mModel);
     public int deleteAccount(String id);
+    public String getName(String id);
 
 }

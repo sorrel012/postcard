@@ -29,19 +29,17 @@
         <tr class="text-center">
           <th class="col-1 text-wrap">번호</th>
           <th class="col-6 text-wrap">제목</th>
-          <th class="col-1 text-wrap">작성자</th>
-          <th class="col-1 text-wrap">작성일</th>
-          <th class="col-1 text-wrap">댓글수</th>
+          <th class="col-2 text-wrap">작성자</th>
+          <th class="col-2 text-wrap">작성일</th>
           <th class="col-1 text-wrap">조회수</th>
         </tr>
         </thead>
         <tbody>
           <tr class="text-center align-middle" v-for="writing in writingList" :key="writing.b_seq" @click="writingDetail(writing)">
             <td class="col-1 text-truncate">{{ writing.b_seq }}</td>
-            <td class="col-6 text-truncate hover">{{ writing.title }}</td>
-            <td class="col-1 text-truncate">{{ writing.m_id }}</td>
-            <td class="col-1 text-truncate">{{ writing.regdate }}</td>
-            <td class="col-1 text-truncate">1</td>
+            <td class="col-5 text-truncate hover">{{ writing.title }}</td>
+            <td class="col-2 text-truncate">{{ writing.name }}</td>
+            <td class="col-2 text-truncate">{{ writing.regdate }}</td>
             <td class="col-1 text-truncate">{{ writing.hit }}</td>
           </tr>
         </tbody>

@@ -21,6 +21,5 @@ public interface MemberService {
     ResponseEntity<Object> disconnectKakao(String authHeader);
     ResponseEntity<Object> disconnectNaver(String params);
     ResponseEntity<Object> disconnectGoogle(String token);
-    ResponseEntity<Object> getName(String id);
 
 }

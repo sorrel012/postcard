@@ -1,5 +1,6 @@
 package com.postcard.toyou.service;
 
+import com.postcard.toyou.dao.MemberMapper;
 import com.postcard.toyou.dao.TreasureBoxMapper;
 import com.postcard.toyou.model.*;
 import lombok.extern.slf4j.Slf4j;
@@ -19,11 +20,13 @@ import java.util.List;
 public class TreasureBoxServiceImpl implements TreasureBoxService {
 
     private final TreasureBoxMapper tbMapper;
+    private final MemberMapper mMapper;
     private final S3FileUploadService s3Service;
 
-    public TreasureBoxServiceImpl(TreasureBoxMapper tbMapper, S3FileUploadService s3UploadService) {
+    public TreasureBoxServiceImpl(TreasureBoxMapper tbMapper, MemberMapper mMapper, S3FileUploadService s3UploadService) {
         this.tbMapper = tbMapper;
         this.s3Service = s3UploadService;
+        this.mMapper = mMapper;
     }
 
     @Override
@@ -106,9 +109,13 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
 
         List<TreasureBoxModel> wList = tbMapper.getWritingList(selectedOption);
         for(TreasureBoxModel tb : wList) {
+
             String regdate = tb.getRegdate();
             regdate = regdate.split(" ")[0];
             tb.setRegdate(regdate);
+
+            tb.setName(mMapper.getName(tb.getM_id()));
+
         }
 
         rModel.setState(true);

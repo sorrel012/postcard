@@ -163,14 +163,4 @@ public class MemberController {
         return mService.disconnectGoogle(token);
     }
 
-    @PostMapping("/getName")
-    public ResponseEntity<Object> getName(@RequestBody String id) {
-
-        if ( log.isDebugEnabled() ) {
-            log.debug("::: getName ::: String : {}",  id);
-        }
-
-        return mService.getName(id);
-    }
-
 }
