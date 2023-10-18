@@ -111,7 +111,7 @@ export default {
   methods: {
     create() {
       this.paper.id = sessionStorage.getItem('id');
-      axios.post(this.$store.state.url + 'create', this.postcard)
+      axios.post(this.$store.state.url + 'create', this.paper)
           .then(response => {
             console.log(response);
             if (response.data.state) {

@@ -87,6 +87,8 @@ export default {
     }
   },
   async created() {
+    document.body.style.backgroundColor = '#FFFFFF';
+
     const id = sessionStorage.getItem('id');
     if(id == null || id == '') {
       await Swal.fire({
