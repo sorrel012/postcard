@@ -42,7 +42,7 @@
         </div>
 
         <div class="mt-4">
-          <div class="btn-group mb-2 w-100 overflow-auto ">
+          <div class="btn-group mb-2 w-100 overflow-auto">
             <textarea class="form-control resize-none" v-model="newComment"></textarea>
             <input type="button" class="btn btn-primary btn-lg" value="등록" @click="writeComment">
           </div>
@@ -111,6 +111,7 @@ export default {
       axios.get(this.$store.state.url + 'commentlist', {params: {seq: this.writingDetail.b_seq}})
           .then(response => {
             this.commentList = response.data.result;
+            this.commentCnt = this.commentList.length;
           })
           .catch(error => {
             console.log(error);
