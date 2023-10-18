@@ -6,7 +6,7 @@
       <div class="p-5 border-bottom pb-2">
         <div class="mt-3 d-flex justify-content-between text-secondary">
           <div>
-            <span class="me-3">스위트자몽(swt***)</span>
+            <span class="me-3">{{ user }}</span>
             <span>{{ writingDetail.regdate }}</span>
           </div>
           <div>{{ writingDetail.hit }}</div>
@@ -46,18 +46,12 @@ export default {
       user: '',
     }
   },
-  async created() {
+  created() {
     this.writingDetail = this.$store.state.writingDetail;
     this.$store.commit('setWritingDetail', {})
 
-    await axios.post(this.$store.state.url + 'getName', this.writingDetail.id)
-        .then(response => {
-          console.log(response);
-        })
-        .catch(error => {
-          console.log(error);
-        })
-
+    const maskingId = this.writingDetail.m_id.substring(0, 3);
+    this.user = `${this.writingDetail.name}(${maskingId}***)`;
   },
   methods: {
     backToList() {
