@@ -162,7 +162,11 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
             regdate = regdate.split(" ")[0];
             c.setRegdate(regdate);
 
-            c.setName(mMapper.getName(c.getM_id()));
+            String name = mMapper.getName(c.getM_id());
+            c.setName(name);
+
+            String writer = String.format("%s(%s***)", name, c.getM_id());
+            c.setWriter(writer);
 
         }
 

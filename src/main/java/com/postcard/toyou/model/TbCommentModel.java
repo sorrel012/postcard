@@ -12,5 +12,6 @@ public class TbCommentModel {
     private String m_id;        //작성자 아이디
     
     private String name;        //작성자 이름
+    private String writer;      //작성자 출력용
 
 }

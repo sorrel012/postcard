@@ -39,8 +39,8 @@
 
     <insert id="registComment" parameterType="com.postcard.toyou.model.TbCommentModel">
         <![CDATA[
-        insert into tbcomment (c_seq, content, b_seq, m_id)
-        values (#{c_seq}, #{content}, #{b_seq}, #{m_id})
+        insert into tbcomment (content, b_seq, m_id)
+        values (#{content}, #{b_seq}, #{m_id})
         ]]>
     </insert>
 

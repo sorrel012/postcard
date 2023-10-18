@@ -28,12 +28,12 @@
 <!--        <div v-for="comment in commentList" :key="comment.c_seq">-->
 <!--          -->
 <!--        </div>-->
-        <div class="mt-3 p-3 text-start text-bg-light rounded">
+        <div class="mt-3 p-3 text-start text-bg-light rounded" v-for="comment in commentList" :key="commentList.c_seq">
           <div class="text-secondary">
-            <span class="me-3">댓글작성자</span>
-            <span>댓글 작성 시간</span>
+            <span class="me-3">{{ comment.writer }}</span>
+            <span>{{ comment.regdate }}</span>
           </div>
-          <div class="text-start fs-5 mt-2">댓글 내용</div>
+          <div class="text-start fs-5 mt-2">{{ comment.content }}</div>
 
           <div class="text-end mt-2 ">
             <button type="button" class="btn btn-sm btn-border me-2">수정</button>
