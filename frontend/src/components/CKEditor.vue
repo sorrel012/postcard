@@ -51,7 +51,7 @@ export default {
     const component = this;
     const uploadUrl = this.$store.state.url + 'treasure/image';
     CustomEditor.create(document.querySelector('#editor'), {
-      allowedContent: 'p; strong; i; u; s; span; ul; ol; img;'
+      allowedContent: 'p; strong; i; u; s; span; ul; ol; img; li;'
     })
         .then(editor => {
           component.editor = editor;

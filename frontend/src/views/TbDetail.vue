@@ -25,10 +25,25 @@
           <div><font-awesome-icon :icon="['fa', 'message']"  /> {{ commentCnt }}</div>
         </div>
 
-        <!--댓글-->
+<!--        <div v-for="comment in commentList" :key="comment.c_seq">-->
+<!--          -->
+<!--        </div>-->
+        <div class="mt-3 p-3 text-start text-bg-light rounded">
+          <div class="text-secondary">
+            <span class="me-3">댓글작성자</span>
+            <span>댓글 작성 시간</span>
+          </div>
+          <div class="text-start fs-5 mt-2">댓글 내용</div>
+
+          <div class="text-end mt-2 ">
+            <button type="button" class="btn btn-sm btn-border me-2">수정</button>
+            <button type="button" class="btn btn-sm btn-border">삭제</button>
+          </div>
+        </div>
+
         <div class="mt-4">
           <div class="btn-group mb-2 w-100 overflow-auto ">
-            <textarea class="form-control resize-none" v-model="comment"></textarea>
+            <textarea class="form-control resize-none" v-model="newComment"></textarea>
             <input type="button" class="btn btn-primary btn-lg" value="등록" @click="writeComment">
           </div>
         </div>
@@ -55,25 +70,51 @@ export default {
       writingDetail: {},
       writer: '',
       commentCnt: 0,
+      commentList: {},
       loginUser: '',
-      comment: '',
+      newComment: '',
     }
   },
   created() {
+    this.loginUser =sessionStorage.getItem('id');
+
+    //본문
     this.writingDetail = this.$store.state.writingDetail;
     this.$store.commit('setWritingDetail', {})
 
     const maskingId = this.writingDetail.m_id.substring(0, 3);
     this.writer = `${this.writingDetail.name}(${maskingId}***)`;
 
-
+    //댓글
+    this.getCommentList();
   },
   methods: {
     backToList() {
       location.href = '/treasure';
     },
     writeComment() {
-      //댓글 저장
+      const comment = {
+        b_seq: this.writingDetail.b_seq,
+        m_id: this.loginUser,
+        content: this.newComment
+      }
+      axios.post(this.$store.state.url + 'comment', comment)
+          .then(response => {
+            console.log(response);
+            this.getCommentList();
+          })
+          .catch(error => {
+            console.log(error);
+          })
+    },
+    getCommentList() {
+      axios.get(this.$store.state.url + 'commentlist', {params: {seq: this.writingDetail.b_seq}})
+          .then(response => {
+            this.commentList = response.data.result;
+          })
+          .catch(error => {
+            console.log(error);
+          })
     }
   }
 }
