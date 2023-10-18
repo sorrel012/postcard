@@ -3,7 +3,7 @@
 
     <div class="p-3 mb-4 border rounded-end">
 
-      <div class="p-5 border-bottom pb-2">
+      <div class="p-5 pb-2">
         <div class="d-flex justify-content-between text-secondary">
           <div>
             <span class="me-3">{{ writer }}</span>
@@ -20,14 +20,17 @@
           <button type="button" class="btn btn-lg btn-success me-2">수정</button>
           <button type="button" class="btn btn-lg btn-danger">삭제</button>
         </div>
-      </div>
 
-      <!--댓글-->
+        <div class="text-end border-bottom pb-1 text-secondary">
+          <div><font-awesome-icon :icon="['fa', 'message']"  /> {{ commentCnt }}</div>
+        </div>
 
-      <div class="mt-4">
-        <div class="btn-group mb-2 w-100 overflow-auto ">
-          <textarea class="form-control resize-none" v-model="comment"></textarea>
-          <input type="button" class="btn btn-primary btn-lg" value="등록" @click="writeComment">
+        <!--댓글-->
+        <div class="mt-4">
+          <div class="btn-group mb-2 w-100 overflow-auto ">
+            <textarea class="form-control resize-none" v-model="comment"></textarea>
+            <input type="button" class="btn btn-primary btn-lg" value="등록" @click="writeComment">
+          </div>
         </div>
       </div>
 
@@ -51,6 +54,7 @@ export default {
     return {
       writingDetail: {},
       writer: '',
+      commentCnt: 0,
       loginUser: '',
       comment: '',
     }
