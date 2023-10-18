@@ -16,7 +16,7 @@
 
         <div class="mt-5 text-start fs-5" v-html="writingDetail.content"></div>
 
-        <div class="text-end mt-5 mb-4">
+        <div class="text-end mt-5 mb-4" v-if="writingDetail.m_id===loginUser">
           <button type="button" class="btn btn-lg btn-success me-2">수정</button>
           <button type="button" class="btn btn-lg btn-danger">삭제</button>
         </div>
@@ -35,7 +35,7 @@
           </div>
           <div class="text-start fs-5 mt-2">{{ comment.content }}</div>
 
-          <div class="text-end mt-2 ">
+          <div class="text-end mt-2" v-if="comment.m_id===loginUser">
             <button type="button" class="btn btn-sm btn-border me-2">수정</button>
             <button type="button" class="btn btn-sm btn-border">삭제</button>
           </div>
