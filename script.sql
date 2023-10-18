@@ -24,7 +24,7 @@ create table paper (
 	title VARCHAR(5000) not null,
 	code int unique not null,
 	regdate timestamp not null default current_timestamp,
-	isDelete varchar(1) not null default 'N',
+	is_deleted varchar(1) not null default 'N',
 	
 	m_id varchar(100) not null,	
 	constraint fk_mId foreign key(m_id) references member(m_id)
@@ -37,7 +37,7 @@ create table postcard (
 	content varchar(3000) not null,
 	regDate timestamp not null default current_timestamp,
 	textcolor VARCHAR(50) DEFAULT '#FFFFFF',
-	isDelete varchar(1) not null default 'N',
+	is_deleted varchar(1) not null default 'N',
 	
 	pcc_seq int not null,
 	constraint fk_pcc_seq foreign key(pcc_seq) references paper(pcc_seq)
@@ -51,11 +51,11 @@ create table TreasureBox (
 	content	varchar(5000)	not null,
 	regdate	timestamp	default current_timestamp,
 	hit	int	default 0,
+	is_deleted varchar(1) not null default 'N',
 	
 	m_id	varchar(100)	not null,
 	constraint fk_m_id foreign key(m_id) references member(m_id)
 );
-
 
 create table TbPic (
 	pic_url		varchar(500)	primary key,
@@ -76,7 +76,10 @@ create table TbComment (
 	constraint fk_b_seq foreign key(b_seq) references TreasureBox(b_seq),
 	
 	m_id	varchar(100)	not null,	
-	constraint fk_m_id foreign key(m_id) references member(m_id)
+	constraint fk_m_id foreign key(m_id) references member(m_id),
+	
+	
+	is_deleted varchar(1) not null default 'N'
 	
 );
 
@@ -99,8 +102,11 @@ create table TbcReply (
 	constraint fk_c_seq foreign key(c_seq) references TbComment(c_seq),	
 	
 	m_id	varchar(100)	not null,
-	constraint fk_m_id foreign key(m_id) references member(m_id)
-); 
+	constraint fk_m_id foreign key(m_id) references member(m_id),
+	
+	
+	is_deleted varchar(1) not null default 'N'
+);
 
 
 select * from member;

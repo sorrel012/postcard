@@ -5,7 +5,17 @@
 
     <select id="getList" parameterType="java.lang.Integer" resultType="com.postcard.toyou.model.PostcardModel">
         <![CDATA[
-            select * from postcard where isdelete='N' and pcc_seq=#{pccSeq} order by regdate
+            select
+                pc_seq,
+                content,
+                regdate,
+                textcolor,
+                is_deleted,
+                pcc_seq
+            from postcard
+                where is_deleted='N'
+                and pcc_seq=#{pccSeq}
+            order by regdate
         ]]>
     </select>
 
@@ -18,13 +28,17 @@
 
     <update id="deletePostcard" parameterType="java.lang.Integer">
         <![CDATA[
-            update postcard set isdelete='Y' where pc_seq=#{pc_seq}
+            update postcard
+                set is_deleted='Y'
+            where pc_seq=#{pc_seq}
         ]]>
     </update>
 
     <update id="deleteAllPostcards" parameterType="java.lang.Integer">
         <![CDATA[
-            update postcard set isdelete='Y' where pcc_seq=#{pcc_seq}
+            update postcard
+                set is_deleted='Y'
+            where pcc_seq=#{pcc_seq}
         ]]>
     </update>
 

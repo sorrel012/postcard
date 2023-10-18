@@ -5,7 +5,11 @@
 
     <select id="isUnique" parameterType="java.lang.Integer" resultType="java.lang.Integer">
         <![CDATA[
-            select count(*) as cnt from paper where code=#{code} and isdelete='N'
+            select
+                count(*) as cnt
+            from paper
+                where code=#{code}
+                and is_deleted='N'
         ]]>
     </select>
 
@@ -18,25 +22,58 @@
 
     <select id="getList" parameterType="java.lang.String" resultType="com.postcard.toyou.model.PaperModel">
         <![CDATA[
-            select * from paper where m_id=#{id} and isdelete='N' order by regdate
+            select
+                pcc_seq,
+                bgcolor,
+                pccolor,
+                pcbcolor,
+                pcborderpx,
+                pcbradiuspx,
+                title,
+                code,
+                regdate,
+                m_id
+            from paper
+                where m_id=#{id}
+                and is_deleted='N'
+            order by regdate
         ]]>
     </select>
 
     <select id="getCnt" parameterType="java.lang.Integer" resultType="java.lang.Integer">
         <![CDATA[
-            select count(*) from postcard where pcc_seq=#{seq} and isdelete='N'
+            select
+                count(*)
+            from postcard
+                where pcc_seq=#{seq}
+                and is_deleted='N'
         ]]>
     </select>
 
     <select id="getPaper" parameterType="java.lang.Integer" resultType="com.postcard.toyou.model.PaperModel">
         <![CDATA[
-            select * from paper where code=#{code} and isdelete='N'
+            select
+                pcc_seq,
+                bgcolor,
+                pccolor,
+                pcbcolor,
+                pcborderpx,
+                pcbradiuspx,
+                title,
+                code,
+                regdate,
+                m_id
+            from paper
+                where code=#{code}
+                and is_deleted='N'
         ]]>
     </select>
 
     <update id="deletePaper" parameterType="java.lang.Integer">
         <![CDATA[
-            update paper set isdelete='Y' where pcc_seq=#{pcc_seq}
+            update paper
+                set is_deleted='Y'
+            where pcc_seq=#{pcc_seq}
         ]]>
     </update>
 

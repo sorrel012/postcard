@@ -5,37 +5,63 @@
 
     <select id="selectRejoin" parameterType="java.util.ArrayList">
         <![CDATA[
-            select m_id from member where m_id=#{id} and deletedate is not null
+            select
+                m_id
+            from member
+                where m_id=#{id}
+                and deletedate is not null
         ]]>
     </select>
 
     <select id="selectDupId" parameterType="java.util.ArrayList">
         <![CDATA[
-            select m_id from member where m_id=#{id} and deletedate is null
+            select
+                m_id
+            from member
+                where m_id=#{id}
+                and deletedate is null
         ]]>
     </select>
 
     <select id="selectDupName" parameterType="java.util.ArrayList">
         <![CDATA[
-            select name from member where name=#{name} and deletedate is null
+            select
+                name
+            from member
+                where name=#{name}
+                and deletedate is null
         ]]>
     </select>
 
     <insert id="register" parameterType="com.postcard.toyou.model.MemberModel">
         <![CDATA[
-            insert into member (m_id, pw, name, tel, email, address, addressdetail, birth) values (#{id}, #{pw}, #{name}, #{tel}, #{email}, #{address}, #{addressDetail}, #{birth})
+            insert into member (m_id, pw, name, tel, email, address, addressdetail, birth)
+            values (#{id}, #{pw}, #{name}, #{tel}, #{email}, #{address}, #{addressDetail}, #{birth})
         ]]>
     </insert>
 
     <insert id="snsRegister" parameterType="com.postcard.toyou.model.MemberModel">
         <![CDATA[
-            insert into member (m_id, name, tel, email, address, addressdetail, birth) values (#{id}, #{name}, #{tel}, #{email}, #{address}, #{addressDetail}, #{birth})
+            insert into member (m_id, name, tel, email, address, addressdetail, birth)
+            values (#{id}, #{name}, #{tel}, #{email}, #{address}, #{addressDetail}, #{birth})
         ]]>
     </insert>
 
     <select id="login" parameterType="com.postcard.toyou.model.MemberModel" resultType="com.postcard.toyou.model.MemberModel">
         <![CDATA[
-            select * from member where m_id=#{id} and deletedate is null
+            select
+                m_id,
+                pw,
+                name,
+                address,
+                addressdetail,
+                tel,
+                email,
+                regdate,
+                birth
+            from member
+                where m_id=#{id}
+                and deletedate is null
         ]]>
     </select>
 
@@ -70,7 +96,11 @@
 
     <select id="getName">
         <![CDATA[
-            select name from member where m_id=#{id} and deletedate is null
+            select
+                name
+            from member
+                where m_id=#{id}
+                and deletedate is null
         ]]>
     </select>
 

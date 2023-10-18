@@ -6,7 +6,7 @@
     <select id="registPost" parameterType="com.postcard.toyou.model.TreasureBoxModel" resultType="java.lang.Integer">
         <![CDATA[
             insert into treasurebox (title, content, m_id)
-            values (#{title}, #{content}, #{m_id})
+                values (#{title}, #{content}, #{m_id})
             returning b_seq
         ]]>
     </select>
@@ -28,6 +28,7 @@
                 hit,
                 m_id
             from treasurebox
+                where is_deleted == 'N'
         ]]>
         <if test="selectedOption == 1">
             order by regdate desc
@@ -40,7 +41,7 @@
     <insert id="registComment" parameterType="com.postcard.toyou.model.TbCommentModel">
         <![CDATA[
             insert into tbcomment (content, b_seq, m_id)
-            values (#{content}, #{b_seq}, #{m_id})
+                values (#{content}, #{b_seq}, #{m_id})
         ]]>
     </insert>
 
@@ -54,6 +55,7 @@
                 m_id
             from tbcomment
                 where b_seq=#{seq}
+                and is_deleted == 'N'
             order by regdate asc
         ]]>
     </select>
