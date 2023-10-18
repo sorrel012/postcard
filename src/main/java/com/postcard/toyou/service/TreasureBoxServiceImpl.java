@@ -177,4 +177,24 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
         return ResponseEntity.ok(rModel);
     }
 
+    @Override
+    public ResponseEntity<ResultModel> increaseHit(int seq) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: increaseHit ::: int : {}", seq);
+        }
+
+        ResultModel rModel = new ResultModel();
+        int result = tbMapper.increaseHit(seq);
+        if (result == 1) {
+            rModel.setState(true);
+            rModel.setMessage("조회수가 증가하였습니다.");
+        } else {
+            rModel.setState(false);
+            rModel.setMessage("조회수 증가에 실패하였습니다.");
+        }
+
+        return ResponseEntity.ok(rModel);
+    }
+
 }

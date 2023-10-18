@@ -39,8 +39,8 @@
 
     <insert id="registComment" parameterType="com.postcard.toyou.model.TbCommentModel">
         <![CDATA[
-        insert into tbcomment (content, b_seq, m_id)
-        values (#{content}, #{b_seq}, #{m_id})
+            insert into tbcomment (content, b_seq, m_id)
+            values (#{content}, #{b_seq}, #{m_id})
         ]]>
     </insert>
 
@@ -57,5 +57,13 @@
             order by regdate asc
         ]]>
     </select>
+
+    <update id="increaseHit" parameterType="java.lang.Integer">
+        <![CDATA[
+            update treasurebox
+                set hit=hit+1
+            where b_seq=#{seq}
+        ]]>
+    </update>
 
 </mapper>

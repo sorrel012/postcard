@@ -78,10 +78,24 @@ export default {
   created() {
     this.loginUser =sessionStorage.getItem('id');
 
-    //본문
+    //게시글 정보 받기
     this.writingDetail = this.$store.state.writingDetail;
     this.$store.commit('setWritingDetail', {})
 
+    //조회수 올리기
+    axios.put(this.$store.state.url + 'hit', this.writingDetail.b_seq , {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          })
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error);
+        })
+
+    //작성자 이름
     const maskingId = this.writingDetail.m_id.substring(0, 3);
     this.writer = `${this.writingDetail.name}(${maskingId}***)`;
 

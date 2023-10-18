@@ -124,4 +124,14 @@ public class TreasureBoxController {
         return tbService.getCommentList(seq);
     }
 
+    @PutMapping("/hit")
+    public ResponseEntity<ResultModel> increaseHit(@RequestBody String seq) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: increaseHit ::: String : {}",  seq);
+        }
+
+        return tbService.increaseHit(Integer.valueOf(seq));
+    }
+
 }

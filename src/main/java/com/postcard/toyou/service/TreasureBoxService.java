@@ -13,5 +13,6 @@ public interface TreasureBoxService {
     ResponseEntity<ResultModel> getWritingList(int selectedOption);
     ResponseEntity<ResultModel> registComment(TbCommentModel tbcModel);
     ResponseEntity<ResultModel> getCommentList(int seq);
+    ResponseEntity<ResultModel> increaseHit(int seq);
 
 }

@@ -15,5 +15,6 @@ public interface TreasureBoxMapper {
     List<TreasureBoxModel> getWritingList(int selectedOption);
     int registComment(TbCommentModel tbcModel);
     List<TbCommentModel> getCommentList(int seq);
+    int increaseHit(int seq);
 
 }
