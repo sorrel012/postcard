@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -41,11 +43,17 @@ public class PaperServiceImpl implements PaperService {
         }
 
         ResultModel rModel = new ResultModel();
+        Map<String, Integer> returnResult = new HashMap<>();
+
+        returnResult.put("code", code);
+
         int result = pMapper.create(pModel);
-        if (result == 1) {
+        returnResult.put("pcc_seq", result);
+
+        if (result > 0) {
             rModel.setState(true);
             rModel.setMessage("도화지가 생성되었습니다.");
-            rModel.setResult(code);
+            rModel.setResult(returnResult);
         } else {
             rModel.setState(false);
             rModel.setMessage("도화지를 만들지 못하였습니다.");

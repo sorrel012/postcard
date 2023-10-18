@@ -13,12 +13,13 @@
         ]]>
     </select>
 
-    <insert id="create" parameterType="com.postcard.toyou.model.PaperModel">
+    <select id="create" parameterType="com.postcard.toyou.model.PaperModel" resultType="java.lang.Integer">
         <![CDATA[
             insert into paper(m_id, title, bgcolor, pccolor, pcborderpx, pcbcolor, pcbradiuspx, code)
                 values(#{id}, #{title}, #{bgColor}, #{pcColor}, #{pcBorderPx}, #{pcbColor}, #{pcbRadiusPx}, #{code})
+            returning pcc_seq
         ]]>
-    </insert>
+    </select>
 
     <select id="getList" parameterType="java.lang.String" resultType="com.postcard.toyou.model.PaperModel">
         <![CDATA[

@@ -66,7 +66,8 @@ export default {
         pcbColor: '#000000',
         pcBorderPx: '',
         pcbRadiusPx: '',
-        id: ''
+        id: '',
+        pcc_seq: 0
       },
       name: '',
       pcBorder: 2,
@@ -115,13 +116,15 @@ export default {
           .then(response => {
             console.log(response);
             if (response.data.state) {
+              this.paper.pcc_seq=response.data.result.pcc_seq;
+              this.$store.commit('setPaper', this.paper);
               Swal.fire({
                 icon: 'success',
-                title: response.data.result,
+                title: response.data.result.code,
                 text: response.data.message,
                 timer: 10000,
               }).then(() => {
-                location.href = '/mypaper';
+                router.push({name: 'mypaper'});
               });
             } else {
               Swal.fire({
