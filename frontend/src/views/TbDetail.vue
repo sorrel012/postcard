@@ -27,7 +27,7 @@
       <div class="mt-4">
         <div class="btn-group mb-2 w-100 overflow-auto ">
           <textarea class="form-control resize-none" v-model="comment"></textarea>
-          <input type="button" class="btn btn-primary" value="등록" @click="writeComment">
+          <input type="button" class="btn btn-primary btn-lg" value="등록" @click="writeComment">
         </div>
       </div>
 
