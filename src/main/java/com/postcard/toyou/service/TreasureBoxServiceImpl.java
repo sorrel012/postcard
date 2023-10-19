@@ -285,11 +285,18 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
 
         //게시글 삭제
         int result1 = tbMapper.deletePost(seq);
-        
-        //S3 서버에서 사진 삭제
+
         String content = tbMapper.getContent(seq);
         List<String> contentImg = getContentImg(content);
+
+        //S3 서버에서 사진 삭제
         s3Service.deleteImage(contentImg);
+
+        //DB에서 사진 삭제
+        for(String url : contentImg) {
+            String decodedUrl = s3Service.decodeUrl(url);
+            tbMapper.deletePostPic(decodedUrl);
+        }
 
         if(result1 > 0) {
 
