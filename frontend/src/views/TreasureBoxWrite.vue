@@ -11,7 +11,7 @@
 
       <input type="text" placeholder="제목을 입력해 주세요" class="form-control mb-4" style="height: 40px" required v-model="title">
 
-      <CkEditor @write="content=$event" @images="images=$event"/>
+      <CkEditor :initial-data="content" @write="content=$event" @images="images=$event"/>
 
       <div class="text-end mt-4 mb-4">
         <button type="submit" class="btn btn-primary me-2" v-if="postType==='write'"><font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #ffffff;" /> 등록</button>
@@ -55,9 +55,15 @@ export default {
       this.isMember = true;
     }
 
-    //수정인지 추가인지 확인
+    //수정인지 추가인지 확인하여 수정일 경우 본문 내용 보여주기
     this.postType = sessionStorage.getItem('postType');
     sessionStorage.removeItem('postType');
+
+    if(this.postType === 'edit') {
+      this.title = this.$store.state.postDetail.title;
+      this.content = this.$store.state.postDetail.content;
+      this.$store.commit('setPostDetail', {});
+    }
 
   },
   methods: {

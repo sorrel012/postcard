@@ -9,7 +9,7 @@
             <span class="me-3">{{ writer }}</span>
             <span>{{ postDetail.regdate }}</span>
           </div>
-          <div>{{ postDetail.hit }}</div>
+          <div>조회 {{ postDetail.hit }}</div>
         </div>
 
         <div class="border-bottom pb-3 mt-3 text-start fs-4 fw-bold">{{ postDetail.title }}</div>
@@ -135,8 +135,9 @@ export default {
           })
     },
     editPost() {
-      location.href='/treasure-write';
       sessionStorage.setItem('postType', 'edit');
+      this.$store.commit('setPostDetail', this.postDetail);
+      router.push({name: 'treasure-write'})
     },
     deletePost() {
       Swal.fire({
