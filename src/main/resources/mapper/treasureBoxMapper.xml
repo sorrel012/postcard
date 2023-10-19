@@ -84,6 +84,21 @@
         ]]>
     </update>
 
+    <update id="deleteReply" parameterType="java.lang.Integer">
+        <![CDATA[
+            update tbcreply
+                set is_deleted='Y'
+            where c_seq=#{c_seq}
+        ]]>
+    </update>
 
+    <select id="getContent" parameterType="java.lang.Integer" resultType="java.lang.String">
+        <![CDATA[
+            select
+                content
+            from treasurebox
+                where b_seq=#{seq}
+        ]]>
+    </select>
 
 </mapper>

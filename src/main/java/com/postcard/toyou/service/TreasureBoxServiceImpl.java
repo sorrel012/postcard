@@ -48,14 +48,7 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
         if(postResult>0 && !imageList.isEmpty()){
 
             //게시글 이미지 추출
-            List<String> contentImages = new ArrayList<>();
-            Document doc = Jsoup.parse(post.getContent());
-            Elements imageElements = doc.select("img");
-
-            for (Element imageElement : imageElements) {
-                String imageUrl = imageElement.attr("src");
-                contentImages.add(imageUrl);
-            }
+            List<String> contentImages = getContentImg(post.getContent());
 
             //업로드 후 삭제한 이미지 추출
             List<String> deletedImg = new ArrayList<>(imageList);
@@ -209,28 +202,28 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
 
         //게시글 삭제
         int result1 = tbMapper.deletePost(seq);
+        
+        //S3 서버에서 사진 삭제
+        String content = tbMapper.getContent(seq);
+        List<String> contentImg = getContentImg(content);
+        s3Service.deleteImage(contentImg);
 
         if(result1 > 0) {
-            
-            //댓글 list먼저 select하고 삭제, select한 댓글 seq 넘겨서 답글도 삭제
+
+            //답글 삭제를 위해 댓글list먼저 select
             List<TbCommentModel> comments = tbMapper.getCommentList(seq);
 
+            //댓글 삭제
+            tbMapper.deleteComment(seq);
+
+            //답글 삭제
             for (TbCommentModel comment : comments) {
-                tbMapper.deleteComment(seq);
+                tbMapper.deleteReply(comment.getC_seq());
             }
 
-//            int result3 = tbMapper.deleteReply(pccSeq);
-
-//            if (result2>0 && result3 > 0) {
-//                rModel.setState(true);
-//                rModel.setMessage("게시글을 삭제했습니다.");
-//                rModel.setResult(true);
-//
-//            } else {
-//                rModel.setState(false);
-//                rModel.setMessage("게시글을 삭제하지 못했습니다.");
-//                rModel.setResult(false);
-//            }
+            rModel.setState(true);
+            rModel.setMessage("게시글을 삭제했습니다.");
+            rModel.setResult(true);
 
         } else {
             rModel.setState(false);
@@ -239,6 +232,18 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
         }
 
         return ResponseEntity.ok(rModel);
+    }
+
+    public List<String> getContentImg(String content) {
+        List<String> contentImages = new ArrayList<>();
+        Document doc = Jsoup.parse(content);
+        Elements imageElements = doc.select("img");
+
+        for (Element imageElement : imageElements) {
+            String imageUrl = imageElement.attr("src");
+            contentImages.add(imageUrl);
+        }
+        return contentImages;
     }
 
 }

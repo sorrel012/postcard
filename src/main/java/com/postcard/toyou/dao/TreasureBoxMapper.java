@@ -18,5 +18,7 @@ public interface TreasureBoxMapper {
     int increaseHit(int seq);
     int deletePost(int seq);
     int deleteComment(int seq);
+    void deleteReply(int c_seq);
+    String getContent(int seq);
 
 }

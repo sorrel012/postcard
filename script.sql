@@ -114,6 +114,8 @@ select * from paper;
 select * from postcard;
 select * from treasurebox;
 select * from tbpic;
+select * from tbcomment;
+select * from tbcreply;
 
 
 
