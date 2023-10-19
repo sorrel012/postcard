@@ -133,7 +133,7 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
                 String imgName = s3Service.extractFileName(url).split("@")[1];
 
                 TbPicModel tbpModel = new TbPicModel();
-                tbpModel.setB_seq(postResult);
+                tbpModel.setB_seq(tbModel.getB_seq());
                 tbpModel.setPic_url(url);
                 tbpModel.setPic_name(imgName);
 
