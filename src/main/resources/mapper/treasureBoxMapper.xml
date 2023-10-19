@@ -118,4 +118,30 @@
         ]]>
     </select>
 
+    <select id="searchPost" parameterType="com.postcard.toyou.dto.SearchDTO" resultType="com.postcard.toyou.model.TreasureBoxModel">
+        <![CDATA[
+            select
+                b_seq,
+                title,
+                content,
+                regdate,
+                hit,
+                m_id
+            from treasurebox
+                where is_deleted='N'
+        ]]>
+        <if test="searchOption == 1">
+            and title like concat('%', #{searchKeyword}, '%' )
+        </if>
+        <if test="searchOption == 2">
+            and content like concat('%', #{searchKeyword}, '%' )
+        </if>
+        <if test="searchOption == 3">
+            and (title like concat('%', #{searchKeyword}, '%' ) or content like concat('%', #{searchKeyword}, '%' ))
+        </if>
+        <if test="searchOption == 4">
+            and m_id like concat('%', #{searchKeyword}, '%' )
+        </if>
+    </select>
+
 </mapper>

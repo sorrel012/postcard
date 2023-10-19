@@ -1,5 +1,6 @@
 package com.postcard.toyou.service;
 
+import com.postcard.toyou.dto.SearchDTO;
 import com.postcard.toyou.model.ResultModel;
 import com.postcard.toyou.model.TbCommentModel;
 import com.postcard.toyou.model.TreasureBoxModel;
@@ -16,5 +17,6 @@ public interface TreasureBoxService {
     ResponseEntity<ResultModel> getCommentList(int seq);
     ResponseEntity<ResultModel> increaseHit(int seq);
     ResponseEntity<ResultModel> deletePost(int seq);
+    ResponseEntity<ResultModel> searchPost(SearchDTO sDto);
 
 }

@@ -2,6 +2,7 @@ package com.postcard.toyou.service;
 
 import com.postcard.toyou.dao.MemberMapper;
 import com.postcard.toyou.dao.TreasureBoxMapper;
+import com.postcard.toyou.dto.SearchDTO;
 import com.postcard.toyou.model.*;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
@@ -335,6 +336,34 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
             contentImages.add(imageUrl);
         }
         return contentImages;
+    }
+
+    @Override
+    public ResponseEntity<ResultModel> searchPost(SearchDTO sDto) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: searchPost ::: SearchDTO : {}",  sDto.toString());
+        }
+
+        ResultModel rModel = new ResultModel();
+
+        List<TreasureBoxModel> wList = tbMapper.searchPost(sDto);
+        for(TreasureBoxModel tb : wList) {
+
+            String regdate = tb.getRegdate();
+            regdate = regdate.split(" ")[0];
+            tb.setRegdate(regdate);
+
+            tb.setName(mMapper.getName(tb.getM_id()));
+
+        }
+
+        rModel.setState(true);
+        rModel.setMessage("검색을 완료했습니다.");
+        rModel.setResult(wList);
+
+        return ResponseEntity.ok(rModel);
+
     }
 
 }

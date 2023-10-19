@@ -6,14 +6,20 @@
         <h2 class="fw-bold">보물상자🎁</h2>
       </div>
       <div class="btn-group mb-3">
-        <input type="text" class="form-control" placeholder="검색어를 입력해주세요.">
+        <select class="form-select w-35 me-1" v-model="searchOption">
+          <option value="1">제목</option>
+          <option value="2">내용</option>
+          <option value="3">제목+내용</option>
+          <option value="4">작성자</option>
+        </select>
+        <input type="text" class="form-control" placeholder="검색어를 입력해주세요." v-model="searchKeyword">
         <button type="button" class="btn btn-primary text-nowrap" @click="search()"><font-awesome-icon :icon="['fas', 'magnifying-glass']" beat style="color: #ffffff;" /></button>
       </div>
     </div>
 
     <div class="side-headline mt-4 mb-3">
       <div class="d-flex justify-content-between align-items-end">
-        <p class="mb-0">총 <span class="fw-bold">3</span>건</p>
+        <p class="mb-0">총 <span class="fw-bold">{{ postCnt }}</span>건</p>
         <div>
           <select class="form-select w-100" v-model="selectedOption" @change="getPosts">
             <option value="1">최신순</option>
@@ -44,6 +50,10 @@
           </tr>
         </tbody>
       </table>
+
+      <div class="text-center align-middle border-bottom" v-if="postCnt==0 && isSearch">
+        <div class="col-12 mt-5 mb-5">검색 결과가 없습니다.</div>
+      </div>
     </div>
     <div class="text-end mt-4">
       <button type="button" class="btn btn-primary" @click="write"><font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #ffffff;" /> 글쓰기</button>
@@ -83,7 +93,11 @@ export default {
     return {
       isMember: false,
       selectedOption: 1,
-      postList: []
+      postList: [],
+      postCnt: 0,
+      searchOption: 1,
+      searchKeyword: '',
+      isSearch: false,
     }
   },
   async created() {
@@ -109,20 +123,38 @@ export default {
       location.href='/treasure-write';
       sessionStorage.setItem('postType', 'write');
     },
-    //게시글 목록 받아오기
-    getPosts() {
+    getPosts() {  //게시글 목록 받아오기
       axios.get(this.$store.state.url + 'postlist', {params: {selectedOption: this.selectedOption}})
           .then(response => {
-            this.postList = response.data.result
+            this.postList = response.data.result;
+            this.postCnt = this.postList.length;
           })
           .catch(error => {
             console.log(error);
           })
     },
-    //상세페이지로 이동
-    postDetail(post) {
+    postDetail(post) {  //상세페이지로 이동
       this.$store.commit('setPostDetail', post)
       this.$router.push({ name: 'treasure-detail' })
+    },
+    search() {  //검색
+
+      const config = {
+        searchOption: this.searchOption,
+        searchKeyword: this.searchKeyword
+      }
+
+      this.isSearch = true;
+
+      axios.get(this.$store.state.url + 'search', {params: config})
+          .then(response => {
+            this.postList = response.data.result;
+            this.postCnt = this.postList.length;
+          })
+          .catch(error => {
+            console.log(error);
+          });
+
     }
   }
 }
@@ -133,5 +165,8 @@ export default {
 }
 .hover {
   cursor: pointer;
+}
+.w-35{
+  width: 35% !important;
 }
 </style>

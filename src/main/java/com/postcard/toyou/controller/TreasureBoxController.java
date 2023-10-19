@@ -1,6 +1,7 @@
 package com.postcard.toyou.controller;
 
 import com.postcard.toyou.config.TagFilterUtil;
+import com.postcard.toyou.dto.SearchDTO;
 import com.postcard.toyou.model.ResultModel;
 import com.postcard.toyou.model.TbCommentModel;
 import com.postcard.toyou.model.TreasureBoxModel;
@@ -179,6 +180,20 @@ public class TreasureBoxController {
         return tbService.deletePost(Integer.valueOf(seq));
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<ResultModel> searchPost(
+            @RequestParam int searchOption,
+            @RequestParam String searchKeyword) {
 
+        SearchDTO sDto = new SearchDTO();
+        sDto.setSearchOption(searchOption);
+        sDto.setSearchKeyword(searchKeyword);
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: searchPost ::: SearchDTO : {}",  sDto.toString());
+        }
+
+        return tbService.searchPost(sDto);
+    }
 
 }

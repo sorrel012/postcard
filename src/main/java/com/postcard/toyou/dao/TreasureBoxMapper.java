@@ -1,5 +1,6 @@
 package com.postcard.toyou.dao;
 
+import com.postcard.toyou.dto.SearchDTO;
 import com.postcard.toyou.model.TbCommentModel;
 import com.postcard.toyou.model.TbPicModel;
 import com.postcard.toyou.model.TreasureBoxModel;
@@ -22,4 +23,6 @@ public interface TreasureBoxMapper {
     int deleteComment(int seq);
     void deleteReply(int c_seq);
     String getContent(int seq);
+    List<TreasureBoxModel> searchPost(SearchDTO sDto);
+
 }
