@@ -8,6 +8,7 @@ public class TagFilterUtil {
             .allowElements("a", "p", "div", "img", "figure", "strong", "i", "u", "s", "span", "ul", "ol", "li")
             .allowUrlProtocols("https")
             .allowAttributes("src", "href").onElements("a", "img")
+            .allowAttributes("style", "class").onElements("figure")
             .requireRelNofollowOnLinks()
             .toFactory();
 
