@@ -27,11 +27,11 @@
         ]]>
     </insert>
 
-    <delete id="deletePostPic" parameterType="java.lang.Integer">
+    <delete id="deletePostPic" parameterType="java.lang.String">
         <![CDATA[
             delete from
                 tbpic
-            where b_seq=#{b_seq}
+            where pic_url=#{url}
         ]]>
     </delete>
 

@@ -102,19 +102,25 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
 
         ResultModel rModel = new ResultModel();
         
-        //수정하면서 삭제된 사진 확인하여 S3 서버에서 삭제
+        //수정하면서 삭제된 사진 확인
         String originContent = tbMapper.getContent(tbModel.getB_seq());
         List<String> originContentImg = getContentImg(originContent);           //기존 본문에 있던 사진들
         List<String> newContentImg = getContentImg(tbModel.getContent());       //새로 작성한 본문에 있는 사진들
-        List<String> editedImg = new ArrayList<>(originContentImg);
+
+        List<String> editedImg = new ArrayList<>(originContentImg); //삭제된 사진들
         editedImg.removeAll(newContentImg);
+
+        //S3에서 삭제
         s3Service.deleteImage(editedImg);
+
+        //DB에서 삭제
+        for(String img : editedImg) {
+            String decodedUrl = s3Service.decodeUrl(img);
+            tbMapper.deletePostPic(decodedUrl);
+        }
 
         //본문 DB 수정
         int postResult = tbMapper.editPost(tbModel);
-
-        //본문 사진 DB 삭제
-        tbMapper.deletePostPic(tbModel.getB_seq());
 
         //본문 내용 수정 성공 && 이미지를 업로드 한 적 있는지 확인
         int picResult = 1;
@@ -127,8 +133,16 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
             //AWS S3에서 이미지 삭제
             s3Service.deleteImage(deletedImg);
 
-            //게시글 이미지 DB 저장
-            for(String url : newContentImg) {
+            //새로운 게시글 이미지 DB 저장
+            List<String> retainedImg = new ArrayList<>(originContentImg);
+            retainedImg.retainAll(newContentImg);
+
+            List<String> newImgOnly = new ArrayList<>(newContentImg);
+            newImgOnly.removeAll(retainedImg);
+
+            System.out.println(newImgOnly);
+
+            for(String url : newImgOnly) {
                 url = s3Service.decodeUrl(url);
                 String imgName = s3Service.extractFileName(url).split("@")[1];
 
