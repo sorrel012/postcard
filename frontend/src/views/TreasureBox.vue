@@ -35,9 +35,9 @@
         </tr>
         </thead>
         <tbody>
-          <tr class="text-center align-middle" v-for="post in postList" :key="post.b_seq" @click="postDetail(post)">
+          <tr class="text-center align-middle hover" v-for="post in postList" :key="post.b_seq" @click="postDetail(post)">
             <td class="col-1 text-truncate">{{ post.b_seq }}</td>
-            <td class="col-5 text-truncate hover">{{ post.title }}</td>
+            <td class="col-5 text-truncate">{{ post.title }}</td>
             <td class="col-2 text-truncate">{{ post.name }}</td>
             <td class="col-2 text-truncate">{{ post.regdate }}</td>
             <td class="col-1 text-truncate">{{ post.hit }}</td>
