@@ -10,7 +10,6 @@ import com.postcard.toyou.service.S3FileUploadService;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -131,13 +130,21 @@ public class TreasureBoxController {
     }
 
     @GetMapping("/postlist")
-    public ResponseEntity<ResultModel> getPostList(@RequestParam int selectedOption) {
+    public ResponseEntity<ResultModel> getPostList(
+            @RequestParam int selectedOption,
+            @RequestParam int searchOption,
+            @RequestParam String searchKeyword) {
+
+        SearchDTO sDto = new SearchDTO();
+        sDto.setSearchOption(searchOption);
+        sDto.setSearchKeyword(searchKeyword);
+        sDto.setSelectedOption(selectedOption);
 
         if ( log.isDebugEnabled() ) {
-            log.debug("::: getPostList ::: int : {}",  selectedOption);
+            log.debug("::: searchPost ::: SearchDTO : {}",  sDto.toString());
         }
 
-        return tbService.getPostList(selectedOption);
+        return tbService.getPostList(sDto);
     }
 
     @PostMapping("/comment")
@@ -178,22 +185,6 @@ public class TreasureBoxController {
         }
 
         return tbService.deletePost(Integer.valueOf(seq));
-    }
-
-    @GetMapping("/search")
-    public ResponseEntity<ResultModel> searchPost(
-            @RequestParam int searchOption,
-            @RequestParam String searchKeyword) {
-
-        SearchDTO sDto = new SearchDTO();
-        sDto.setSearchOption(searchOption);
-        sDto.setSearchKeyword(searchKeyword);
-
-        if ( log.isDebugEnabled() ) {
-            log.debug("::: searchPost ::: SearchDTO : {}",  sDto.toString());
-        }
-
-        return tbService.searchPost(sDto);
     }
 
 }

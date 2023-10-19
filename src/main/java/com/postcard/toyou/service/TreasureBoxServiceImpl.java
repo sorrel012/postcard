@@ -196,15 +196,16 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
     }
 
     @Override
-    public ResponseEntity<ResultModel> getPostList(int selectedOption) {
+    public ResponseEntity<ResultModel> getPostList(SearchDTO sDto) {
+
 
         if ( log.isDebugEnabled() ) {
-            log.debug("::: getPostList ::: int : {}",  selectedOption);
+            log.debug("::: searchPost ::: SearchDTO : {}",  sDto.toString());
         }
 
         ResultModel rModel = new ResultModel();
 
-        List<TreasureBoxModel> wList = tbMapper.getPostList(selectedOption);
+        List<TreasureBoxModel> wList = tbMapper.getPostList(sDto);
         for(TreasureBoxModel tb : wList) {
 
             String regdate = tb.getRegdate();
@@ -220,7 +221,6 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
         rModel.setResult(wList);
 
         return ResponseEntity.ok(rModel);
-
     }
 
     @Override
@@ -336,34 +336,6 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
             contentImages.add(imageUrl);
         }
         return contentImages;
-    }
-
-    @Override
-    public ResponseEntity<ResultModel> searchPost(SearchDTO sDto) {
-
-        if ( log.isDebugEnabled() ) {
-            log.debug("::: searchPost ::: SearchDTO : {}",  sDto.toString());
-        }
-
-        ResultModel rModel = new ResultModel();
-
-        List<TreasureBoxModel> wList = tbMapper.searchPost(sDto);
-        for(TreasureBoxModel tb : wList) {
-
-            String regdate = tb.getRegdate();
-            regdate = regdate.split(" ")[0];
-            tb.setRegdate(regdate);
-
-            tb.setName(mMapper.getName(tb.getM_id()));
-
-        }
-
-        rModel.setState(true);
-        rModel.setMessage("검색을 완료했습니다.");
-        rModel.setResult(wList);
-
-        return ResponseEntity.ok(rModel);
-
     }
 
 }

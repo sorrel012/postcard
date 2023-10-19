@@ -12,11 +12,10 @@ public interface TreasureBoxService {
 
     ResponseEntity<ResultModel> registPost(TreasureBoxModel post, List<String> imageList);
     ResponseEntity<ResultModel> editPost(TreasureBoxModel tbModel, List<String> imageList);
-    ResponseEntity<ResultModel> getPostList(int selectedOption);
+    ResponseEntity<ResultModel> getPostList(SearchDTO sDto);
     ResponseEntity<ResultModel> registComment(TbCommentModel tbcModel);
     ResponseEntity<ResultModel> getCommentList(int seq);
     ResponseEntity<ResultModel> increaseHit(int seq);
     ResponseEntity<ResultModel> deletePost(int seq);
-    ResponseEntity<ResultModel> searchPost(SearchDTO sDto);
 
 }

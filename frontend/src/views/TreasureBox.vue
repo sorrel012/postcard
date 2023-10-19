@@ -13,7 +13,7 @@
           <option value="4">작성자</option>
         </select>
         <input type="text" class="form-control" placeholder="검색어를 입력해주세요." v-model="searchKeyword">
-        <button type="button" class="btn btn-primary text-nowrap" @click="search()"><font-awesome-icon :icon="['fas', 'magnifying-glass']" beat style="color: #ffffff;" /></button>
+        <button type="button" class="btn btn-primary text-nowrap" @click="getPosts()"><font-awesome-icon :icon="['fas', 'magnifying-glass']" beat style="color: #ffffff;" /></button>
       </div>
     </div>
 
@@ -116,7 +116,7 @@ export default {
     }
 
     //게시글 목록 받아오기
-    this.getPosts(this.selectedOption);
+    this.getPosts();
   },
   methods: {
     write() {
@@ -124,7 +124,14 @@ export default {
       sessionStorage.setItem('postType', 'write');
     },
     getPosts() {  //게시글 목록 받아오기
-      axios.get(this.$store.state.url + 'postlist', {params: {selectedOption: this.selectedOption}})
+
+      const config = {
+        searchOption: this.searchOption,
+        searchKeyword: this.searchKeyword,
+        selectedOption: this.selectedOption
+      }
+
+      axios.get(this.$store.state.url + 'postlist', {params: config})
           .then(response => {
             this.postList = response.data.result;
             this.postCnt = this.postList.length;
@@ -137,25 +144,6 @@ export default {
       this.$store.commit('setPostDetail', post)
       this.$router.push({ name: 'treasure-detail' })
     },
-    search() {  //검색
-
-      const config = {
-        searchOption: this.searchOption,
-        searchKeyword: this.searchKeyword
-      }
-
-      this.isSearch = true;
-
-      axios.get(this.$store.state.url + 'search', {params: config})
-          .then(response => {
-            this.postList = response.data.result;
-            this.postCnt = this.postList.length;
-          })
-          .catch(error => {
-            console.log(error);
-          });
-
-    }
   }
 }
 </script>

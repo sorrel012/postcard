@@ -15,7 +15,7 @@ public interface TreasureBoxMapper {
     int editPost(TreasureBoxModel tbModel);
     int registPic(TbPicModel tbpModel);
     void deletePostPic(String url);
-    List<TreasureBoxModel> getPostList(int selectedOption);
+    List<TreasureBoxModel> getPostList(SearchDTO sDto);
     int registComment(TbCommentModel tbcModel);
     List<TbCommentModel> getCommentList(int seq);
     int increaseHit(int seq);
@@ -23,6 +23,5 @@ public interface TreasureBoxMapper {
     int deleteComment(int seq);
     void deleteReply(int c_seq);
     String getContent(int seq);
-    List<TreasureBoxModel> searchPost(SearchDTO sDto);
 
 }

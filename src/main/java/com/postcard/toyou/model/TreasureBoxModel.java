@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class TreasureBoxModel {
     
-    private int b_seq;   //게시글 번호
+    private int b_seq;      //게시글 번호
     private String m_id;    //작성자 아이디
     private String title;   //제목
     private String content; //내용
