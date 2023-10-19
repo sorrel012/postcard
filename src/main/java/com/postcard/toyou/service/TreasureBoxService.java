@@ -10,6 +10,7 @@ import java.util.List;
 public interface TreasureBoxService {
 
     ResponseEntity<ResultModel> registPost(TreasureBoxModel post, List<String> imageList);
+    ResponseEntity<ResultModel> editPost(TreasureBoxModel tbModel, List<String> imageList);
     ResponseEntity<ResultModel> getPostList(int selectedOption);
     ResponseEntity<ResultModel> registComment(TbCommentModel tbcModel);
     ResponseEntity<ResultModel> getCommentList(int seq);

@@ -36,7 +36,8 @@ export default {
       content: '',
       title: '',
       images: [],
-      postType: ''
+      postType: '',
+      b_seq: 0,
     }
   },
   components: {
@@ -62,6 +63,7 @@ export default {
     if(this.postType === 'edit') {
       this.title = this.$store.state.postDetail.title;
       this.content = this.$store.state.postDetail.content;
+      this.b_seq = this.$store.state.postDetail.b_seq;
       this.$store.commit('setPostDetail', {});
     }
 
@@ -104,8 +106,34 @@ export default {
               .catch(error => {
                 console.log(error);
               });
-        } else if(this.postType === 'edit') {
-          //수정 처리
+        }
+        //기존 글 수정
+        else if(this.postType === 'edit') {
+          formData.append('b_seq', this.b_seq);
+
+          axios.put(this.$store.state.url + 'post', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          })
+              .then(response => {
+                console.log(response);
+                if (response.data.state) {
+                  Swal.fire({
+                    icon: 'success',
+                    title: response.data.message,
+                  });
+                  this.$router.push({name: 'treasure-box'});
+                } else {
+                  Swal.fire({
+                    icon: 'error',
+                    title: response.data.message,
+                  });
+                }
+              })
+              .catch(error => {
+                console.log(error);
+              });
         }
 
       } else {

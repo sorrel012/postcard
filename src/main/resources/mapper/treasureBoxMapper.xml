@@ -11,12 +11,29 @@
         ]]>
     </select>
 
+    <update id="editPost" parameterType="com.postcard.toyou.model.TreasureBoxModel">
+        <![CDATA[
+            update treasurebox
+                set title=#{title},
+                    content=#{content}
+            where b_seq=#{b_seq}
+        ]]>
+    </update>
+
     <insert id="registPic" parameterType="com.postcard.toyou.model.TbPicModel">
         <![CDATA[
             insert into tbpic (pic_url, pic_name, b_seq)
                 values (#{pic_url}, #{pic_name}, #{b_seq})
         ]]>
     </insert>
+
+    <delete id="deletePostPic" parameterType="java.lang.Integer">
+        <![CDATA[
+            delete from
+                tbpic
+            where b_seq=#{b_seq}
+        ]]>
+    </delete>
 
     <select id="getPostList" parameterType="java.lang.Integer" resultType="com.postcard.toyou.model.TreasureBoxModel">
         <![CDATA[

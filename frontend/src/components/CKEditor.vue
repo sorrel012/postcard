@@ -50,6 +50,7 @@ export default {
     return {
       editor: null,
       images: [],
+      content: this.initialData
     };
   },
   mounted() {
@@ -65,11 +66,11 @@ export default {
             return new MyUploadAdapter(loader, uploadUrl, component);
           };
 
-          editor.setData(component.initialData);
+          editor.setData(component.content);
 
           editor.model.document.on('change:data', () => {
-            component.initialData = editor.getData();
-            component.$emit('write', component.initialData);
+            component.content = editor.getData();
+            component.$emit('write', component.content);
             component.$emit('images', component.images);
           });
 

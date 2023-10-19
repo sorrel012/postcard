@@ -94,6 +94,41 @@ public class TreasureBoxController {
         return tbService.registPost(tbModel, imageList);
     }
 
+    @PutMapping("/post")
+    public ResponseEntity<ResultModel> editPost(
+            @RequestParam("content") String content,
+            @RequestParam("title") String title,
+            @RequestParam("id") String id,
+            @RequestParam("images") String images,
+            @RequestParam("b_seq") int b_seq
+            ) {
+
+        // 태그 필터링
+        content = TagFilterUtil.filter(content);
+
+        TreasureBoxModel tbModel = new TreasureBoxModel();
+        tbModel.setTitle(title);
+        tbModel.setContent(content);
+        tbModel.setM_id(id);
+        tbModel.setB_seq(b_seq);
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: editPost ::: TreasureBoxModel : {}",  tbModel.toString());
+        }
+
+        JSONArray jsonArray = new JSONArray(images);
+        List<String> imageList = new ArrayList<>();
+
+        if(jsonArray.length() > 0) {
+            for(int i = 0; i < jsonArray.length(); i++){
+                String imageUrl = jsonArray.getString(i);
+                imageList.add(imageUrl);
+            }
+        }
+
+        return tbService.editPost(tbModel, imageList);
+    }
+
     @GetMapping("/postlist")
     public ResponseEntity<ResultModel> getPostList(@RequestParam int selectedOption) {
 

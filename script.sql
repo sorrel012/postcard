@@ -118,7 +118,6 @@ select * from tbcomment;
 select * from tbcreply;
 
 
-
 ALTER TABLE public.paper ADD bgcolor VARCHAR(50) DEFAULT '#FFFFFF';
 ALTER TABLE public.paper ADD regdate timestamp not null default current_timestamp;
 

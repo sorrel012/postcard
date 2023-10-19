@@ -10,8 +10,10 @@ import java.util.List;
 @Mapper
 public interface TreasureBoxMapper {
 
-    int registPost(TreasureBoxModel post);
+    int registPost(TreasureBoxModel tbModel);
+    int editPost(TreasureBoxModel tbModel);
     int registPic(TbPicModel tbpModel);
+    void deletePostPic(int b_seq);
     List<TreasureBoxModel> getPostList(int selectedOption);
     int registComment(TbCommentModel tbcModel);
     List<TbCommentModel> getCommentList(int seq);
@@ -20,5 +22,4 @@ public interface TreasureBoxMapper {
     int deleteComment(int seq);
     void deleteReply(int c_seq);
     String getContent(int seq);
-
 }

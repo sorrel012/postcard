@@ -31,24 +31,24 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
 
     @Override
     @Transactional
-    public ResponseEntity<ResultModel> registPost(TreasureBoxModel post, List<String> imageList) {
+    public ResponseEntity<ResultModel> registPost(TreasureBoxModel tbModel, List<String> imageList) {
 
         if ( log.isDebugEnabled() ) {
-            log.debug("::: registPost ::: TreasureBoxModel : {}",  post.toString());
+            log.debug("::: registPost ::: TreasureBoxModel : {}",  tbModel.toString());
             log.debug("::: registPost ::: List<String> : {}",  imageList.toString());
         }
 
         ResultModel rModel = new ResultModel();
         
         //게시글 DB 저장
-        int postResult = tbMapper.registPost(post);
+        int postResult = tbMapper.registPost(tbModel);
         
         //본문 내용 저장 성공 && 이미지를 업로드 한 적 있는지 확인
         int picResult = 1;
         if(postResult>0 && !imageList.isEmpty()){
 
             //게시글 이미지 추출
-            List<String> contentImages = getContentImg(post.getContent());
+            List<String> contentImages = getContentImg(tbModel.getContent());
 
             //업로드 후 삭제한 이미지 추출
             List<String> deletedImg = new ArrayList<>(imageList);
@@ -86,6 +86,75 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
         } else {
             rModel.setState(false);
             rModel.setMessage("게시글 작성에 실패하였습니다.");
+        }
+
+        return ResponseEntity.ok(rModel);
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<ResultModel> editPost(TreasureBoxModel tbModel, List<String> imageList) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: editPost ::: TreasureBoxModel : {}",  tbModel.toString());
+            log.debug("::: editPost ::: List<String> : {}",  imageList.toString());
+        }
+
+        ResultModel rModel = new ResultModel();
+        
+        //수정하면서 삭제된 사진 확인하여 S3 서버에서 삭제
+        String originContent = tbMapper.getContent(tbModel.getB_seq());
+        List<String> originContentImg = getContentImg(originContent);           //기존 본문에 있던 사진들
+        List<String> newContentImg = getContentImg(tbModel.getContent());       //새로 작성한 본문에 있는 사진들
+        List<String> editedImg = new ArrayList<>(originContentImg);
+        editedImg.removeAll(newContentImg);
+        s3Service.deleteImage(editedImg);
+
+        //본문 DB 수정
+        int postResult = tbMapper.editPost(tbModel);
+
+        //본문 사진 DB 삭제
+        tbMapper.deletePostPic(tbModel.getB_seq());
+
+        //본문 내용 수정 성공 && 이미지를 업로드 한 적 있는지 확인
+        int picResult = 1;
+        if(postResult>0 && !imageList.isEmpty()){
+
+            //업로드 후 삭제한 이미지 추출
+            List<String> deletedImg = new ArrayList<>(imageList);
+            deletedImg.removeAll(newContentImg);
+
+            //AWS S3에서 이미지 삭제
+            s3Service.deleteImage(deletedImg);
+
+            //게시글 이미지 DB 저장
+            for(String url : newContentImg) {
+                url = s3Service.decodeUrl(url);
+                String imgName = s3Service.extractFileName(url).split("@")[1];
+
+                TbPicModel tbpModel = new TbPicModel();
+                tbpModel.setB_seq(postResult);
+                tbpModel.setPic_url(url);
+                tbpModel.setPic_name(imgName);
+
+                if ( log.isDebugEnabled() ) {
+                    log.debug("::: editPost ::: TbPicModel : {}",  tbpModel.toString());
+                }
+
+                picResult = tbMapper.registPic(tbpModel);
+                if(picResult != 1) {
+                    throw new RuntimeException("Image saving failed");
+                }
+
+            }
+        }
+
+        if (postResult>0 && picResult==1) {
+            rModel.setState(true);
+            rModel.setMessage("게시글이 수정되었습니다.");
+        } else {
+            rModel.setState(false);
+            rModel.setMessage("게시글 수정에 실패하였습니다.");
         }
 
         return ResponseEntity.ok(rModel);
@@ -236,6 +305,7 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
 
     public List<String> getContentImg(String content) {
         List<String> contentImages = new ArrayList<>();
+
         Document doc = Jsoup.parse(content);
         Elements imageElements = doc.select("img");
 
