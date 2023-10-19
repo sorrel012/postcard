@@ -135,7 +135,8 @@ export default {
           })
     },
     editPost() {
-
+      location.href='/treasure-write';
+      sessionStorage.setItem('postType', 'edit');
     },
     deletePost() {
       Swal.fire({

@@ -40,10 +40,15 @@ class MyUploadAdapter {
 
 export default {
   name: 'CKEditor',
+  props: {
+    initialData: {
+      type: String,
+      default: ''
+    }
+  },
   data() {
     return {
       editor: null,
-      initialData: '',
       images: [],
     };
   },

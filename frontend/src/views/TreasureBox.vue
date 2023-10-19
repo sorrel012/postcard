@@ -106,7 +106,8 @@ export default {
   },
   methods: {
     write() {
-      location.href='/treasure-write'
+      location.href='/treasure-write';
+      sessionStorage.setItem('postType', 'write');
     },
     //게시글 목록 받아오기
     getPosts() {

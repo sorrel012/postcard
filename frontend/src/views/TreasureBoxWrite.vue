@@ -14,7 +14,8 @@
       <CkEditor @write="content=$event" @images="images=$event"/>
 
       <div class="text-end mt-4 mb-4">
-        <button type="submit" class="btn btn-primary me-2"><font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #ffffff;" /> 등록</button>
+        <button type="submit" class="btn btn-primary me-2" v-if="postType==='write'"><font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #ffffff;" /> 등록</button>
+        <button type="submit" class="btn btn-primary me-2" v-if="postType==='edit'"><font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #ffffff;" /> 수정</button>
         <button type="button" class="btn btn-border" @click="backToList"><font-awesome-icon :icon="['fas', 'bars']" style="color: black;" /> 목록</button>
       </div>
     </form>
@@ -35,6 +36,7 @@ export default {
       content: '',
       title: '',
       images: [],
+      postType: ''
     }
   },
   components: {
@@ -53,6 +55,10 @@ export default {
       this.isMember = true;
     }
 
+    //수정인지 추가인지 확인
+    this.postType = sessionStorage.getItem('postType');
+    sessionStorage.removeItem('postType');
+
   },
   methods: {
     registPost() {
@@ -67,33 +73,35 @@ export default {
         formData.append('id', sessionStorage.getItem('id'));
         formData.append('images', JSON.stringify(this.images));
 
-        axios.post(this.$store.state.url + 'post', formData, {
-              headers: {
-                'Content-Type': 'multipart/form-data',
-              },
-            })
-            .then(response => {
-              console.log(response);
-              if (response.data.state) {
-                Swal.fire({
-                  icon: 'success',
-                  title: response.data.message,
-                });
-                this.$router.push({name: 'treasure-box'});
-              } else {
-                Swal.fire({
-                  icon: 'error',
-                  title: response.data.message,
-                });
-              }
-            })
-            .catch(error => {
-              console.log(error);
-              Swal.fire({
-                icon: 'error',
-                title: '게시글 작성에 실패했습니다',
+        // 새 글 작성
+        if(this.postType === 'write') {
+          axios.post(this.$store.state.url + 'post', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          })
+              .then(response => {
+                console.log(response);
+                if (response.data.state) {
+                  Swal.fire({
+                    icon: 'success',
+                    title: response.data.message,
+                  });
+                  this.$router.push({name: 'treasure-box'});
+                } else {
+                  Swal.fire({
+                    icon: 'error',
+                    title: response.data.message,
+                  });
+                }
+              })
+              .catch(error => {
+                console.log(error);
               });
-            });
+        } else if(this.postType === 'edit') {
+          //수정 처리
+        }
+
       } else {
         Swal.fire({
           icon: 'error',
