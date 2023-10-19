@@ -14,7 +14,8 @@
       <CkEditor @write="content=$event" @images="images=$event"/>
 
       <div class="text-end mt-4 mb-4">
-        <button type="submit" class="btn btn-primary"><font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #ffffff;" /> 등록</button>
+        <button type="submit" class="btn btn-primary me-2"><font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #ffffff;" /> 등록</button>
+        <button type="button" class="btn btn-border" @click="backToList"><font-awesome-icon :icon="['fas', 'bars']" style="color: black;" /> 목록</button>
       </div>
     </form>
 
@@ -105,4 +106,8 @@ export default {
 </script>
 
 <style>
+.btn-border {
+  background-color: white;
+  border-color: #797979;
+}
 </style>
