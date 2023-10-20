@@ -3,7 +3,7 @@
 
 <mapper namespace="com.postcard.toyou.dao.TreasureBoxMapper">
 
-    <select id="registPost" parameterType="com.postcard.toyou.model.TreasureBoxModel" resultType="java.lang.Integer">
+    <select id="registPost" parameterType="com.postcard.toyou.model.TreasureBoxModel" resultType="int">
         <![CDATA[
             insert into treasurebox (title, content, m_id)
                 values (#{title}, #{content}, #{m_id})
@@ -35,7 +35,7 @@
         ]]>
     </delete>
 
-    <select id="getPostList" parameterType="com.postcard.toyou.dto.SearchDTO" resultType="com.postcard.toyou.model.TreasureBoxModel">
+    <select id="getPostList" resultType="com.postcard.toyou.model.TreasureBoxModel">
         <![CDATA[
             select
                 b_seq,
@@ -47,24 +47,33 @@
             from treasurebox
                 where is_deleted='N'
         ]]>
-        <if test="searchOption == 1">
-            and title like concat('%', #{searchKeyword}, '%' )
+        <if test="search.searchOption == 1">
+            and title like concat('%', #{search.searchKeyword}, '%' )
         </if>
-        <if test="searchOption == 2">
-            and content like concat('%', #{searchKeyword}, '%' )
+        <if test="search.searchOption == 2">
+            and content like concat('%', #{search.searchKeyword}, '%' )
         </if>
-        <if test="searchOption == 3">
-            and (title like concat('%', #{searchKeyword}, '%' ) or content like concat('%', #{searchKeyword}, '%' ))
+        <if test="search.searchOption == 3">
+            and (title like concat('%', #{search.searchKeyword}, '%' ) or content like concat('%', #{search.searchKeyword}, '%' ))
         </if>
-        <if test="searchOption == 4">
-            and m_id like concat('%', #{searchKeyword}, '%' )
+        <if test="search.searchOption == 4">
+            and m_id like concat('%', #{search.searchKeyword}, '%' )
         </if>
-        <if test="selectedOption == 1">
+        <if test="search.selectedOption == 1">
             order by regdate desc
         </if>
-        <if test="selectedOption == 2">
+        <if test="search.selectedOption == 2">
             order by regdate asc
         </if>
+        LIMIT #{page.size}
+        OFFSET #{page.startRow}
+    </select>
+
+    <select id="getTotalPostCount" resultType="int">
+        select
+            count(*) as cnt
+        from treasurebox
+            where is_deleted='N'
     </select>
 
     <insert id="registComment" parameterType="com.postcard.toyou.model.TbCommentModel">

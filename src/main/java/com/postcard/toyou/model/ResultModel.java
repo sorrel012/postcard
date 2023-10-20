@@ -8,5 +8,6 @@ public class ResultModel {
     private Boolean state;
     private Object result;
     private String message;
+    private int totalRow;
 
 }

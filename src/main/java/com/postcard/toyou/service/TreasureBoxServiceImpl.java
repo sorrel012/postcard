@@ -1,5 +1,6 @@
 package com.postcard.toyou.service;
 
+import com.postcard.toyou.common.PageCriteria;
 import com.postcard.toyou.dao.MemberMapper;
 import com.postcard.toyou.dao.TreasureBoxMapper;
 import com.postcard.toyou.dto.SearchDTO;
@@ -196,16 +197,17 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
     }
 
     @Override
-    public ResponseEntity<ResultModel> getPostList(SearchDTO sDto) {
+    public ResponseEntity<ResultModel> getPostList(SearchDTO sDto, PageCriteria criteria) {
 
 
         if ( log.isDebugEnabled() ) {
             log.debug("::: searchPost ::: SearchDTO : {}",  sDto.toString());
+            log.debug("::: searchPost ::: PageCriteria : {}",  criteria.toString());
         }
 
         ResultModel rModel = new ResultModel();
 
-        List<TreasureBoxModel> wList = tbMapper.getPostList(sDto);
+        List<TreasureBoxModel> wList = tbMapper.getPostList(sDto, criteria);
         for(TreasureBoxModel tb : wList) {
 
             String regdate = tb.getRegdate();
@@ -216,9 +218,12 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
 
         }
 
+        int totalPostCount = tbMapper.getTotalPostCount();
+
         rModel.setState(true);
         rModel.setMessage("게시글 목록을 불러왔습니다.");
         rModel.setResult(wList);
+        rModel.setTotalRow(totalPostCount);
 
         return ResponseEntity.ok(rModel);
     }

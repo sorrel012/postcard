@@ -59,26 +59,13 @@
       <button type="button" class="btn btn-primary" @click="write"><font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #ffffff;" /> 글쓰기</button>
     </div>
 
-<!--    페이징-->
-<!--    <div class="d-flex justify-content-center mt-4">-->
-<!--      <div id="pagination-buttons">-->
-<!--        <button class="btn w-10" id="previous-button">&lt;&lt;</button>-->
-<!--      </div>-->
-<!--    </div>-->
-
-<!--    검색 -->
-<!--    <c:if test="${count == 0}">-->
-
-<!--      <hr>-->
-<!--      <div>-->
-<!--        <div class="text-center my-5 fs-2 fw-bold">검색 결과가 존재하지 않습니다.</div>-->
-<!--        <div class="w-100 d-flex justify-content-center" >-->
-<!--          <button type="button" class="btn btn-light btn-lg mb-5 text-dark" style="background-color : #ededed;" onclick="location.href='/listenlist.do'">전체 리스트 보기</button>-->
-<!--        </div>-->
-
-
-<!--      </div>-->
-<!--    </c:if>-->
+    <div class="d-flex justify-content-center mt-4">
+      <div id="pagination-buttons">
+        <button class="btn w-10" @click="prevPage" :disabled="pageNo <= 1">&lt;&lt;</button>
+        <span class="mx-3">{{ pageNo }} / {{ totalPage }}</span>
+        <button class="btn w-10" @click="nextPage" :disabled="pageNo >= totalPage">&gt;&gt;</button>
+      </div>
+    </div>
 
   </section>
 
@@ -91,13 +78,16 @@ export default {
   name:'TreasureBox',
   data() {
     return {
-      isMember: false,
-      selectedOption: 1,
-      postList: [],
-      postCnt: 0,
-      searchOption: 1,
-      searchKeyword: '',
-      isSearch: false,
+      isMember: false,    // 회원 여부
+      selectedOption: 1,  // 정렬 기준
+      postList: [],       // 게시글 목록
+      postCnt: 0,         // 게시글 수
+      searchOption: 1,    // 검색 기준
+      searchKeyword: '',  // 검색어
+      isSearch: false,    // 검색여부
+      pageNo: 1,          // 현재 페이지 번호
+      totalPage: 0,       // 전체 페이지 수
+      pageSize: 10,       // 페이지당 게시물 수
     }
   },
   async created() {
@@ -128,13 +118,16 @@ export default {
       const config = {
         searchOption: this.searchOption,
         searchKeyword: this.searchKeyword,
-        selectedOption: this.selectedOption
+        selectedOption: this.selectedOption,
+        pageNo: this.pageNo,
+        size: this.pageSize
       }
 
       axios.get(this.$store.state.url + 'postlist', {params: config})
           .then(response => {
             this.postList = response.data.result;
-            this.postCnt = this.postList.length;
+            this.postCnt = response.data.totalRow;
+            this.totalPage = Math.ceil(this.postCnt / this.pageSize);
           })
           .catch(error => {
             console.log(error);
@@ -144,6 +137,18 @@ export default {
       this.$store.commit('setPostDetail', post)
       this.$router.push({ name: 'treasure-detail' })
     },
+    prevPage() {
+      if (this.pageNo > 1) {
+        this.pageNo--;
+        this.getPosts();
+      }
+    },
+    nextPage() {
+      if (this.pageNo < this.totalPage) {
+        this.pageNo++;
+        this.getPosts();
+      }
+    }
   }
 }
 </script>

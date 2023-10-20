@@ -3,7 +3,7 @@
 
 <mapper namespace="com.postcard.toyou.dao.PaperMapper">
 
-    <select id="isUnique" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    <select id="isUnique" parameterType="java.lang.Integer" resultType="int">
         <![CDATA[
             select
                 count(*) as cnt
@@ -13,7 +13,7 @@
         ]]>
     </select>
 
-    <select id="create" parameterType="com.postcard.toyou.model.PaperModel" resultType="java.lang.Integer">
+    <select id="create" parameterType="com.postcard.toyou.model.PaperModel" resultType="int">
         <![CDATA[
             insert into paper(m_id, title, bgcolor, pccolor, pcborderpx, pcbcolor, pcbradiuspx, code)
                 values(#{id}, #{title}, #{bgColor}, #{pcColor}, #{pcBorderPx}, #{pcbColor}, #{pcbRadiusPx}, #{code})
@@ -41,7 +41,7 @@
         ]]>
     </select>
 
-    <select id="getCnt" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    <select id="getCnt" parameterType="java.lang.Integer" resultType="int">
         <![CDATA[
             select
                 count(*)

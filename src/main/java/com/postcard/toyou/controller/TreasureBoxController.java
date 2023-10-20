@@ -1,5 +1,6 @@
 package com.postcard.toyou.controller;
 
+import com.postcard.toyou.common.PageCriteria;
 import com.postcard.toyou.config.TagFilterUtil;
 import com.postcard.toyou.dto.SearchDTO;
 import com.postcard.toyou.model.ResultModel;
@@ -133,18 +134,29 @@ public class TreasureBoxController {
     public ResponseEntity<ResultModel> getPostList(
             @RequestParam int selectedOption,
             @RequestParam int searchOption,
-            @RequestParam String searchKeyword) {
+            @RequestParam String searchKeyword,
+            @RequestParam int pageNo,
+            @RequestParam int size) {
 
+        //검색 조건
         SearchDTO sDto = new SearchDTO();
         sDto.setSearchOption(searchOption);
         sDto.setSearchKeyword(searchKeyword);
+
+        //정렬 조건
         sDto.setSelectedOption(selectedOption);
+
+        // 페이징
+        PageCriteria criteria = new PageCriteria();
+        criteria.setPageNo(pageNo);
+        criteria.setSize(size);
 
         if ( log.isDebugEnabled() ) {
             log.debug("::: searchPost ::: SearchDTO : {}",  sDto.toString());
+            log.debug("::: searchPost ::: PageCriteria : {}",  criteria.toString());
         }
 
-        return tbService.getPostList(sDto);
+        return tbService.getPostList(sDto, criteria);
     }
 
     @PostMapping("/comment")
