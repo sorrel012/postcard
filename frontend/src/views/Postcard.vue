@@ -1,6 +1,10 @@
 <template>
   <div class="p-5 h-100 w-100">
 
+    <div class="mt-4">
+      <img src="@/assets/postcard_banner.png" class="img-fluid" alt="main-banner">
+    </div>
+
     <div :class="{'mt-4':true, 'fs-1':true, 'f-bold':true, 'd-none': !isLoading}" @click="inputCode">
       <button class="btn btn-danger w-50">전하기 💌</button>
     </div>
