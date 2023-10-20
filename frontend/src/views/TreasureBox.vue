@@ -59,13 +59,24 @@
       <button type="button" class="btn btn-primary" @click="write"><font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #ffffff;" /> 글쓰기</button>
     </div>
 
-    <div class="d-flex justify-content-center mt-4">
-      <div id="pagination-buttons">
-        <button class="btn w-10" @click="prevPage" :disabled="pageNo <= 1">&lt;&lt;</button>
-        <span class="mx-3">{{ pageNo }} / {{ totalPage }}</span>
-        <button class="btn w-10" @click="nextPage" :disabled="pageNo >= totalPage">&gt;&gt;</button>
-      </div>
-    </div>
+    <nav aria-label="Page navigation" class="mt-4">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" :class="{ 'disabled': pageNo <= 1 }">
+          <a class="page-link" href="#" @click.prevent="prevPage" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li v-for="page in totalPage" :key="page" class="page-item" :class="{ 'active': pageNo == page }">
+          <a class="page-link" href="#" @click.prevent="goToPage(page)">{{ page }}</a>
+        </li>
+        <li class="page-item" :class="{ 'disabled': pageNo >= totalPage }">
+          <a class="page-link" href="#" @click.prevent="nextPage" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
 
   </section>
 
@@ -148,6 +159,10 @@ export default {
         this.pageNo++;
         this.getPosts();
       }
+    },
+    goToPage(pageNo) {
+      this.pageNo = pageNo;
+      this.getPosts();
     }
   }
 }
@@ -162,4 +177,15 @@ export default {
 .w-35{
   width: 35% !important;
 }
+.active>.page-link {
+  background-color: rgb(194, 184, 184) !important;
+  border-color: rgb(194, 184, 184) !important;
+}
+.page-link, .page-link:hover {
+  color: rgb(122, 107, 107);
+}
+.page-link:focus {
+  box-shadow: none
+}
+.disabled {}
 </style>
