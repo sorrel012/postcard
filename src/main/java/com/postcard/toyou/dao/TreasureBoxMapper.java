@@ -18,7 +18,7 @@ public interface TreasureBoxMapper {
     int registPic(TbPicModel tbpModel);
     void deletePostPic(String url);
     List<TreasureBoxModel> getPostList(@Param("search") SearchDTO sDto, @Param("page") PageCriteria criteria);
-    int getTotalPostCount();
+    int getTotalPostCount(SearchDTO sDto);
     int registComment(TbCommentModel tbcModel);
     List<TbCommentModel> getCommentList(int seq);
     int increaseHit(int seq);

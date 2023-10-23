@@ -51,7 +51,7 @@
         </tbody>
       </table>
 
-      <div class="text-center align-middle border-bottom" v-if="postCnt==0 && isSearch">
+      <div class="text-center align-middle border-bottom" v-if="postCnt===0 && isSearch">
         <div class="col-12 mt-5 mb-5">검색 결과가 없습니다.</div>
       </div>
     </div>

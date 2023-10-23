@@ -217,8 +217,9 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
             tb.setName(mMapper.getName(tb.getM_id()));
 
         }
+        System.out.println("ㅠㅠ" + wList);
 
-        int totalPostCount = tbMapper.getTotalPostCount();
+        int totalPostCount = tbMapper.getTotalPostCount(sDto);
 
         rModel.setState(true);
         rModel.setMessage("게시글 목록을 불러왔습니다.");

@@ -66,14 +66,28 @@
             order by regdate asc
         </if>
         LIMIT #{page.size}
-        OFFSET #{page.startRow}
+        OFFSET ( #{page.startRow} -1 ) *10
     </select>
 
     <select id="getTotalPostCount" resultType="int">
-        select
-            count(*) as cnt
-        from treasurebox
-            where is_deleted='N'
+        <![CDATA[
+            select
+                count(*) as cnt
+            from treasurebox
+                where is_deleted='N'
+        ]]>
+        <if test="searchOption == 1">
+            and title like concat('%', #{searchKeyword}, '%' )
+        </if>
+        <if test="searchOption == 2">
+            and content like concat('%', #{searchKeyword}, '%' )
+        </if>
+        <if test="searchOption == 3">
+            and (title like concat('%', #{searchKeyword}, '%' ) or content like concat('%', #{searchKeyword}, '%' ))
+        </if>
+        <if test="searchOption == 4">
+            and m_id like concat('%', #{searchKeyword}, '%' )
+        </if>
     </select>
 
     <insert id="registComment" parameterType="com.postcard.toyou.model.TbCommentModel">
