@@ -66,7 +66,7 @@
             <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
-        <li v-for="page in totalPage" :key="page" class="page-item" :class="{ 'active': pageNo == page }">
+        <li v-for="page in totalPage" :key="page" class="page-item" :class="{ 'active': pageNo === page }">
           <a class="page-link" href="#" @click.prevent="goToPage(page)">{{ page }}</a>
         </li>
         <li class="page-item" :class="{ 'disabled': pageNo >= totalPage }">
@@ -105,7 +105,7 @@ export default {
     document.body.style.backgroundColor = '#FFFFFF';
 
     const id = sessionStorage.getItem('id');
-    if(id == null || id == '') {
+    if(id == null || id === '') {
       await Swal.fire({
         icon: 'error',
         title: '로그인 후 이용하실 수 있습니다',
@@ -125,6 +125,10 @@ export default {
       sessionStorage.setItem('postType', 'write');
     },
     getPosts() {  //게시글 목록 받아오기
+
+      if(this.searchKeyword != null || this.searchKeyword !== '') {
+        this.isSearch = true;
+      }
 
       const config = {
         searchOption: this.searchOption,
