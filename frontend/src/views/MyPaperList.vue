@@ -12,7 +12,10 @@
           </div>
         </div>
       </div>
-      <table class="container-lg table table-hover mt-5">
+
+      <p class="mt-3 text-end">총 {{ paperCnt }}건</p>
+
+      <table class="container-lg table table-hover">
         <thead class="table-light">
         <tr class="text-center">
           <th class="col-3 text-wrap">제목</th>
