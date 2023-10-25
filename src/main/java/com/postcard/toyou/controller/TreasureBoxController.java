@@ -199,4 +199,14 @@ public class TreasureBoxController {
         return tbService.deletePost(Integer.valueOf(seq));
     }
 
+    @GetMapping("mypostlist")
+    public ResponseEntity<ResultModel> getMyPostList(@RequestParam String id) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: deletePost ::: String : {}",  id);
+        }
+
+        return tbService.getMyPostList(id);
+    }
+
 }

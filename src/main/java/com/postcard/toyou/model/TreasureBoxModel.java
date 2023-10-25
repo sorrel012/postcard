@@ -12,6 +12,7 @@ public class TreasureBoxModel {
     private String regdate; //작성시간
     private int hit;        //조회수
 
-    private String name;    //작성자 이름;
+    private String name;    //작성자 이름
+    private int commentCnt; //댓글 수
     
 }

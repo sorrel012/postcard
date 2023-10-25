@@ -97,7 +97,7 @@
         ]]>
     </insert>
 
-    <select id="getCommentList" parameterType="java.lang.Integer" resultType="com.postcard.toyou.model.TbCommentModel">
+    <select id="getCommentList" parameterType="int" resultType="com.postcard.toyou.model.TbCommentModel">
         <![CDATA[
             select
                 c_seq,
@@ -112,7 +112,7 @@
         ]]>
     </select>
 
-    <update id="increaseHit" parameterType="java.lang.Integer">
+    <update id="increaseHit" parameterType="int">
         <![CDATA[
             update treasurebox
                 set hit=hit+1
@@ -120,7 +120,7 @@
         ]]>
     </update>
 
-    <update id="deletePost" parameterType="java.lang.Integer">
+    <update id="deletePost" parameterType="int">
         <![CDATA[
             update treasurebox
                 set is_deleted='Y'
@@ -128,7 +128,7 @@
         ]]>
     </update>
 
-    <update id="deleteComment" parameterType="java.lang.Integer">
+    <update id="deleteComment" parameterType="int">
         <![CDATA[
             update tbcomment
                 set is_deleted='Y'
@@ -136,7 +136,7 @@
         ]]>
     </update>
 
-    <update id="deleteReply" parameterType="java.lang.Integer">
+    <update id="deleteReply" parameterType="int">
         <![CDATA[
             update tbcreply
                 set is_deleted='Y'
@@ -144,7 +144,7 @@
         ]]>
     </update>
 
-    <select id="getContent" parameterType="java.lang.Integer" resultType="java.lang.String">
+    <select id="getContent" parameterType="int" resultType="java.lang.String">
         <![CDATA[
             select
                 content
@@ -152,5 +152,27 @@
                 where b_seq=#{seq}
         ]]>
     </select>
+
+    <select id="getMyPostList" parameterType="int" resultType="com.postcard.toyou.model.TreasureBoxModel">
+        select
+            b_seq,
+            title,
+            content,
+            regdate,
+            hit,
+            m_id
+        from treasurebox
+            where is_deleted='N'
+        order by regdate desc
+    </select>
+
+    <select id="getCommmentCnt" parameterType="int" resultType="int">
+        select
+            count(*) as cnt
+        from tbComment
+            where is_deleted='N'
+            and b_seq=#{seq}
+    </select>
+
 
 </mapper>

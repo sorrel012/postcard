@@ -344,4 +344,33 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
         return contentImages;
     }
 
+    @Override
+    public ResponseEntity<ResultModel> getMyPostList(String id) {
+
+        ResultModel rModel = new ResultModel();
+
+        List<TreasureBoxModel> plist = tbMapper.getMyPostList(id);
+        for(TreasureBoxModel tb : plist) {
+
+            int seq = tb.getB_seq();
+            int cnt = tbMapper.getCommmentCnt(seq);
+            tb.setCommentCnt(cnt);
+
+            String regdate = tb.getRegdate();
+            regdate = regdate.split(" ")[0];
+            tb.setRegdate(regdate);
+
+        }
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: getPostList ::: String : {}",  id);
+        }
+
+        rModel.setState(true);
+        rModel.setMessage("게시글 목록을 불러왔습니다.");
+        rModel.setResult(plist);
+
+        return ResponseEntity.ok(rModel);
+    }
+
 }

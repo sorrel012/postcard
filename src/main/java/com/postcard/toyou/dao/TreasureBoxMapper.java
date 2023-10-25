@@ -26,5 +26,7 @@ public interface TreasureBoxMapper {
     int deleteComment(int seq);
     void deleteReply(int c_seq);
     String getContent(int seq);
+    List<TreasureBoxModel> getMyPostList(String id);
+    int getCommmentCnt(int seq);
 
 }

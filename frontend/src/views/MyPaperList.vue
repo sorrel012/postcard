@@ -55,34 +55,34 @@ import Swal from "sweetalert2";
 import MyPageSidebar from '@/components/MypageSidebar.vue';
 import MyPageNavbar from "@/components/MyPageNavbar.vue";
 
-export default {
-  name: 'MyPaper',
-  data() {
-    return {
-      paperlist: [],
-      isMember: false,
-    }
-  },
-  components: {
-    MyPageNavbar,
-    MyPageSidebar
-  },
-  async created() {
-    const id = sessionStorage.getItem('id');
-    if(id == null || id == '') {
-      await Swal.fire({
-        icon: 'error',
-        title: '로그인 후 이용하실 수 있습니다',
-      })
-      location.href='/login';
-      return
-    } else {
-      this.isMember = true;
-    }
+  export default {
+    name: 'MyPaper',
+    data() {
+      return {
+        paperlist: [],
+        isMember: false,
+      }
+    },
+    components: {
+      MyPageNavbar,
+      MyPageSidebar
+    },
+    async created() {
+      const id = sessionStorage.getItem('id');
+      if(id == null || id == '') {
+        await Swal.fire({
+          icon: 'error',
+          title: '로그인 후 이용하실 수 있습니다',
+        })
+        location.href='/login';
+        return
+      } else {
+        this.isMember = true;
+      }
 
-    document.body.style.backgroundColor = 'rgb(255, 255, 255)';
-    this.getPapers();
-  },
+      document.body.style.backgroundColor = 'rgb(255, 255, 255)';
+      this.getPapers();
+    },
   mounted() {
     document.body.style.backgroundColor = '#fffff';
   },

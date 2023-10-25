@@ -68,7 +68,13 @@ const routes = [
     path: '/treasure-detail',
     name: 'treasure-detail',
     component: () => import('@/views/TbDetail.vue')
-  }
+  },
+  {
+    path: '/mypostlist',
+    name: 'mypostlist',
+    component: () => import('@/views/MyPost.vue')
+  },
+
 ]
 
 const router = new VueRouter({
