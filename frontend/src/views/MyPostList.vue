@@ -73,7 +73,7 @@ import Swal from "sweetalert2";
 import axios from "axios";
 
 export default {
-  name: 'MyPost',
+  name: 'MyPostList',
   data() {
     return {
       postlist: [],       // 게시글 목록
