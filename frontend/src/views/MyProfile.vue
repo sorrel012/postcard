@@ -437,7 +437,7 @@ export default {
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!',
+        confirmButtonText: 'Delete',
         preConfirm: () => {
           return axios.delete(this.$store.state.url + 'deleteaccount', {params: {id : this.userinfo.id}})
               .catch(error => {

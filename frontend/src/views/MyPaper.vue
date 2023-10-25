@@ -72,7 +72,7 @@ export default {
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!',
+        confirmButtonText: 'Delete',
         preConfirm: () => {
           return axios.delete(this.$store.state.url + 'postcard', {params: {pc_seq : postcard.pc_seq}})
               .then(response => {
