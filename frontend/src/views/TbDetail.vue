@@ -28,7 +28,7 @@
 <!--        <div v-for="comment in commentList" :key="comment.c_seq">-->
 <!--          -->
 <!--        </div>-->
-        <div class="mt-3 p-3 text-start text-bg-light rounded" v-for="comment in commentList" :key="commentList.c_seq">
+        <div class="mt-3 p-3 text-start text-bg-light rounded" v-for="comment in commentList" :key="commentList.c_seq" :id="`comment-${comment.c_seq}`">
           <div class="text-secondary">
             <span class="me-3">{{ comment.writer }}</span>
             <span>{{ comment.regdate }}</span>
@@ -37,7 +37,7 @@
 
           <div class="text-end mt-2" v-if="comment.m_id===loginUser">
             <button type="button" class="btn btn-sm btn-border me-2">수정</button>
-            <button type="button" class="btn btn-sm btn-border"">삭제</button>
+            <button type="button" class="btn btn-sm btn-border">삭제</button>
           </div>
         </div>
 
@@ -82,6 +82,7 @@ export default {
 
     //게시글 정보 받기
     this.postDetail = this.$store.state.postDetail;
+    this.$store.commit('setPostDetail', {})
 
     //조회수 올리기
     axios.put(this.$store.state.url + 'hit', this.postDetail.b_seq , {
@@ -102,6 +103,21 @@ export default {
 
     //댓글
     this.getCommentList();
+  },
+  watch: {
+    commentList() { //해당 댓글 위치로 스크롤
+      this.$nextTick(() => {
+        if (this.$route.query.commentId) {
+          const commentElement = document.getElementById(`comment-${this.$route.query.commentId}`);
+          console.log('흑:', commentElement);
+          if (commentElement) {
+            console.log("Scrolling to:", `comment-${this.$route.query.commentId}`);
+            commentElement.scrollIntoView({ behavior: 'smooth' });
+          }
+
+        }
+      });
+    }
   },
   methods: {
     backToList() {

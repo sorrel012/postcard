@@ -125,7 +125,7 @@ export default {
       axios.get(this.$store.state.url + 'post', {params: {seq: comment.b_seq}})
           .then(response => {
             this.$store.commit('setPostDetail', response.data.result);
-            this.$router.push({name: 'treasure-detail'});
+            this.$router.push({name: 'treasure-detail', query: { commentId: comment.c_seq }});
           })
           .catch(error => {
             console.log(error);
