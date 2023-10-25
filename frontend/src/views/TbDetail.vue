@@ -77,12 +77,19 @@ export default {
       newComment: '',
     }
   },
-  created() {
+  async created() {
     this.loginUser =sessionStorage.getItem('id');
 
     //게시글 정보 받기
-    this.postDetail = this.$store.state.postDetail;
-    this.$store.commit('setPostDetail', {})
+    const b_seq = this.$route.query.seq;
+    await axios.get(this.$store.state.url + 'post', {params: {seq: b_seq}})
+              .then(response => {
+                console.log(response);
+                this.postDetail = response.data.result;
+              })
+              .catch(error => {
+                console.log(error);
+              })
 
     //조회수 올리기
     axios.put(this.$store.state.url + 'hit', this.postDetail.b_seq , {

@@ -41,14 +41,21 @@ export default {
       this.isMember = true;
     }
 
-    this.paper = this.$store.state.paper;
-    document.body.style.backgroundColor = this.paper.bgColor;
+    //도화지 정보 받기
+    const seq = this.$route.query.code;
+    await axios.get(this.$store.state.url + 'paper', {params: {code: seq}})
+        .then(response => {
+          this.paper = response.data.result;
+        })
+        .catch(error => {
+          console.log(error);
+        })
 
+    document.body.style.backgroundColor = this.paper.bgColor;
     this.getPostcards(this.paper);
   },
   methods: {
     getPostcards(paper) {
-      console.log(paper.pcc_seq);
       axios.get(this.$store.state.url + 'postcardlist', {params: {pcc_seq: paper.pcc_seq}})
           .then(response => {
             this.postcards = response.data.result;

@@ -123,8 +123,7 @@ export default {
           })
     },
     mypaper(paper) {
-      this.$store.commit('setPaper', paper);
-      this.$router.push({name: 'mypaper'});
+      this.$router.push({ name: 'mypaper', query: {code: paper.code} })
     },
     deletePaper(paper) {
       Swal.fire({

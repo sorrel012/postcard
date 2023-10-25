@@ -148,8 +148,7 @@ export default {
           })
     },
     postDetail(post) {  //상세페이지로 이동
-      this.$store.commit('setPostDetail', post)
-      this.$router.push({ name: 'treasure-detail' })
+      this.$router.push({ name: 'treasure-detail', query: {seq: post.b_seq} })
     },
     prevPage() {
       if (this.pageNo > 1) {

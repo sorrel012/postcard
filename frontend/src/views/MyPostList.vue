@@ -125,8 +125,7 @@ export default {
           })
     },
     myPost(post) {
-      this.$store.commit('setPostDetail', post);
-      this.$router.push({name: 'treasure-detail'});
+      this.$router.push({ name: 'treasure-detail', query: {seq: post.b_seq} })
     },
     deletePost(post) {
       Swal.fire({
