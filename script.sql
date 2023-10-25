@@ -83,30 +83,30 @@ create table TbComment (
 	
 );
 
-
-create table TbcPic (
-	pic_name	varchar(100) primary key,
-	
-	c_seq	int	not null,
-	constraint fk_c_seq foreign key(c_seq) references TbComment(c_seq)
-);
-
-
-create table TbcReply (
-	r_seq	serial primary key,
-	
-	content	varchar(5000)	not null,
-	regdate	timestamp	not null default current_timestamp,	
-	
-	c_seq	int	not null,
-	constraint fk_c_seq foreign key(c_seq) references TbComment(c_seq),	
-	
-	m_id	varchar(100)	not null,
-	constraint fk_m_id foreign key(m_id) references member(m_id),
-	
-	
-	is_deleted varchar(1) not null default 'N'
-);
+--
+--create table TbcPic (
+--	pic_name	varchar(100) primary key,
+--	
+--	c_seq	int	not null,
+--	constraint fk_c_seq foreign key(c_seq) references TbComment(c_seq)
+--);
+--
+--
+--create table TbcReply (
+--	r_seq	serial primary key,
+--	
+--	content	varchar(5000)	not null,
+--	regdate	timestamp	not null default current_timestamp,	
+--	
+--	c_seq	int	not null,
+--	constraint fk_c_seq foreign key(c_seq) references TbComment(c_seq),	
+--	
+--	m_id	varchar(100)	not null,
+--	constraint fk_m_id foreign key(m_id) references member(m_id),
+--	
+--	
+--	is_deleted varchar(1) not null default 'N'
+--);
 
 
 select * from member;
@@ -115,7 +115,7 @@ select * from postcard;
 select * from treasurebox;
 select * from tbpic;
 select * from tbcomment;
-select * from tbcreply;
+--select * from tbcreply;
 
 
 ALTER TABLE public.paper ADD bgcolor VARCHAR(50) DEFAULT '#FFFFFF';
