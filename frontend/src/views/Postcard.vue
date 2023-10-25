@@ -128,6 +128,21 @@ export default {
       this.isNew = true;
     },
     async regPostcard() {
+
+      //공백 제거
+      this.postcard.content = this.postcard.content.trim();
+      
+      console.log(this.postcard.content);
+
+      //값이 있는지 검사
+      if(this.postcard.content == null || this.postcard.content === '') {
+        Swal.fire({
+          icon: 'error',
+          title: '내용을 입력해 주세요',
+        });
+        return;
+      }
+
       await axios.post(this.$store.state.url + 'write', this.postcard)
           .then(result => {
             if(result.data.state) {
