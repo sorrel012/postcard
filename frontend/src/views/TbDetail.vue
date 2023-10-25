@@ -25,9 +25,6 @@
           <div><font-awesome-icon :icon="['fa', 'message']"  /> {{ commentCnt }}</div>
         </div>
 
-<!--        <div v-for="comment in commentList" :key="comment.c_seq">-->
-<!--          -->
-<!--        </div>-->
         <div class="mt-3 p-3 text-start text-bg-light rounded" v-for="comment in commentList" :key="commentList.c_seq" :id="`comment-${comment.c_seq}`">
           <div class="text-secondary">
             <span class="me-3">{{ comment.writer }}</span>
@@ -36,8 +33,8 @@
           <div class="text-start fs-5 mt-2">{{ comment.content }}</div>
 
           <div class="text-end mt-2" v-if="comment.m_id===loginUser">
-            <button type="button" class="btn btn-sm btn-border me-2">수정</button>
-            <button type="button" class="btn btn-sm btn-border">삭제</button>
+            <button type="button" class="btn btn-sm btn-border me-2" @click="editComment(comment)">수정</button>
+            <button type="button" class="btn btn-sm btn-border" @click="deleteComment(comment)">삭제</button>
           </div>
         </div>
 
@@ -150,9 +147,7 @@ export default {
           })
     },
     editPost() {
-      sessionStorage.setItem('postType', 'edit');
-      this.$store.commit('setPostDetail', this.postDetail);
-      router.push({name: 'treasure-write'})
+      router.push({name: 'treasure-write', query: {seq: this.postDetail.b_seq}})
     },
     deletePost() {
       Swal.fire({
@@ -184,6 +179,9 @@ export default {
           )
         }
       })
+    },
+    editComment(comment) {
+
     },
   }
 }

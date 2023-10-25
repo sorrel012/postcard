@@ -84,6 +84,13 @@ export default {
       this.editor.destroy();
     }
   },
+  watch: {
+    initialData(newVal) {
+      if (this.editor) {
+        this.editor.setData(newVal);
+      }
+    }
+  }
 }
 </script>
 

@@ -96,7 +96,6 @@ export default {
                 this.postcard.pcc_seq = this.paper.pcc_seq;
 
                 this.getPostcards();
-                console.log(this.isLoading);
 
                 return response.data;
               })
@@ -131,8 +130,6 @@ export default {
 
       //공백 제거
       this.postcard.content = this.postcard.content.trim();
-      
-      console.log(this.postcard.content);
 
       //값이 있는지 검사
       if(this.postcard.content == null || this.postcard.content === '') {
@@ -174,7 +171,6 @@ export default {
     getPostcards() {
       axios.get(this.$store.state.url + 'postcardlist', {params: {pcc_seq: this.paper.pcc_seq}})
           .then(response => {
-            console.log(response);
             this.postcards = response.data.result;
             this.$store.commit('setLoadingStatus', false);
           })

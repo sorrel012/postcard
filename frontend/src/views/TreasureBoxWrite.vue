@@ -57,14 +57,17 @@ export default {
     }
 
     //수정인지 추가인지 확인하여 수정일 경우 본문 내용 보여주기
-    this.postType = sessionStorage.getItem('postType');
-    sessionStorage.removeItem('postType');
-
-    if(this.postType === 'edit') {
-      this.title = this.$store.state.postDetail.title;
-      this.content = this.$store.state.postDetail.content;
-      this.b_seq = this.$store.state.postDetail.b_seq;
-      this.$store.commit('setPostDetail', {});
+    const editSeq = this.$route.query.seq;
+    if(editSeq != undefined) {
+      axios.get(this.$store.state.url + 'post', {params: {seq: editSeq}})
+          .then(response => {
+            this.title = response.data.result.title;
+            this.content = response.data.result.content;
+            this.b_seq = editSeq;
+          })
+          .catch(error => {
+            console.log(error);
+          })
     }
 
   },
