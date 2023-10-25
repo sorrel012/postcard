@@ -114,7 +114,6 @@ export default {
       this.paper.id = sessionStorage.getItem('id');
       axios.post(this.$store.state.url + 'create', this.paper)
           .then(response => {
-            console.log(response);
             if (response.data.state) {
               this.paper.pcc_seq=response.data.result.pcc_seq;
               this.$store.commit('setPaper', this.paper);

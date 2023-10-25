@@ -471,7 +471,6 @@ export default {
     async disconnect() {
 
       const accessToken = JSON.parse(atob(sessionStorage.getItem('access_token')));
-      console.log(accessToken);
       const btnType = sessionStorage.getItem('socialType');
 
       const kakaoHeader = {

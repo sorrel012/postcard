@@ -84,7 +84,6 @@ export default {
     const b_seq = this.$route.query.seq;
     await axios.get(this.$store.state.url + 'post', {params: {seq: b_seq}})
               .then(response => {
-                console.log(response);
                 this.postDetail = response.data.result;
               })
               .catch(error => {
@@ -97,9 +96,6 @@ export default {
               'Content-Type': 'application/json'
             }
           })
-        .then(response => {
-          console.log(response);
-        })
         .catch(error => {
           console.log(error);
         })
@@ -116,9 +112,7 @@ export default {
       this.$nextTick(() => {
         if (this.$route.query.commentId) {
           const commentElement = document.getElementById(`comment-${this.$route.query.commentId}`);
-          console.log('흑:', commentElement);
           if (commentElement) {
-            console.log("Scrolling to:", `comment-${this.$route.query.commentId}`);
             commentElement.scrollIntoView({ behavior: 'smooth' });
           }
 
@@ -138,7 +132,6 @@ export default {
       }
       axios.post(this.$store.state.url + 'comment', comment)
           .then(response => {
-            console.log(response);
             this.getCommentList();
             this.newComment = '';
           })
@@ -173,7 +166,6 @@ export default {
         preConfirm: () => {
           return axios.delete(this.$store.state.url + 'post', {params: {seq : this.postDetail.b_seq}})
               .then(response => {
-                console.log(response);
                 router.push({name: 'treasure-box'});
               })
               .catch(error => {

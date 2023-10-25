@@ -162,7 +162,6 @@ export default {
     },
     nextPage() {
       if (this.pageNo < this.totalPage) {
-        console.log('왜');
         this.pageNo++;
         this.getComments();
       }

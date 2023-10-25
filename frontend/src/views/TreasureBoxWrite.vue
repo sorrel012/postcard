@@ -89,7 +89,6 @@ export default {
             },
           })
               .then(response => {
-                console.log(response);
                 if (response.data.state) {
                   Swal.fire({
                     icon: 'success',
@@ -117,7 +116,6 @@ export default {
             },
           })
               .then(response => {
-                console.log(response);
                 if (response.data.state) {
                   Swal.fire({
                     icon: 'success',

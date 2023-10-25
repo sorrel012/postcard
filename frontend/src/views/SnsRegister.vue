@@ -248,7 +248,6 @@ export default {
 
       axios.post(this.$store.state.url + 'snsregister', this.userinfo)
           .then(response => {
-            console.log(response);
             if (response.data.state) {
               Swal.fire({
                 icon: 'success',
@@ -277,7 +276,6 @@ export default {
     getUserinfo() {
       axios.post(this.$store.state.url + 'login', this.userinfo)
           .then(response => {
-            console.log(response);
             if (response.data.state) {
               Swal.fire({
                 icon: 'success',

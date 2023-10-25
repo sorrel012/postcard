@@ -60,7 +60,6 @@ export default {
     login() {
       axios.post(this.$store.state.url + 'login', this.account)
         .then(response => {
-          console.log(response);
           if (response.data.state) {
             Swal.fire({
               icon: 'success',
