@@ -14,6 +14,6 @@ public interface PaperMapper {
     public int isUnique(int code);
     List<PaperModel> getMyPaperList(@Param("id") String id, @Param("page") PageCriteria criteria);
     int getCnt(int seq);
-    List<PaperModel> getPaper(int code);
+    PaperModel getPaper(int code);
     int deletePaper(int pccSeq);
 }

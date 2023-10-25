@@ -108,12 +108,10 @@ public class PaperServiceImpl implements PaperService {
 
         ResultModel rModel = new ResultModel();
 
-        List<PaperModel> plist = pMapper.getPaper(code);
-        for(PaperModel p : plist) {
-            String regdate = p.getRegdate();
-            regdate = regdate.split(" ")[0];
-            p.setRegdate(regdate);
-        }
+        PaperModel paper = pMapper.getPaper(code);
+        String regdate = paper.getRegdate();
+        regdate = regdate.split(" ")[0];
+        paper.setRegdate(regdate);
 
         if ( log.isDebugEnabled() ) {
             log.debug("::: getPaper ::: int : {}",  code);
@@ -121,7 +119,7 @@ public class PaperServiceImpl implements PaperService {
 
         rModel.setState(true);
         rModel.setMessage("도화지를 불러왔습니다.");
-        rModel.setResult(plist);
+        rModel.setResult(paper);
 
         return ResponseEntity.ok(rModel);
     }

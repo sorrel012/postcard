@@ -89,7 +89,7 @@ export default {
           return axios.get(this.$store.state.url + 'paper', {params: {code: code}})
               .then(response => {
 
-                this.paper = response.data.result[0];
+                this.paper = response.data.result;
 
                 document.body.style.backgroundColor = this.paper.bgColor;
                 this.postcard.pcc_seq = this.paper.pcc_seq;
