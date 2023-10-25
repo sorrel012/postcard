@@ -200,13 +200,20 @@ public class TreasureBoxController {
     }
 
     @GetMapping("mypostlist")
-    public ResponseEntity<ResultModel> getMyPostList(@RequestParam String id) {
+    public ResponseEntity<ResultModel> getMyPostList(
+            @RequestParam String id,
+            @RequestParam int pageNo,
+            @RequestParam int size) {
 
         if ( log.isDebugEnabled() ) {
-            log.debug("::: deletePost ::: String : {}",  id);
+            log.debug("::: getMyPostList ::: String : {}",  id);
         }
 
-        return tbService.getMyPostList(id);
+        PageCriteria criteria = new PageCriteria();
+        criteria.setPageNo(pageNo);
+        criteria.setSize(size);
+
+        return tbService.getMyPostList(id, criteria);
     }
 
 }

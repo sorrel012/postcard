@@ -15,7 +15,7 @@ public class PageCriteria {
     private int totalRow;   //총 게시물 수
 
     public int getStartRow() {
-        return ((this.pageNo - 1) * this.size) + 1;
+        return ((this.pageNo - 1) * this.size);
     }
 
     public int getEndRow() {

@@ -77,7 +77,6 @@
       </ul>
     </nav>
 
-
   </section>
 
 </template>
@@ -171,25 +170,3 @@ export default {
   }
 }
 </script>
-<style>
-.truncLayout {
-  table-layout: fixed;
-}
-.hover {
-  cursor: pointer;
-}
-.w-35{
-  width: 35% !important;
-}
-.active>.page-link {
-  background-color: rgb(194, 184, 184) !important;
-  border-color: rgb(194, 184, 184) !important;
-}
-.page-link, .page-link:hover {
-  color: rgb(122, 107, 107);
-}
-.page-link:focus {
-  box-shadow: none
-}
-.disabled {}
-</style>

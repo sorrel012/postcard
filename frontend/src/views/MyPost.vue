@@ -12,7 +12,10 @@
           </div>
         </div>
       </div>
-      <table class="container-lg table table-hover mt-5">
+
+      <p class="mt-3 text-end">총 {{ postCnt }}건</p>
+
+      <table class="container-lg table table-hover">
         <thead class="table-light">
         <tr class="text-center">
           <th class="col-1 text-wrap">번호</th>
@@ -39,14 +42,25 @@
         </tbody>
       </table>
 
-      <!--      <div class="d-flex justify-content-center mt-4 l-matop">-->
-      <!--        <div id="pagination-buttons">-->
-      <!--          <button class="btn w-10" id="previous-button">&lt;&lt;</button>-->
-      <!--        </div>-->
-      <!--      </div>-->
+      <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" :class="{ 'disabled': pageNo <= 1 }">
+            <a class="page-link" href="#" @click.prevent="prevPage" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li v-for="page in totalPage" :key="page" class="page-item" :class="{ 'active': pageNo === page }">
+            <a class="page-link" href="#" @click.prevent="goToPage(page)">{{ page }}</a>
+          </li>
+          <li class="page-item" :class="{ 'disabled': pageNo >= totalPage }">
+            <a class="page-link" href="#" @click.prevent="nextPage" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
 
     </div>
-
   </div>
 
 </template>
@@ -62,8 +76,12 @@ export default {
   name: 'MyPost',
   data() {
     return {
-      postlist: [],
-      isMember: false,
+      postlist: [],       // 게시글 목록
+      isMember: false,    // 로그인한 회원 여부
+      pageNo: 1,          // 현재 페이지 번호
+      totalPage: 0,       // 전체 페이지 수
+      pageSize: 10,       // 페이지당 게시물 수
+      postCnt: 0,         // 작성한 총 게시물 수
     }
   },
   components: {
@@ -91,9 +109,16 @@ export default {
   },
   methods: {
     getPosts() {
-      axios.get(this.$store.state.url + 'mypostlist', {params: {id: sessionStorage.getItem('id')}})
+      const config = {
+        pageNo: this.pageNo,
+        size: this.pageSize,
+        id: sessionStorage.getItem('id')
+      }
+      axios.get(this.$store.state.url + 'mypostlist', {params: config})
           .then(response => {
             this.postlist = response.data.result;
+            this.postCnt = this.postlist.length;
+            this.totalPage = Math.ceil(this.postCnt / this.pageSize);
           })
           .catch(error => {
             console.log(error);
@@ -134,6 +159,23 @@ export default {
         }
       })
     },
+    prevPage() {
+      if (this.pageNo > 1) {
+        this.pageNo--;
+        this.getPosts();
+      }
+    },
+    nextPage() {
+      if (this.pageNo < this.totalPage) {
+        console.log('왜');
+        this.pageNo++;
+        this.getPosts();
+      }
+    },
+    goToPage(pageNo) {
+      this.pageNo = pageNo;
+      this.getPosts();
+    }
   }
 }
 

@@ -37,15 +37,27 @@
         </tbody>
       </table>
 
-<!--      <div class="d-flex justify-content-center mt-4 l-matop">-->
-<!--        <div id="pagination-buttons">-->
-<!--          <button class="btn w-10" id="previous-button">&lt;&lt;</button>-->
-<!--        </div>-->
-<!--      </div>-->
+      <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" :class="{ 'disabled': pageNo <= 1 }">
+            <a class="page-link" href="#" @click.prevent="prevPage" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li v-for="page in totalPage" :key="page" class="page-item" :class="{ 'active': pageNo === page }">
+            <a class="page-link" href="#" @click.prevent="goToPage(page)">{{ page }}</a>
+          </li>
+          <li class="page-item" :class="{ 'disabled': pageNo >= totalPage }">
+            <a class="page-link" href="#" @click.prevent="nextPage" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
 
     </div>
-
   </div>
+
 </template>
 
 <script>

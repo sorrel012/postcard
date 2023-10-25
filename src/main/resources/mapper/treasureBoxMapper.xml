@@ -153,7 +153,7 @@
         ]]>
     </select>
 
-    <select id="getMyPostList" parameterType="int" resultType="com.postcard.toyou.model.TreasureBoxModel">
+    <select id="getMyPostList" resultType="com.postcard.toyou.model.TreasureBoxModel">
         select
             b_seq,
             title,
@@ -163,7 +163,10 @@
             m_id
         from treasurebox
             where is_deleted='N'
+            and m_id=#{id}
         order by regdate desc
+        LIMIT #{page.size}
+        OFFSET #{page.startRow}
     </select>
 
     <select id="getCommmentCnt" parameterType="int" resultType="int">

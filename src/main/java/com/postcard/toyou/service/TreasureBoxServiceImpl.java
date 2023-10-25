@@ -345,11 +345,11 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
     }
 
     @Override
-    public ResponseEntity<ResultModel> getMyPostList(String id) {
+    public ResponseEntity<ResultModel> getMyPostList(String id, PageCriteria criteria) {
 
         ResultModel rModel = new ResultModel();
 
-        List<TreasureBoxModel> plist = tbMapper.getMyPostList(id);
+        List<TreasureBoxModel> plist = tbMapper.getMyPostList(id, criteria);
         for(TreasureBoxModel tb : plist) {
 
             int seq = tb.getB_seq();
