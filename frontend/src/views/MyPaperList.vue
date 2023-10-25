@@ -55,34 +55,34 @@ import Swal from "sweetalert2";
 import MyPageSidebar from '@/components/MypageSidebar.vue';
 import MyPageNavbar from "@/components/MyPageNavbar.vue";
 
-  export default {
-    name: 'MyPaper',
-    data() {
-      return {
-        paperlist: [],
-        isMember: false,
-      }
-    },
-    components: {
-      MyPageNavbar,
-      MyPageSidebar
-    },
-    async created() {
-      const id = sessionStorage.getItem('id');
-      if(id == null || id == '') {
-        await Swal.fire({
-          icon: 'error',
-          title: '로그인 후 이용하실 수 있습니다',
-        })
-        location.href='/login';
-        return
-      } else {
-        this.isMember = true;
-      }
+export default {
+  name: 'MyPaper',
+  data() {
+    return {
+      paperlist: [],
+      isMember: false,
+    }
+  },
+  components: {
+    MyPageNavbar,
+    MyPageSidebar
+  },
+  async created() {
+    const id = sessionStorage.getItem('id');
+    if(id == null || id == '') {
+      await Swal.fire({
+        icon: 'error',
+        title: '로그인 후 이용하실 수 있습니다',
+      })
+      location.href='/login';
+      return
+    } else {
+      this.isMember = true;
+    }
 
-      document.body.style.backgroundColor = 'rgb(255, 255, 255)';
-      this.getPapers();
-    },
+    document.body.style.backgroundColor = 'rgb(255, 255, 255)';
+    this.getPapers();
+  },
   mounted() {
     document.body.style.backgroundColor = '#fffff';
   },
@@ -108,7 +108,7 @@ import MyPageNavbar from "@/components/MyPageNavbar.vue";
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!',
+        confirmButtonText: 'Delete',
         preConfirm: () => {
           return axios.delete(this.$store.state.url + 'paper', {params: {pcc_seq : paper.pcc_seq}})
               .then(response => {
@@ -136,6 +136,8 @@ import MyPageNavbar from "@/components/MyPageNavbar.vue";
 
 </script>
 
-<style scoped>
-
+<style>
+td {
+  cursor: pointer;
+}
 </style>

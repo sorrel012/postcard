@@ -27,7 +27,7 @@
         <tr class="text-center align-middle" v-for="post in postlist">
           <td class="col-1 text-wrap">{{ post.b_seq }}</td>
           <td class="col-6 text-wrap">
-            <div class="text-dark text-wrap text-decoration-none text-hover" @click="mypost(post)">{{ post.title }}</div>
+            <div class="text-dark text-wrap text-decoration-none text-hover" @click="myPost(post)">{{ post.title }}</div>
           </td>
           <td class="col-2 text-wrap">{{ post.regdate }}</td>
           <td class="col-1 text-wrap">{{ post.commentCnt }}</td>
@@ -99,11 +99,48 @@ export default {
             console.log(error);
           })
     },
+    myPost(post) {
+      this.$store.commit('setPostDetail', post);
+      this.$router.push({name: 'treasure-detail'});
+    },
+    deletePost(post) {
+      Swal.fire({
+        title: '삭제하시겠습니까?',
+        text: "삭제한 게시글은 다시 되돌릴 수 없습니다",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Delete',
+        preConfirm: () => {
+          return axios.delete(this.$store.state.url + 'post', {params: {seq : post.b_seq}})
+              .then(response => {
+                this.getPosts();
+              })
+              .catch(error => {
+                console.log(error);
+                Swal.showValidationMessage(
+                    '게시글을 삭제하지 못했습니다'
+                )
+              })
+        }
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire(
+              '삭제 완료',
+              '게시글을 삭제했습니다',
+              'success'
+          )
+        }
+      })
+    },
   }
 }
 
 </script>
 
-<style scoped>
-
+<style>
+td {
+  cursor: pointer;
+}
 </style>
