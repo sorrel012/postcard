@@ -248,9 +248,7 @@ export default {
       }
       axios.post(this.$store.state.url + 'auth', authConfig)
           .then(result => {
-            if(result.data.state) {
-              console.log(result.data.message);
-            }
+            console.log(result.data.message);
           })
           .catch(error => {
             console.log(error);
