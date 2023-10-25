@@ -66,7 +66,7 @@
             order by regdate asc
         </if>
         LIMIT #{page.size}
-        OFFSET ( #{page.startRow} -1 ) * 10
+        OFFSET #{page.startRow}
     </select>
 
     <select id="getTotalPostCount" resultType="int">
