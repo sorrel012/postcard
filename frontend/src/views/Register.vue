@@ -260,9 +260,7 @@ export default {
       }
       axios.post(this.$store.state.url + 'auth', authConfig)
           .then(result => {
-            if(result.data.state) {
               console.log(result.data.message);
-            }
           }).catch(error => {
             console.log(error);
           })
@@ -423,7 +421,6 @@ export default {
 
       axios.post(this.$store.state.url + 'register', this.userinfo)
           .then(response => {
-            console.log(response);
             if (response.data.state) {
               Swal.fire({
                 icon: 'success',
