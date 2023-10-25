@@ -45,7 +45,6 @@ export default {
     document.body.style.backgroundColor = this.paper.bgColor;
 
     this.getPostcards(this.paper);
-    this.$store.commit('setPaper', {});
   },
   methods: {
     getPostcards(paper) {

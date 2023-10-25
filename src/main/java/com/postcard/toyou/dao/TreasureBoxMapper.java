@@ -28,5 +28,7 @@ public interface TreasureBoxMapper {
     String getContent(int seq);
     List<TreasureBoxModel> getMyPostList(@Param("id") String id, @Param("page") PageCriteria criteria);
     int getCommmentCnt(int seq);
+    List<TbCommentModel> getMyCommentList(@Param("id") String id, @Param("page") PageCriteria criteria);
+    TreasureBoxModel getPost(int seq);
 
 }

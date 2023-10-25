@@ -19,7 +19,7 @@
         <div class="mt-3 mb-1 f-bold">내가 쓴 댓글</div>
         <ul class="list-unstyled mb-2">
           <li class="nav-item pb-1">
-            <router-link class="text-decoration-none text-secondary" to="/mypre" active-class="active">게시판</router-link>
+            <router-link class="text-decoration-none text-secondary" to="/mycommentlist" active-class="active">보물상자</router-link>
           </li>
         </ul>
       </nav>

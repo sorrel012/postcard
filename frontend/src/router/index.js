@@ -72,9 +72,13 @@ const routes = [
   {
     path: '/mypostlist',
     name: 'mypostlist',
-    component: () => import('@/views/MyPost.vue')
+    component: () => import('@/views/MyPostList.vue')
   },
-
+  {
+    path: '/mycommentlist',
+    name: 'mycommentlist',
+    component: () => import('@/views/MyCommentList.vue')
+  },
 ]
 
 const router = new VueRouter({

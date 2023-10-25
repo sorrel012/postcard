@@ -19,5 +19,7 @@ public interface TreasureBoxService {
     ResponseEntity<ResultModel> increaseHit(int seq);
     ResponseEntity<ResultModel> deletePost(int seq);
     ResponseEntity<ResultModel> getMyPostList(String id, PageCriteria criteria);
+    ResponseEntity<ResultModel> getMyCommentList(String id, PageCriteria criteria);
+    ResponseEntity<ResultModel> getPost(int seq);
 
 }

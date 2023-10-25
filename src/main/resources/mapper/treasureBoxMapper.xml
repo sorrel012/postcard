@@ -154,28 +154,64 @@
     </select>
 
     <select id="getMyPostList" resultType="com.postcard.toyou.model.TreasureBoxModel">
-        select
-            b_seq,
-            title,
-            content,
-            regdate,
-            hit,
-            m_id
-        from treasurebox
-            where is_deleted='N'
-            and m_id=#{id}
-        order by regdate desc
-        LIMIT #{page.size}
-        OFFSET #{page.startRow}
+        <![CDATA[
+            select
+                b_seq,
+                title,
+                content,
+                regdate,
+                hit,
+                m_id
+            from treasurebox
+                where is_deleted='N'
+                and m_id=#{id}
+            order by regdate desc
+            LIMIT #{page.size}
+            OFFSET #{page.startRow}
+        ]]>
     </select>
 
     <select id="getCommmentCnt" parameterType="int" resultType="int">
-        select
-            count(*) as cnt
-        from tbComment
-            where is_deleted='N'
-            and b_seq=#{seq}
+        <![CDATA[
+            select
+                count(*) as cnt
+            from tbComment
+                where is_deleted='N'
+                and b_seq=#{seq}
+        ]]>
     </select>
 
+    <select id="getMyCommentList" resultType="com.postcard.toyou.model.TbCommentModel">
+        <![CDATA[
+            select
+                c_seq,
+                content,
+                regdate,
+                b_seq,
+                m_id
+            from tbComment
+                where is_deleted='N'
+                and m_id=#{id}
+            order by regdate desc
+            LIMIT #{page.size}
+            OFFSET #{page.startRow}
+        ]]>
+    </select>
+
+    <select id="getPost" parameterType="int" resultType="com.postcard.toyou.model.TreasureBoxModel">
+        <![CDATA[
+            select
+                b_seq,
+                title,
+                content,
+                regdate,
+                hit,
+                m_id
+            from treasurebox
+            where is_deleted='N'
+              and b_seq=#{seq}
+            order by regdate desc
+        ]]>
+    </select>
 
 </mapper>

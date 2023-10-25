@@ -82,7 +82,6 @@ export default {
 
     //게시글 정보 받기
     this.postDetail = this.$store.state.postDetail;
-    this.$store.commit('setPostDetail', {})
 
     //조회수 올리기
     axios.put(this.$store.state.url + 'hit', this.postDetail.b_seq , {

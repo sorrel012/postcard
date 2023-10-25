@@ -217,4 +217,32 @@ public class TreasureBoxController {
         return tbService.getMyPostList(id, criteria);
     }
 
+    @GetMapping("mycommentlist")
+    public ResponseEntity<ResultModel> getMyCommentList(
+            @RequestParam String id,
+            @RequestParam int pageNo,
+            @RequestParam int size) {
+
+        PageCriteria criteria = new PageCriteria();
+        criteria.setPageNo(pageNo);
+        criteria.setSize(size);
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: getMyCommentList ::: String : {}",  id);
+            log.debug("::: getMyCommentList ::: PageCriteria : {}",  criteria);
+        }
+
+        return tbService.getMyCommentList(id, criteria);
+    }
+
+    @GetMapping("/post")
+    public ResponseEntity<ResultModel> getPost(@RequestParam int seq) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: getPost ::: int : {}",  seq);
+        }
+
+        return tbService.getPost(seq);
+    }
+
 }

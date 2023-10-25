@@ -217,7 +217,6 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
             tb.setName(mMapper.getName(tb.getM_id()));
 
         }
-        System.out.println("ㅠㅠ" + wList);
 
         int totalPostCount = tbMapper.getTotalPostCount(sDto);
 
@@ -347,6 +346,11 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
     @Override
     public ResponseEntity<ResultModel> getMyPostList(String id, PageCriteria criteria) {
 
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: getPostList ::: String : {}",  id);
+            log.debug("::: getPostList ::: PageCriteria : {}",  criteria);
+        }
+
         ResultModel rModel = new ResultModel();
 
         List<TreasureBoxModel> plist = tbMapper.getMyPostList(id, criteria);
@@ -362,10 +366,6 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
 
         }
 
-        if ( log.isDebugEnabled() ) {
-            log.debug("::: getPostList ::: String : {}",  id);
-        }
-
         rModel.setState(true);
         rModel.setMessage("게시글 목록을 불러왔습니다.");
         rModel.setResult(plist);
@@ -373,4 +373,55 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
         return ResponseEntity.ok(rModel);
     }
 
+    @Override
+    public ResponseEntity<ResultModel> getMyCommentList(String id, PageCriteria criteria) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: getMyCommentList ::: String : {}",  id);
+            log.debug("::: getMyCommentList ::: PageCriteria : {}",  criteria);
+        }
+
+        ResultModel rModel = new ResultModel();
+
+        List<TbCommentModel> clist = tbMapper.getMyCommentList(id, criteria);
+        for(TbCommentModel c : clist) {
+
+            int seq = c.getB_seq();
+//            int cnt = tbMapper.getCommmentCnt(seq);
+//            c.setCommentCnt(cnt);
+
+            String regdate = c.getRegdate();
+            regdate = regdate.split(" ")[0];
+            c.setRegdate(regdate);
+
+        }
+        rModel.setState(true);
+        rModel.setMessage("댓글 목록을 불러왔습니다.");
+        rModel.setResult(clist);
+
+        return ResponseEntity.ok(rModel);
+    }
+
+    @Override
+    public ResponseEntity<ResultModel> getPost(int seq) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: getPost ::: int : {}",  seq);
+        }
+
+        ResultModel rModel = new ResultModel();
+
+        TreasureBoxModel post = tbMapper.getPost(seq);
+
+        String regdate = post.getRegdate();
+        regdate = regdate.split(" ")[0];
+        post.setRegdate(regdate);
+        post.setName(mMapper.getName(post.getM_id()));
+
+        rModel.setState(true);
+        rModel.setMessage("게시글을 불러왔습니다.");
+        rModel.setResult(post);
+
+        return ResponseEntity.ok(rModel);
+    }
 }
