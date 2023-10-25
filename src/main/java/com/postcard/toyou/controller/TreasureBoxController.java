@@ -205,13 +205,14 @@ public class TreasureBoxController {
             @RequestParam int pageNo,
             @RequestParam int size) {
 
-        if ( log.isDebugEnabled() ) {
-            log.debug("::: getMyPostList ::: String : {}",  id);
-        }
-
         PageCriteria criteria = new PageCriteria();
         criteria.setPageNo(pageNo);
         criteria.setSize(size);
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: getMyPostList ::: String : {}",  id);
+            log.debug("::: getMyPostList ::: PageCriteria : {}",  criteria);
+        }
 
         return tbService.getMyPostList(id, criteria);
     }

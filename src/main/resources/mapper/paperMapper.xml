@@ -21,7 +21,7 @@
         ]]>
     </select>
 
-    <select id="getList" parameterType="java.lang.String" resultType="com.postcard.toyou.model.PaperModel">
+    <select id="getMyPaperList" resultType="com.postcard.toyou.model.PaperModel">
         <![CDATA[
             select
                 pcc_seq,
@@ -37,7 +37,9 @@
             from paper
                 where m_id=#{id}
                 and is_deleted='N'
-            order by regdate
+            order by regdate desc
+            LIMIT #{page.size}
+            OFFSET #{page.startRow}
         ]]>
     </select>
 

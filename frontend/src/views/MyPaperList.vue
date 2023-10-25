@@ -71,8 +71,12 @@ export default {
   name: 'MyPaper',
   data() {
     return {
-      paperlist: [],
-      isMember: false,
+      paperlist: [],      // 도화지 목록
+      isMember: false,    // 로그인 여부
+      pageNo: 1,          // 현재 페이지 번호
+      totalPage: 0,       // 전체 페이지 수
+      pageSize: 10,       // 페이지당 게시물 수
+      paperCnt: 0,        // 생성한 총 도화지 수
     }
   },
   components: {
@@ -100,9 +104,16 @@ export default {
   },
   methods: {
     getPapers() {
-      axios.get(this.$store.state.url + 'mypaperlist', { params: {id: sessionStorage.getItem('id')} })
+      const config = {
+        pageNo: this.pageNo,
+        size: this.pageSize,
+        id: sessionStorage.getItem('id')
+      }
+      axios.get(this.$store.state.url + 'mypaperlist', { params: config })
           .then(response => {
             this.paperlist = response.data.result;
+            this.paperCnt = this.paperlist.length;
+            this.totalPage = Math.ceil(this.paperCnt / this.pageSize);
           })
           .catch(error => {
             console.log(error);

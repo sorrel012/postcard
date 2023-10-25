@@ -77,7 +77,7 @@ export default {
   data() {
     return {
       postlist: [],       // 게시글 목록
-      isMember: false,    // 로그인한 회원 여부
+      isMember: false,    // 로그인 여부
       pageNo: 1,          // 현재 페이지 번호
       totalPage: 0,       // 전체 페이지 수
       pageSize: 10,       // 페이지당 게시물 수

@@ -1,5 +1,6 @@
 package com.postcard.toyou.service;
 
+import com.postcard.toyou.common.PageCriteria;
 import com.postcard.toyou.dao.PaperMapper;
 import com.postcard.toyou.dao.PostcardMapper;
 import com.postcard.toyou.model.PaperModel;
@@ -73,11 +74,16 @@ public class PaperServiceImpl implements PaperService {
     }
 
     @Override
-    public ResponseEntity<ResultModel> getList(String id) {
+    public ResponseEntity<ResultModel> getMyPaperList(String id, PageCriteria criteria) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: getMyPaperList ::: String : {}",  id);
+            log.debug("::: getMyPaperList ::: PageCriteria : {}",  criteria);
+        }
 
         ResultModel rModel = new ResultModel();
 
-        List<PaperModel> plist = pMapper.getList(id);
+        List<PaperModel> plist = pMapper.getMyPaperList(id, criteria);
         for(PaperModel p : plist) {
 
             int seq = p.getPcc_seq();
@@ -88,10 +94,6 @@ public class PaperServiceImpl implements PaperService {
             regdate = regdate.split(" ")[0];
             p.setRegdate(regdate);
 
-        }
-
-        if ( log.isDebugEnabled() ) {
-            log.debug("::: getList ::: String : {}",  id);
         }
 
         rModel.setState(true);

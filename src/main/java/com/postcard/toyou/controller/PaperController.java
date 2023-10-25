@@ -1,5 +1,6 @@
 package com.postcard.toyou.controller;
 
+import com.postcard.toyou.common.PageCriteria;
 import com.postcard.toyou.model.PaperModel;
 import com.postcard.toyou.model.ResultModel;
 import com.postcard.toyou.service.PaperService;
@@ -28,13 +29,21 @@ public class PaperController {
     }
 
     @GetMapping("/mypaperlist")
-    public ResponseEntity<ResultModel> getList(@RequestParam String id) {
+    public ResponseEntity<ResultModel> getMyPaperList(
+            @RequestParam String id,
+            @RequestParam int pageNo,
+            @RequestParam int size) {
+
+        PageCriteria criteria = new PageCriteria();
+        criteria.setPageNo(pageNo);
+        criteria.setSize(size);
 
         if ( log.isDebugEnabled() ) {
-            log.debug("::: getList ::: String : {}",  id);
+            log.debug("::: getMyPaperList ::: String : {}",  id);
+            log.debug("::: getMyPaperList ::: PageCriteria : {}",  criteria);
         }
 
-        return pService.getList(id);
+        return pService.getMyPaperList(id, criteria);
     }
 
     @GetMapping("/paper")
