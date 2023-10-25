@@ -1,7 +1,7 @@
 <template>
   <div class="p-5 h-100 w-100">
 
-    <div class="mt-4">
+    <div class="mt-4" v-if="!isSuccess">
       <img src="@/assets/postcard_banner.png" class="img-fluid" alt="main-banner">
     </div>
 
@@ -63,6 +63,7 @@ export default {
         textColor: '#000000',
         pcc_seq: ''
       },
+      isSuccess: false,
     }
   },
   created() {
@@ -109,6 +110,7 @@ export default {
         allowOutsideClick: () => !Swal.isLoading()
       }).then((result) => {
         if (result.isConfirmed) {
+          this.isSuccess = true;
           Swal.fire({
             title: '도화지를 불러왔습니다',
             text: '친구에게 마음을 전해주세요!'
