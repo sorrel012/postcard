@@ -284,7 +284,7 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
     public ResponseEntity<ResultModel> deletePost(int seq) {
 
         if ( log.isDebugEnabled() ) {
-            log.debug("::: deletePaper ::: int : {}",  seq);
+            log.debug("::: deletePost ::: int : {}",  seq);
         }
 
         ResultModel rModel = new ResultModel();
@@ -439,12 +439,38 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
         if(result > 0) {
             rModel.setState(true);
             rModel.setMessage("댓글을 수정했습니다.");
+            rModel.setResult(true);
         } else {
             rModel.setState(false);
             rModel.setMessage("댓글을 수정하지 못했습니다.");
+            rModel.setResult(false);
         }
 
         return ResponseEntity.ok(rModel);
     }
 
+    @Override
+    public ResponseEntity<ResultModel> deleteComment(int seq) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: deleteComment ::: int : {}",  seq);
+        }
+
+        ResultModel rModel = new ResultModel();
+
+        int result = tbMapper.deleteComment(seq);
+
+        if(result > 0) {
+            rModel.setState(true);
+            rModel.setMessage("댓글을 삭제했습니다.");
+            rModel.setResult(true);
+
+        } else {
+            rModel.setState(false);
+            rModel.setMessage("댓글을 삭제하지 못했습니다.");
+            rModel.setResult(false);
+        }
+
+        return ResponseEntity.ok(rModel);
+    }
 }

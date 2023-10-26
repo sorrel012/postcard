@@ -255,4 +255,14 @@ public class TreasureBoxController {
         return tbService.updateComment(tbcModel);
     }
 
+    @DeleteMapping("/comment")
+    public ResponseEntity<ResultModel> deleteComment(@RequestParam String seq) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: deleteComment ::: String : {}",  seq);
+        }
+
+        return tbService.deleteComment(Integer.valueOf(seq));
+    }
+
 }
