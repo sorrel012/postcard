@@ -23,7 +23,7 @@ public interface TreasureBoxMapper {
     List<TbCommentModel> getCommentList(int seq);
     int increaseHit(int seq);
     int deletePost(int seq);
-    int deleteComment(int seq);
+    int deletePostComment(int seq);
     void deleteReply(int c_seq);
     String getContent(int seq);
     List<TreasureBoxModel> getMyPostList(@Param("id") String id, @Param("page") PageCriteria criteria);
@@ -31,5 +31,6 @@ public interface TreasureBoxMapper {
     List<TbCommentModel> getMyCommentList(@Param("id") String id, @Param("page") PageCriteria criteria);
     TreasureBoxModel getPost(int seq);
     int updateComment(TbCommentModel tbcModel);
+    int deleteComment(int seq);
 
 }

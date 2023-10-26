@@ -128,7 +128,7 @@
         ]]>
     </update>
 
-    <update id="deleteComment" parameterType="int">
+    <update id="deletePostComment" parameterType="int">
         <![CDATA[
             update tbcomment
                 set is_deleted='Y'
@@ -221,6 +221,14 @@
                     regdate=now()
             where c_seq=#{c_seq}
 
+        ]]>
+    </update>
+
+    <update id="deleteComment" parameterType="int">
+        <![CDATA[
+        update tbcomment
+            set is_deleted='Y'
+        where c_seq=#{seq}
         ]]>
     </update>
 

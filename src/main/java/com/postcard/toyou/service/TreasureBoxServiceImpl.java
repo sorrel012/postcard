@@ -310,7 +310,7 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
             List<TbCommentModel> comments = tbMapper.getCommentList(seq);
 
             //댓글 삭제
-            tbMapper.deleteComment(seq);
+            tbMapper.deletePostComment(seq);
 
             //답글 삭제
             for (TbCommentModel comment : comments) {
