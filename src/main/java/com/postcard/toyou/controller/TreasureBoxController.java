@@ -199,7 +199,7 @@ public class TreasureBoxController {
         return tbService.deletePost(Integer.valueOf(seq));
     }
 
-    @GetMapping("mypostlist")
+    @GetMapping("/mypostlist")
     public ResponseEntity<ResultModel> getMyPostList(
             @RequestParam String id,
             @RequestParam int pageNo,
@@ -217,7 +217,7 @@ public class TreasureBoxController {
         return tbService.getMyPostList(id, criteria);
     }
 
-    @GetMapping("mycommentlist")
+    @GetMapping("/mycommentlist")
     public ResponseEntity<ResultModel> getMyCommentList(
             @RequestParam String id,
             @RequestParam int pageNo,
@@ -243,6 +243,16 @@ public class TreasureBoxController {
         }
 
         return tbService.getPost(seq);
+    }
+
+    @PutMapping("/comment")
+    public ResponseEntity<ResultModel> updateComment(@RequestBody TbCommentModel tbcModel) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: updateComment ::: TbCommentModel : {}",  tbcModel);
+        }
+
+        return tbService.updateComment(tbcModel);
     }
 
 }

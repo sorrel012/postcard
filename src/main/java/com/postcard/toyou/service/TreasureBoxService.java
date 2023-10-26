@@ -21,5 +21,6 @@ public interface TreasureBoxService {
     ResponseEntity<ResultModel> getMyPostList(String id, PageCriteria criteria);
     ResponseEntity<ResultModel> getMyCommentList(String id, PageCriteria criteria);
     ResponseEntity<ResultModel> getPost(int seq);
+    ResponseEntity<ResultModel> updateComment(TbCommentModel tbcModel);
 
 }

@@ -30,11 +30,18 @@
             <span class="me-3">{{ comment.writer }}</span>
             <span>{{ comment.regdate }}</span>
           </div>
-          <div class="text-start fs-5 mt-2">{{ comment.content }}</div>
+
+          <div v-if="!comment.editing" class="text-start fs-5 mt-2">{{ comment.content }}</div>
+          <div v-else class="mt-2">
+            <textarea v-model="comment.editedContent" class="form-control resize-none"></textarea>
+          </div>
 
           <div class="text-end mt-2" v-if="comment.m_id===loginUser">
-            <button type="button" class="btn btn-sm btn-border me-2" @click="editComment(comment)">수정</button>
-            <button type="button" class="btn btn-sm btn-border" @click="deleteComment(comment)">삭제</button>
+            <button type="button" v-if="!comment.editing" class="btn btn-sm btn-border me-2" @click="editComment(comment)">수정</button>
+            <button type="button" v-if="!comment.editing" class="btn btn-sm btn-border" @click="deleteComment(comment)">삭제</button>
+
+            <button type="button" v-if="comment.editing" class="btn btn-sm btn-border me-2" @click="updateComment(comment)">확인</button>
+            <button type="button" v-if="comment.editing" class="btn btn-sm btn-border me-2" @click="comment.editing=false">취소</button>
           </div>
         </div>
 
@@ -139,7 +146,11 @@ export default {
     getCommentList() {
       axios.get(this.$store.state.url + 'commentlist', {params: {seq: this.postDetail.b_seq}})
           .then(response => {
-            this.commentList = response.data.result;
+            this.commentList = response.data.result.map(comment => {
+              comment.editing = false;
+              comment.editedContent = '';
+              return comment;
+            });
             this.commentCnt = this.commentList.length;
           })
           .catch(error => {
@@ -181,7 +192,18 @@ export default {
       })
     },
     editComment(comment) {
-
+      comment.editing = true; // 수정 모드로 전환
+      comment.editedContent = comment.content; // 원래 댓글 내용을 editedContent에 저장
+    },
+    updateComment(comment) {
+      axios.put(this.$store.state.url + 'comment', {content: comment.editedContent, c_seq: comment.c_seq})
+          .then(response => {
+            comment.editing = false; // 수정 모드 종료
+            this.getCommentList();
+          })
+          .catch(error => {
+            console.log(error);
+          });
     },
   }
 }

@@ -30,5 +30,6 @@ public interface TreasureBoxMapper {
     int getCommmentCnt(int seq);
     List<TbCommentModel> getMyCommentList(@Param("id") String id, @Param("page") PageCriteria criteria);
     TreasureBoxModel getPost(int seq);
+    int updateComment(TbCommentModel tbcModel);
 
 }

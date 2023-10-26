@@ -214,4 +214,14 @@
         ]]>
     </select>
 
+    <update id="updateComment" parameterType="com.postcard.toyou.model.TbCommentModel">
+        <![CDATA[
+            update tbcomment
+                set content=#{content},
+                    regdate=now()
+            where c_seq=#{c_seq}
+
+        ]]>
+    </update>
+
 </mapper>

@@ -424,4 +424,27 @@ public class TreasureBoxServiceImpl implements TreasureBoxService {
 
         return ResponseEntity.ok(rModel);
     }
+
+    @Override
+    public ResponseEntity<ResultModel> updateComment(TbCommentModel tbcModel) {
+
+        if ( log.isDebugEnabled() ) {
+            log.debug("::: updateComment ::: TbCommentModel : {}",  tbcModel);
+        }
+        
+        ResultModel rModel = new ResultModel();
+
+        int result = tbMapper.updateComment(tbcModel);
+
+        if(result > 0) {
+            rModel.setState(true);
+            rModel.setMessage("댓글을 수정했습니다.");
+        } else {
+            rModel.setState(false);
+            rModel.setMessage("댓글을 수정하지 못했습니다.");
+        }
+
+        return ResponseEntity.ok(rModel);
+    }
+
 }
