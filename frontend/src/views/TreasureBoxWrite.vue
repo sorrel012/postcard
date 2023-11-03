@@ -1,26 +1,27 @@
 <template>
-  <section class="container-md mt-5 pt-5">
-    <div class="d-flex justify-content-between mb-5">
+  <main class="container-md mt-5 pt-5">
+    <header class="d-flex justify-content-between mb-5">
       <div class="headline text-start border-bottom border-black w-100">
-        <h2 class="fw-bold ">글쓰기</h2>
+        <h1 class="fw-bold">글쓰기</h1>
       </div>
-    </div>
+    </header>
 
 
     <form class="w-100 h-100 mh-100" @submit.prevent="registPost">
 
       <input type="text" placeholder="제목을 입력해 주세요" class="form-control mb-4" style="height: 40px" required v-model="title">
 
-      <CkEditor :initial-data="content" @write="content=$event" @images="images=$event"/>
+      <article>
+        <CkEditor :initial-data="content" @write="content=$event" @images="images=$event"/>
+      </article>
 
-      <div class="text-end mt-4 mb-4">
-        <button type="submit" class="btn btn-primary me-2" v-if="postType==='write'"><font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #ffffff;" /> 등록</button>
-        <button type="submit" class="btn btn-primary me-2" v-if="postType==='edit'"><font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #ffffff;" /> 수정</button>
+      <footer class="text-end mt-4 mb-4">
+        <button type="submit" class="btn btn-primary me-2" v-if="editSeq==undefined"><font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #ffffff;" /> 등록</button>
+        <button type="submit" class="btn btn-primary me-2" v-if="editSeq!=undefined"><font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #ffffff;" /> 수정</button>
         <button type="button" class="btn btn-border" @click="backToList"><font-awesome-icon :icon="['fas', 'bars']" style="color: black;" /> 목록</button>
-      </div>
+      </footer>
     </form>
-
-  </section>
+  </main>
 </template>
 
 <script>
@@ -36,7 +37,7 @@ export default {
       content: '',
       title: '',
       images: [],
-      postType: '',
+      editSeq: 0,
       b_seq: 0,
     }
   },
@@ -57,13 +58,13 @@ export default {
     }
 
     //수정인지 추가인지 확인하여 수정일 경우 본문 내용 보여주기
-    const editSeq = this.$route.query.seq;
-    if(editSeq != undefined) {
-      axios.get(this.$store.state.url + 'post', {params: {seq: editSeq}})
+    this.editSeq = this.$route.query.seq;
+    if(this.editSeq != undefined) {
+      axios.get(this.$store.state.url + 'post', {params: {seq: this.editSeq}})
           .then(response => {
             this.title = response.data.result.title;
             this.content = response.data.result.content;
-            this.b_seq = editSeq;
+            this.b_seq =this.editSeq;
           })
           .catch(error => {
             console.log(error);
@@ -155,5 +156,8 @@ export default {
 .btn-border {
   background-color: white;
   border-color: #797979;
+}
+h1 {
+  font-size: xx-large;
 }
 </style>
