@@ -1,50 +1,55 @@
 <template>
-  <div class="p-5 h-100 w-100">
-
-    <div class="mt-4" v-if="!isSuccess">
-      <img src="@/assets/postcard_banner.png" class="img-fluid" alt="main-banner">
-    </div>
+  <main class="p-5 h-100 w-100">
+    <figure v-if="!isSuccess" class="mt-4">
+      <img alt="main-banner" class="img-fluid" src="@/assets/postcard_banner.png">
+    </figure>
 
     <div :class="{'mt-4':true, 'fs-1':true, 'f-bold':true, 'd-none': !isLoading}" @click="inputCode">
       <button class="btn btn-danger w-50">전하기 💌</button>
     </div>
 
-    <h1 class="mt-4 mb-5">{{ paper.title }}</h1>
+    <header>
+      <h1 class="mt-4 mb-5">{{ paper.title }}</h1>
+    </header>
 
-    <div class="row w-100 m-0 align-items-baseline">
+    <!--    <section class="row w-100 m-0 align-items-baseline">-->
+    <section class="row w-100 m-0 align-items-start d-flex justify-content-between">
       <!-- 기존의 쪽지들 -->
-      <div class="d-flex flex-wrap justify-content-start">
-        <div class="p-3 fs-4 mt-4 mb-4 col-12 col-sm-4 col-xl-2" v-for="postcard in postcards">
-          <div class="pt-3 pb-3 ps-2 pe-2" :style="{backgroundColor: paper.pcColor, outline: `${paper.pcBorderPx} solid ${paper.pcbColor}`,
-        borderRadius: paper.pcbRadiusPx, boxShadow: `4px 4px 1px 3px ${paper.pcbColor}`, color: postcard.textColor}">
+      <!--      <section class="d-flex flex-wrap justify-content-start">-->
+      <section class="d-flex flex-wrap justify-content-start flex-grow-1">
+        <div v-for="postcard in postcards" class="p-3 fs-4 mt-4 mb-4 col-12 col-sm-4 col-xl-2">
+          <article :style="{backgroundColor: paper.pcColor, outline: `${paper.pcBorderPx} solid ${paper.pcbColor}`,
+        borderRadius: paper.pcbRadiusPx, boxShadow: `4px 4px 1px 3px ${paper.pcbColor}`, color: postcard.textColor}"
+                   class="pt-3 pb-3 ps-2 pe-2">
             {{ postcard.content }}
-          </div>
+          </article>
         </div>
-      </div>
+      </section>
       <!-- 새로운 쪽지-->
-      <div class="p-3 fs-4 m-2 ms-0 me-0">
-        <div class="d-flex align-items-start">
-            <textarea :class="{'p-3':true, 'fs-4':true, 'col-12':true, 'col-sm':true, 'w-75':true, 'd-none': !isNew}"
-                      :style="{backgroundColor: paper.pcColor, outline: `${paper.pcBorderPx} solid ${paper.pcbColor}`,borderRadius: paper.pcbRadiusPx, boxShadow: `4px 4px 1px 3px ${paper.pcbColor}`, color:postcard.textColor, maxWidth: '210px'}"
-                      v-model="postcard.content">
-            </textarea>
+      <!--      <section class="p-3 fs-4 m-2 ms-0 me-0">-->
+      <section class="p-3 fs-4 m-2 ms-0 me-0 align-self-end or ml-auto">
+        <form class="d-flex align-items-start">
+          <textarea v-model="postcard.content" :class="{'d-none': !isNew}"
+                    :style="{backgroundColor: paper.pcColor, outline: `${paper.pcBorderPx} solid ${paper.pcbColor}`,borderRadius: paper.pcbRadiusPx, boxShadow: `4px 4px 1px 3px ${paper.pcbColor}`, color:postcard.textColor, maxWidth: '210px'}"
+                    class="p-3 fs-4 col-12 col-sm w-75">
+          </textarea>
           <div class="ms-3 d-flex flex-column align-items-center">
-            <input type="color"
-                   :class="{'form-control':true, 'form-control-color':true, 'mb-2':true, 'd-none':!isNew}"
+            <input v-model="postcard.textColor" :class="{'d-none':!isNew}"
+                   class="form-control form-control-color mb-2"
                    style="height:50px"
-                   v-model="postcard.textColor">
-            <button :class="{'btn':true, 'btn-success':true, 'd-none':!isNew}"
-                    @click="regPostcard">✔</button>
+                   type="color">
+            <button :class="{'d-none':!isNew}" class="btn btn-success"
+                    @click="regPostcard">✔
+            </button>
           </div>
-        </div>
-      </div>
-    </div>
+        </form>
+      </section>
+    </section>
 
-    <div :class="{'mt-3':true, 'd-none':isLoading}" @click="newPostcard">
-      <button class="btn btn-danger">+</button>
+    <div :class="{'mt-3':true, 'd-none':isLoading}">
+      <button class="btn btn-danger" @click="newPostcard">+</button>
     </div>
-
-  </div>
+  </main>
 </template>
 
 <script>
@@ -118,7 +123,7 @@ export default {
       })
     },
     newPostcard() {
-      if(this.isNew) {
+      if (this.isNew) {
         Swal.fire({
           icon: 'error',
           title: '변경사항을 저장해 주세요',
@@ -132,7 +137,7 @@ export default {
       this.postcard.content = this.postcard.content.trim();
 
       //값이 있는지 검사
-      if(this.postcard.content == null || this.postcard.content === '') {
+      if (this.postcard.content == null || this.postcard.content === '') {
         Swal.fire({
           icon: 'error',
           title: '내용을 입력해 주세요',
@@ -142,7 +147,7 @@ export default {
 
       await axios.post(this.$store.state.url + 'write', this.postcard)
           .then(result => {
-            if(result.data.state) {
+            if (result.data.state) {
               Swal.fire({
                 icon: 'success',
                 title: result.data.message,
@@ -165,8 +170,8 @@ export default {
           })
 
 
-          this.isNew = false;
-          this.getPostcards();
+      this.isNew = false;
+      this.getPostcards();
     },
     getPostcards() {
       axios.get(this.$store.state.url + 'postcardlist', {params: {pcc_seq: this.paper.pcc_seq}})

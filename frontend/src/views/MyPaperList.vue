@@ -1,17 +1,13 @@
 <template>
-  <div v-if="isMember" class="container-fluid row d-lg-flex align-items-sm-start p-5 pt-4" >
+  <div v-if="isMember" class="container-fluid row d-lg-flex align-items-sm-start p-5 pt-4">
 
     <my-page-navbar/>
     <my-page-sidebar/>
 
     <div class="col-9 container-lg">
-      <div class="container-lg mb-4 p-0">
-        <div class="container-lg text-start border-bottom border-2 border-dark d-flex">
-          <div class="text-start">
-            <h3 class="h3 pb-2 m-0 fw-bold">도화지 목록</h3>
-          </div>
-        </div>
-      </div>
+      <header class="mb-4 ps-1 text-start text-gray border-bottom border-2">
+        <h1 class="h3 pb-2 m-0 fw-bold">도화지 목록</h1>
+      </header>
 
       <p class="mt-3 text-end">총 {{ paperCnt }}건</p>
 
@@ -26,32 +22,33 @@
         </tr>
         </thead>
         <tbody>
-          <tr class="text-center align-middle" v-for="paper in paperlist">
-            <td class="col-3 text-wrap">
-              <div class="text-dark text-wrap text-decoration-none text-hover" @click="mypaper(paper)">{{ paper.title }}</div>
-            </td>
-            <td class="col-2 text-wrap">{{ paper.code }}</td>
-            <td class="col-2 text-wrap">{{ paper.regdate }}</td>
-            <td class="col-1 text-wrap">{{ paper.pcCnt }}</td>
-            <td class="col-1 text-wrap">
-              <button type="button" class="btn btn-danger btn-sm" @click="deletePaper(paper)">삭제</button>
-            </td>
-          </tr>
+        <tr v-for="paper in paperlist" class="text-center align-middle">
+          <td class="col-3 text-wrap text-dark text-decoration-none text-hover" @click="mypaper(paper)">{{
+              paper.title
+            }}
+          </td>
+          <td class="col-2 text-wrap">{{ paper.code }}</td>
+          <td class="col-2 text-wrap">{{ paper.regdate }}</td>
+          <td class="col-1 text-wrap">{{ paper.pcCnt }}</td>
+          <td class="col-1 text-wrap">
+            <button class="btn btn-danger btn-sm" type="button" @click="deletePaper(paper)">삭제</button>
+          </td>
+        </tr>
         </tbody>
       </table>
 
-      <nav aria-label="Page navigation" class="mt-4">
+      <nav aria-label="Page Navigation" class="mt-4">
         <ul class="pagination justify-content-center">
-          <li class="page-item" :class="{ 'disabled': pageNo <= 1 }">
-            <a class="page-link" href="#" @click.prevent="prevPage" aria-label="Previous">
+          <li :class="{ 'disabled': pageNo <= 1 }" class="page-item">
+            <a aria-label="Previous" class="page-link" href="#" @click.prevent="prevPage">
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
-          <li v-for="page in totalPage" :key="page" class="page-item" :class="{ 'active': pageNo === page }">
+          <li v-for="page in totalPage" :key="page" :class="{ 'active': pageNo === page }" class="page-item">
             <a class="page-link" href="#" @click.prevent="goToPage(page)">{{ page }}</a>
           </li>
-          <li class="page-item" :class="{ 'disabled': pageNo >= totalPage }">
-            <a class="page-link" href="#" @click.prevent="nextPage" aria-label="Next">
+          <li :class="{ 'disabled': pageNo >= totalPage }" class="page-item">
+            <a aria-label="Next" class="page-link" href="#" @click.prevent="nextPage">
               <span aria-hidden="true">&raquo;</span>
             </a>
           </li>
@@ -88,12 +85,12 @@ export default {
   },
   async created() {
     const id = sessionStorage.getItem('id');
-    if(id == null || id == '') {
+    if (id == null || id == '') {
       await Swal.fire({
         icon: 'error',
         title: '로그인 후 이용하실 수 있습니다',
       })
-      location.href='/login';
+      location.href = '/login';
       return
     } else {
       this.isMember = true;
@@ -112,7 +109,7 @@ export default {
         size: this.pageSize,
         id: sessionStorage.getItem('id')
       }
-      axios.get(this.$store.state.url + 'mypaperlist', { params: config })
+      axios.get(this.$store.state.url + 'mypaperlist', {params: config})
           .then(response => {
             this.paperlist = response.data.result;
             this.paperCnt = this.paperlist.length;
@@ -123,7 +120,7 @@ export default {
           })
     },
     mypaper(paper) {
-      this.$router.push({ name: 'mypaper', query: {code: paper.code} })
+      this.$router.push({name: 'mypaper', query: {code: paper.code}})
     },
     deletePaper(paper) {
       Swal.fire({
@@ -135,7 +132,7 @@ export default {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Delete',
         preConfirm: () => {
-          return axios.delete(this.$store.state.url + 'paper', {params: {pcc_seq : paper.pcc_seq}})
+          return axios.delete(this.$store.state.url + 'paper', {params: {pcc_seq: paper.pcc_seq}})
               .then(response => {
                 this.getPapers();
               })

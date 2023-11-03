@@ -1,11 +1,10 @@
 <template>
-
-  <section class="container-md mt-5 mb-5 pt-5">
-    <div class="d-flex justify-content-between">
-      <div class="headline text-start">
-        <h2 class="fw-bold">보물상자🎁</h2>
-      </div>
-      <div class="btn-group mb-3">
+  <main class="container-md mt-5 mb-5 pt-5">
+    <section class="d-flex justify-content-between">
+      <header class="headline text-start">
+        <h1 class="fw-bold">보물상자🎁</h1>
+      </header>
+      <section class="btn-group mb-3">
         <select class="form-select w-35 me-1" v-model="searchOption">
           <option value="1">제목</option>
           <option value="2">내용</option>
@@ -14,22 +13,20 @@
         </select>
         <input type="text" class="form-control" placeholder="검색어를 입력해주세요." v-model="searchKeyword">
         <button type="button" class="btn btn-primary text-nowrap" @click="getPosts()"><font-awesome-icon :icon="['fas', 'magnifying-glass']" beat style="color: #ffffff;" /></button>
+      </section>
+    </section>
+
+    <div class="side-headline mt-4 mb-3 d-flex justify-content-between align-items-end">
+      <p class="mb-0">총 <span class="fw-bold">{{ postCnt }}</span>건</p>
+      <div>
+        <select class="form-select w-100" v-model="selectedOption" @change="getPosts">
+          <option value="1">최신순</option>
+          <option value="2">오래된순</option>
+        </select>
       </div>
     </div>
 
-    <div class="side-headline mt-4 mb-3">
-      <div class="d-flex justify-content-between align-items-end">
-        <p class="mb-0">총 <span class="fw-bold">{{ postCnt }}</span>건</p>
-        <div>
-          <select class="form-select w-100" v-model="selectedOption" @change="getPosts">
-            <option value="1">최신순</option>
-            <option value="2">오래된순</option>
-          </select>
-        </div>
-      </div>
-    </div>
-
-    <div>
+    <section>
       <table class="container-lg table table-hover mt-1 truncLayout">
         <thead class="table-light">
         <tr class="text-center">
@@ -51,10 +48,11 @@
         </tbody>
       </table>
 
-      <div class="text-center align-middle border-bottom" v-if="postCnt===0 && isSearch">
+      <section class="text-center align-middle border-bottom" v-if="postCnt===0 && isSearch">
         <div class="col-12 mt-5 mb-5">검색 결과가 없습니다.</div>
-      </div>
-    </div>
+      </section>
+    </section>
+
     <div class="text-end mt-4">
       <button type="button" class="btn btn-primary" @click="write"><font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #ffffff;" /> 글쓰기</button>
     </div>
@@ -76,9 +74,7 @@
         </li>
       </ul>
     </nav>
-
-  </section>
-
+  </main>
 </template>
 
 <script>
@@ -169,3 +165,8 @@ export default {
   }
 }
 </script>
+<style>
+h1 {
+  font-size: xx-large;
+}
+</style>

@@ -1,17 +1,13 @@
 <template>
-  <div v-if="isMember" class="container-fluid row d-lg-flex align-items-sm-start p-5 pt-4" >
+  <div v-if="isMember" class="container-fluid row d-lg-flex align-items-sm-start p-5 pt-4">
 
     <my-page-navbar/>
     <my-page-sidebar/>
 
-    <div class="col-9 container-lg">
-      <div class="container-lg mb-4 p-0">
-        <div class="container-lg text-start border-bottom border-2 border-dark d-flex">
-          <div class="text-start">
-            <h3 class="h3 pb-2 m-0 fw-bold">게시글 목록</h3>
-          </div>
-        </div>
-      </div>
+    <main class="col-9 container-lg">
+      <header class="mb-4 ps-1 text-start text-gray border-bottom border-2">
+        <h1 class="h3 pb-2 m-0 fw-bold">게시글 목록</h1>
+      </header>
 
       <p class="mt-3 text-end">총 {{ postCnt }}건</p>
 
@@ -27,40 +23,41 @@
         </tr>
         </thead>
         <tbody>
-        <tr class="text-center align-middle" v-for="post in postlist">
+        <tr v-for="post in postlist" class="text-center align-middle">
           <td class="col-1 text-wrap">{{ post.b_seq }}</td>
-          <td class="col-6 text-wrap">
-            <div class="text-dark text-wrap text-decoration-none text-hover" @click="myPost(post)">{{ post.title }}</div>
+          <td class="col-6 text-wrap text-dark text-decoration-none text-hover" @click="myPost(post)">{{
+              post.title
+            }}
           </td>
           <td class="col-2 text-wrap">{{ post.regdate }}</td>
           <td class="col-1 text-wrap">{{ post.commentCnt }}</td>
           <td class="col-1 text-wrap">{{ post.hit }}</td>
           <td class="col-1 text-wrap">
-            <button type="button" class="btn btn-danger btn-sm" @click="deletePost(post)">삭제</button>
+            <button class="btn btn-danger btn-sm" type="button" @click="deletePost(post)">삭제</button>
           </td>
         </tr>
         </tbody>
       </table>
 
-      <nav aria-label="Page navigation" class="mt-4">
+      <nav aria-label="Page Navigation" class="mt-4">
         <ul class="pagination justify-content-center">
-          <li class="page-item" :class="{ 'disabled': pageNo <= 1 }">
-            <a class="page-link" href="#" @click.prevent="prevPage" aria-label="Previous">
+          <li :class="{ 'disabled': pageNo <= 1 }" class="page-item">
+            <a aria-label="Previous" class="page-link" href="#" @click.prevent="prevPage">
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
-          <li v-for="page in totalPage" :key="page" class="page-item" :class="{ 'active': pageNo === page }">
+          <li v-for="page in totalPage" :key="page" :class="{ 'active': pageNo === page }" class="page-item">
             <a class="page-link" href="#" @click.prevent="goToPage(page)">{{ page }}</a>
           </li>
-          <li class="page-item" :class="{ 'disabled': pageNo >= totalPage }">
-            <a class="page-link" href="#" @click.prevent="nextPage" aria-label="Next">
+          <li :class="{ 'disabled': pageNo >= totalPage }" class="page-item">
+            <a aria-label="Next" class="page-link" href="#" @click.prevent="nextPage">
               <span aria-hidden="true">&raquo;</span>
             </a>
           </li>
         </ul>
       </nav>
 
-    </div>
+    </main>
   </div>
 
 </template>
@@ -125,7 +122,7 @@ export default {
           })
     },
     myPost(post) {
-      this.$router.push({ name: 'treasure-detail', query: {seq: post.b_seq} })
+      this.$router.push({name: 'treasure-detail', query: {seq: post.b_seq}})
     },
     deletePost(post) {
       Swal.fire({
@@ -137,7 +134,7 @@ export default {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Delete',
         preConfirm: () => {
-          return axios.delete(this.$store.state.url + 'post', {params: {seq : post.b_seq}})
+          return axios.delete(this.$store.state.url + 'post', {params: {seq: post.b_seq}})
               .then(response => {
                 this.getPosts();
               })

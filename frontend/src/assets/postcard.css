@@ -15,7 +15,7 @@
 }
 
 .nav-link, .navbar-brand, h1, .f-bold {
-    font-family: SUITE-ExtraBold ;
+    font-family: SUITE-ExtraBold;
 }
 
 div, button, form, section {
@@ -50,8 +50,13 @@ div, button, form, section {
 .c-red {
     color: red;
 }
+
 .c-blue {
     color: blue;
+}
+
+.text-gray {
+    color: #4b4d4d;
 }
 
 /*sweetalert2 폰트 변경*/
@@ -71,19 +76,24 @@ div, button, form, section {
 .truncLayout {
     table-layout: fixed;
 }
+
 .hover {
     cursor: pointer;
 }
-.w-35{
+
+.w-35 {
     width: 35% !important;
 }
-.active>.page-link {
+
+.active > .page-link {
     background-color: rgb(194, 184, 184) !important;
     border-color: rgb(194, 184, 184) !important;
 }
+
 .page-link, .page-link:hover {
     color: rgb(122, 107, 107);
 }
+
 .page-link:focus {
     box-shadow: none
 }

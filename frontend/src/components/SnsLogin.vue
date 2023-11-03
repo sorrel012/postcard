@@ -1,18 +1,21 @@
 <template>
-  <div class=" mt-4 mb-2" :class="{'d-none':isRedirect}">
+  <div :class="{'d-none':isRedirect}" class=" mt-4 mb-2">
     <div>
-      <img src="@/assets/kakao_login.png" alt="kakao" @click="socialLogin($event)" class="w-25 mb-2" id="kakao">
+      <img id="kakao" alt="kakao" class="w-25 mb-2" role="button" src="@/assets/kakao_login.png"
+           @click="socialLogin($event)">
     </div>
     <div>
-      <img src="@/assets/naver_login.png" alt="naver" @click="socialLogin($event)" class="w-25 mb-2" id="naver">
+      <img id="naver" alt="naver" class="w-25 mb-2" role="button" src="@/assets/naver_login.png"
+           @click="socialLogin($event)">
     </div>
     <div>
-      <img src="@/assets/google_login.png" alt="naver" @click="socialLogin($event)" class="w-25" id="google">
+      <img id="google" alt="google" class="w-25" role="button" src="@/assets/google_login.png"
+           @click="socialLogin($event)">
     </div>
 
-    <div class="mt-5" :class="{'d-none':!isRedirect}">
-      <img src="@/assets/banner.png" class="img-fluid" alt="main-banner">
-    </div>
+    <figure :class="{'d-none':!isRedirect}" class="mt-5">
+      <img alt="main-banner" class="img-fluid" src="@/assets/banner.png">
+    </figure>
   </div>
 </template>
 
@@ -47,20 +50,20 @@ export default {
       kakaoTokenParams: {
         client_id: process.env.VUE_APP_KAKAO_REST_KEY,
         code: this.$route.query.code,
-        grant_type : 'authorization_code',
+        grant_type: 'authorization_code',
       },
       naverTokenParams: {
         client_id: process.env.VUE_APP_NAVER_CLIENT_ID,
         client_secret: process.env.VUE_APP_NAVER_CLIENT_SECRET_ID,
         code: this.$route.query.code,
-        grant_type : 'authorization_code',
+        grant_type: 'authorization_code',
         state: this.generateEncodedState(),
       },
       googleTokenParams: {
         client_id: process.env.VUE_APP_GOOGLE_CLIENT_ID,
         client_secret: process.env.VUE_APP_GOOGLE_CLIENT_SECRET_PW,
         code: this.$route.query.code,
-        grant_type : 'authorization_code',
+        grant_type: 'authorization_code',
         redirect_uri: process.env.VUE_APP_SNS_REDIRECT_URI
       },
       token: {
@@ -76,7 +79,7 @@ export default {
   },
   async created() {
 
-    if(this.$route.query.state != undefined) {
+    if (this.$route.query.state != undefined) {
       this.isRedirect = true;
 
       //btn Id값 디코딩
@@ -88,7 +91,7 @@ export default {
       // 토큰 값 얻어오기
       const tokenConfig = {
         headers: {
-          'btnType' : btnId
+          'btnType': btnId
         }
       }
 
@@ -110,9 +113,9 @@ export default {
       //유저 정보 가져오기
       const userConfig = {
         headers: {
-          'Authorization' : `Bearer ${this.token.access_token}`,
-          'Content-type' : 'application/x-www-form-urlencoded;charset=utf-8',
-          'btnType' : btnId
+          'Authorization': `Bearer ${this.token.access_token}`,
+          'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
+          'btnType': btnId
         }
       }
 
@@ -179,7 +182,7 @@ export default {
       return encodeURIComponent(this.generateRandomState());
     },
     async getToken(header, tokenParams) {
-      await axios.post(this.$store.state.url+'snslogin', new URLSearchParams(tokenParams).toString(), header)
+      await axios.post(this.$store.state.url + 'snslogin', new URLSearchParams(tokenParams).toString(), header)
           .then(response => {
             this.token.access_token = response.data.result.access_token;
             this.token.refresh_token = response.data.result.refresh_token;
@@ -189,17 +192,17 @@ export default {
           })
     },
     async getSnsInfo(btnId, header) {
-      await axios.get(this.$store.state.url+'snslogin', header)
+      await axios.get(this.$store.state.url + 'snslogin', header)
           .then(response => {
-            if(btnId === 'naver') {
+            if (btnId === 'naver') {
               this.$store.commit('setSnsUserId', response.data.result.response.id);
               this.$store.commit('setSnsUserEmail', response.data.result.response.email);
               this.userinfo.id = response.data.result.response.id;
-            } else if(btnId === 'kakao') {
+            } else if (btnId === 'kakao') {
               this.$store.commit('setSnsUserId', response.data.result.id);
               this.$store.commit('setSnsUserEmail', response.data.result.kakao_account.email);
               this.userinfo.id = response.data.result.id;
-            } else if(btnId === 'google') {
+            } else if (btnId === 'google') {
               this.$store.commit('setSnsUserId', response.data.result.id);
               this.$store.commit('setSnsUserEmail', response.data.result.email);
               this.userinfo.id = response.data.result.id;
@@ -215,7 +218,7 @@ export default {
           })
 
       //이전에 가입 후 탈퇴한 회원인지 확인
-      await axios.post(this.$store.state.url+'checkrejoin', this.userinfo)
+      await axios.post(this.$store.state.url + 'checkrejoin', this.userinfo)
           .then(async response => {
             if (response.data.result.length !== 0) {
               await Swal.fire({
@@ -224,7 +227,7 @@ export default {
                 text: '다른 계정으로 로그인해 주세요',
                 timer: 2000,
               })
-                location.href = '/login';
+              location.href = '/login';
             }
           })
           .catch(error => {
@@ -235,7 +238,7 @@ export default {
       //최초 로그인인지 확인
       await axios.post(this.$store.state.url + 'dup-id', this.userinfo)
           .then(response => {
-            if(response.data.result.length === 0) {
+            if (response.data.result.length === 0) {
               this.$router.push({name: 'sns-register'})
             } else {
               sessionStorage.setItem('id', this.userinfo.id);
@@ -291,6 +294,7 @@ export default {
 .mt-5 {
   margin-top: 7rem !important;
 }
+
 img:hover {
   cursor: pointer;
 }

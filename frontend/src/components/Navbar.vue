@@ -1,49 +1,46 @@
 <template>
-  <div>
-    <nav class="pt-3 pb-3 navbar navbar-expand-lg bg-light">
-      <div class="font-bold container-fluid">
-        <a class="navbar-brand ms-3" href="/">롤링페이퍼 🧾</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <router-link class="nav-link me-3" to="/create" active-class="active">도화지 만들기</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link " to="/write" active-class="active">마음 전하기</router-link>
-            </li>
+  <nav class="p-3 navbar navbar-expand-lg bg-light font-bold container-fluid">
+    <a class="navbar-brand ms-3" href="/">롤링페이퍼 🧾</a>
 
-            <li class="nav-item">
-              <router-link class="nav-link ms-4" to="/treasure" active-class="active">보물상자</router-link>
-            </li>
-          </ul>
-        </div>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav2"
-                aria-controls="navbarNav2" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav2">
-          <ul class="navbar-nav">
-            <li class="nav-item me-2" v-if="isMember" @click="logout">
-              <a class="nav-link">로그아웃</a>
-            </li>
-            <li class="nav-item me-2" v-if="isMember">
-              <a class="nav-link" href="/myprofile">회원정보</a>
-            </li>
-            <li class="nav-item me-2" v-if="!isMember">
-              <a class="nav-link" href="/login">로그인</a>
-            </li>
-            <li class="nav-item me-2" v-if="!isMember">
-              <a class="nav-link" href="/register">회원가입</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-  </div>
+    <button aria-controls="mainNavigation" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+            data-bs-target="#mainNavigation" data-bs-toggle="collapse" type="button">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="mainNavigation" class="collapse navbar-collapse">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <router-link active-class="active" class="nav-link me-3" to="/create">도화지 만들기</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link active-class="active" class="nav-link " to="/write">마음 전하기</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link active-class="active" class="nav-link ms-4" to="/treasure">보물상자</router-link>
+        </li>
+      </ul>
+    </div>
+
+    <button aria-controls="userNavigation" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+            data-bs-target="#userNavigation" data-bs-toggle="collapse" type="button">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="userNavigation" class="collapse navbar-collapse">
+      <ul class="navbar-nav">
+        <li v-if="isMember" class="nav-item me-2" @click="logout">
+          <a class="nav-link">로그아웃</a>
+        </li>
+        <li v-if="isMember" class="nav-item me-2">
+          <a class="nav-link" href="/myprofile">회원정보</a>
+        </li>
+        <li v-if="!isMember" class="nav-item me-2">
+          <a class="nav-link" href="/login">로그인</a>
+        </li>
+        <li v-if="!isMember" class="nav-item me-2">
+          <a class="nav-link" href="/register">회원가입</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 </template>
 
 <script>
@@ -70,10 +67,10 @@ export default {
     }
   },
   created() {
-    if(sessionStorage.getItem('id') != null) {
+    if (sessionStorage.getItem('id') != null) {
       this.isMember = true;
     }
-    if(sessionStorage.getItem('social') != null) {
+    if (sessionStorage.getItem('social') != null) {
       this.isSocial = true;
     }
   },
@@ -87,7 +84,7 @@ export default {
         sessionStorage.removeItem('id');
         sessionStorage.removeItem('name');
         sessionStorage.removeItem('no');
-        if(this.isSocial) {
+        if (this.isSocial) {
           this.socialLogout();
           sessionStorage.removeItem('social');
           sessionStorage.removeItem('access_token');
@@ -101,12 +98,12 @@ export default {
       const accessToken = JSON.parse(atob(sessionStorage.getItem('access_token')));
       const btnType = sessionStorage.getItem('socialType');
 
-      if(btnType === 'kakao') {
+      if (btnType === 'kakao') {
         const url = 'https://kauth.kakao.com/oauth/logout';
         location.href = `${url}?client_id=${this.kakaoLogoutParams.client_id}&logout_redirect_uri=${this.kakaoLogoutParams.logout_redirect_uri}`;
-      } else if(btnType === 'naver') {
+      } else if (btnType === 'naver') {
         this.naverLogoutParams.access_token = accessToken;
-        axios.post(this.$store.state.url+'snslogout', new URLSearchParams(this.naverLogoutParams).toString())
+        axios.post(this.$store.state.url + 'snslogout', new URLSearchParams(this.naverLogoutParams).toString())
       }
 
     }
@@ -114,7 +111,7 @@ export default {
 }
 </script>
 
-<style >
+<style>
 a:hover {
   cursor: pointer;
 }

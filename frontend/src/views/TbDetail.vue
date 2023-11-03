@@ -1,31 +1,35 @@
 <template>
-  <section class="container mt-5">
-
-    <div class="p-3 mb-4 border rounded-end">
-
-      <div class="p-5 pb-2">
-        <div class="d-flex justify-content-between text-secondary">
+  <main class="container mt-5 p-3">
+    <div class="p-5 pb-2 p-3 mb-4 border rounded-end">
+      <!-- 게시글 -->
+      <article>
+        <section class="d-flex justify-content-between text-secondary">
           <div>
             <span class="me-3">{{ writer }}</span>
             <span>{{ postDetail.regdate }}</span>
           </div>
           <div>조회 {{ postDetail.hit }}</div>
+        </section>
+
+        <header class="border-bottom pb-3 mt-3 text-start fs-4 fw-bold">{{ postDetail.title }}</header>
+
+        <section class="mt-5 text-start fs-5" v-html="postDetail.content"></section>
+
+        <div v-if="postDetail.m_id===loginUser" class="text-end mt-5 mb-4">
+          <button class="btn btn-lg btn-success me-2" type="button" @click="editPost">수정</button>
+          <button class="btn btn-lg btn-danger" type="button" @click="deletePost">삭제</button>
+        </div>
+      </article>
+
+      <!-- 댓글 -->
+      <article>
+        <div class="text-end border-bottom pb-1 text-secondary mb-4">
+          <font-awesome-icon :icon="['fa', 'message']"/>
+          {{ commentCnt }}
         </div>
 
-        <div class="border-bottom pb-3 mt-3 text-start fs-4 fw-bold">{{ postDetail.title }}</div>
-
-        <div class="mt-5 text-start fs-5" v-html="postDetail.content"></div>
-
-        <div class="text-end mt-5 mb-4" v-if="postDetail.m_id===loginUser">
-          <button type="button" class="btn btn-lg btn-success me-2" @click="editPost">수정</button>
-          <button type="button" class="btn btn-lg btn-danger" @click="deletePost">삭제</button>
-        </div>
-
-        <div class="text-end border-bottom pb-1 text-secondary">
-          <div><font-awesome-icon :icon="['fa', 'message']"  /> {{ commentCnt }}</div>
-        </div>
-
-        <div class="mt-3 p-3 text-start text-bg-light rounded" v-for="comment in commentList" :key="commentList.c_seq" :id="`comment-${comment.c_seq}`">
+        <section v-for="comment in commentList" :id="`comment-${comment.c_seq}`"
+                 :key="comment.c_seq" class="mt-3 p-3 ps-4 pe-4 text-start text-bg-light rounded">
           <div class="text-secondary">
             <span class="me-3">{{ comment.writer }}</span>
             <span>{{ comment.regdate }}</span>
@@ -36,30 +40,39 @@
             <textarea v-model="comment.editedContent" class="form-control resize-none"></textarea>
           </div>
 
-          <div class="text-end mt-2" v-if="comment.m_id===loginUser">
-            <button type="button" v-if="!comment.editing" class="btn btn-sm btn-border me-2" @click="editComment(comment)">수정</button>
-            <button type="button" v-if="!comment.editing" class="btn btn-sm btn-border" @click="deleteComment(comment.c_seq)">삭제</button>
+          <div v-if="comment.m_id===loginUser" class="text-end mt-2">
+            <button v-if="!comment.editing" class="btn btn-sm btn-border me-2" type="button"
+                    @click="editComment(comment)">수정
+            </button>
+            <button v-if="!comment.editing" class="btn btn-sm btn-border" type="button"
+                    @click="deleteComment(comment.c_seq)">삭제
+            </button>
 
-            <button type="button" v-if="comment.editing" class="btn btn-sm btn-border me-2" @click="updateComment(comment)">확인</button>
-            <button type="button" v-if="comment.editing" class="btn btn-sm btn-border me-2" @click="comment.editing=false">취소</button>
+            <button v-if="comment.editing" class="btn btn-sm btn-border me-2" type="button"
+                    @click="updateComment(comment)">확인
+            </button>
+            <button v-if="comment.editing" class="btn btn-sm btn-border me-2" type="button"
+                    @click="comment.editing=false">취소
+            </button>
           </div>
-        </div>
+        </section>
 
-        <div class="mt-4">
-          <div class="btn-group mb-2 w-100 overflow-auto">
-            <textarea class="form-control resize-none" v-model="newComment"></textarea>
-            <input type="button" class="btn btn-primary btn-lg" value="등록" @click="writeComment">
-          </div>
+        <div class="btn-group mt-4 mb-4 w-100 overflow-auto">
+          <textarea v-model="newComment" class="form-control resize-none"></textarea>
+          <input class="btn btn-primary btn-lg" type="button" value="등록" @click="writeComment">
         </div>
-      </div>
+      </article>
 
     </div>
 
     <div class="text-end mb-2">
-      <button type="button" class="btn btn-lg btn-border" @click="backToList"><font-awesome-icon :icon="['fas', 'bars']" style="color: black;" /> 목록</button>
+      <button class="btn btn-lg btn-border" type="button" @click="backToList">
+        <font-awesome-icon :icon="['fas', 'bars']" style="color: black;"/>
+        목록
+      </button>
     </div>
 
-  </section>
+  </main>
 </template>
 
 <script>
@@ -82,24 +95,24 @@ export default {
     }
   },
   async created() {
-    this.loginUser =sessionStorage.getItem('id');
+    this.loginUser = sessionStorage.getItem('id');
 
     //게시글 정보 받기
     const b_seq = this.$route.query.seq;
     await axios.get(this.$store.state.url + 'post', {params: {seq: b_seq}})
-              .then(response => {
-                this.postDetail = response.data.result;
-              })
-              .catch(error => {
-                console.log(error);
-              })
+        .then(response => {
+          this.postDetail = response.data.result;
+        })
+        .catch(error => {
+          console.log(error);
+        })
 
     //조회수 올리기
-    axios.put(this.$store.state.url + 'hit', this.postDetail.b_seq , {
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          })
+    axios.put(this.$store.state.url + 'hit', this.postDetail.b_seq, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
         .catch(error => {
           console.log(error);
         })
@@ -117,7 +130,7 @@ export default {
         if (this.$route.query.commentId) {
           const commentElement = document.getElementById(`comment-${this.$route.query.commentId}`);
           if (commentElement) {
-            commentElement.scrollIntoView({ behavior: 'smooth' });
+            commentElement.scrollIntoView({behavior: 'smooth'});
           }
 
         }
@@ -170,7 +183,7 @@ export default {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Delete',
         preConfirm: () => {
-          return axios.delete(this.$store.state.url + 'post', {params: {seq : this.postDetail.b_seq}})
+          return axios.delete(this.$store.state.url + 'post', {params: {seq: this.postDetail.b_seq}})
               .then(response => {
                 router.push({name: 'treasure-box'});
               })
@@ -215,7 +228,7 @@ export default {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Delete',
         preConfirm: () => {
-          return axios.delete(this.$store.state.url + 'comment', {params: {seq : seq}})
+          return axios.delete(this.$store.state.url + 'comment', {params: {seq: seq}})
               .catch(error => {
                 console.log(error);
                 Swal.showValidationMessage(
@@ -243,9 +256,11 @@ export default {
   background-color: white;
   border-color: #797979;
 }
+
 img {
   max-width: 100%;
 }
+
 .resize-none {
   resize: none;
 }

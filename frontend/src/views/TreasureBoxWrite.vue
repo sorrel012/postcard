@@ -1,25 +1,21 @@
 <template>
   <main class="container-md mt-5 pt-5">
-    <header class="d-flex justify-content-between mb-5">
-      <div class="headline text-start border-bottom border-black w-100">
-        <h1 class="fw-bold">글쓰기</h1>
-      </div>
+    <header class="d-flex justify-content-between mb-5 text-start border-bottom border-black w-100">
+      <h1 class="fw-bold">글쓰기</h1>
     </header>
 
-
     <form class="w-100 h-100 mh-100" @submit.prevent="registPost">
-
       <input type="text" placeholder="제목을 입력해 주세요" class="form-control mb-4" style="height: 40px" required v-model="title">
 
       <article>
         <CkEditor :initial-data="content" @write="content=$event" @images="images=$event"/>
       </article>
 
-      <footer class="text-end mt-4 mb-4">
+      <div class="text-end mt-4 mb-4">
         <button type="submit" class="btn btn-primary me-2" v-if="editSeq==undefined"><font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #ffffff;" /> 등록</button>
         <button type="submit" class="btn btn-primary me-2" v-if="editSeq!=undefined"><font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #ffffff;" /> 수정</button>
         <button type="button" class="btn btn-border" @click="backToList"><font-awesome-icon :icon="['fas', 'bars']" style="color: black;" /> 목록</button>
-      </footer>
+      </div>
     </form>
   </main>
 </template>

@@ -1,17 +1,19 @@
 <template>
-  <div class="p-5 h-100" :class="{'d-none':!isMember}">
-    <h1 class="mt-4 mb-5">{{ paper.title }}</h1>
+  <main :class="{'d-none':!isMember}" class="p-5 h-100">
+    <header>
+      <h1 class="mt-4 mb-5">{{ paper.title }}</h1>
+    </header>
 
-    <div class="d-flex flex-wrap justify-content-start">
-      <div class="p-3 fs-4 mt-4 mb-4 col-12 col-sm-4 col-xl-2 hover" v-for="postcard in postcards">
-        <div class="pt-3 pb-3 ps-2 pe-2" :style="{backgroundColor: paper.pcColor, outline: `${paper.pcBorderPx} solid ${paper.pcbColor}`,
-        borderRadius: paper.pcbRadiusPx, boxShadow: `4px 4px 1px 3px ${paper.pcbColor}`, color: postcard.textColor}" @click="deletePostcard(postcard)">
+    <section class="d-flex flex-wrap justify-content-start">
+      <article v-for="postcard in postcards" class="p-3 fs-4 mt-4 mb-4 col-12 col-sm-4 col-xl-2 hover">
+        <div :style="{backgroundColor: paper.pcColor, outline: `${paper.pcBorderPx} solid ${paper.pcbColor}`,
+        borderRadius: paper.pcbRadiusPx, boxShadow: `4px 4px 1px 3px ${paper.pcbColor}`, color: postcard.textColor}"
+             class="pt-3 pb-3 ps-2 pe-2" role="button" @click="deletePostcard(postcard)">
           {{ postcard.content }}
         </div>
-      </div>
-    </div>
-
-  </div>
+      </article>
+    </section>
+  </main>
 </template>
 
 <script>
@@ -30,12 +32,12 @@ export default {
   async created() {
 
     const id = sessionStorage.getItem('id');
-    if(id == null || id == '') {
+    if (id == null || id == '') {
       await Swal.fire({
         icon: 'error',
         title: '로그인 후 이용하실 수 있습니다',
       })
-      location.href='/login';
+      location.href = '/login';
       return
     } else {
       this.isMember = true;
@@ -74,7 +76,7 @@ export default {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Delete',
         preConfirm: () => {
-          return axios.delete(this.$store.state.url + 'postcard', {params: {pc_seq : postcard.pc_seq}})
+          return axios.delete(this.$store.state.url + 'postcard', {params: {pc_seq: postcard.pc_seq}})
               .then(response => {
                 this.getPostcards(this.paper);
               })

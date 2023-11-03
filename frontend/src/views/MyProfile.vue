@@ -4,94 +4,106 @@
     <my-page-navbar/>
     <my-page-sidebar/>
 
-    <div class="col-9 container-lg">
-      <div class="container-lg mb-4 p-0">
-        <h3 class="h3 mb-3 pb-2 fw-bold border-bottom border-2 border-dark">프로필</h3>
-      </div>
+    <main class="col-9 container-lg">
+      <header class="mb-4 ps-1 text-center text-gray border-bottom border-2">
+        <h1 class="h3 pb-2 m-0 fw-bold">프로필</h1>
+      </header>
+
       <form class="form-control p-4 pb-4 bg-secondary bg-opacity-10 p-5" @submit.prevent="updateInfo">
         <div class="row mb-4 pe-3">
-          <div class="col-2 f-bold text-start d-flex align-items-center ps-4">아이디</div>
+          <label class="col-2 f-bold text-start d-flex align-items-center ps-4" for="id">아이디</label>
           <div class="col-10">
-            <input type="text" class="form-control" disabled :value="newUserinfo.id">
+            <input id="id" :value="newUserinfo.id" class="form-control" disabled type="text">
           </div>
         </div>
         <div class="row mb-4 pe-3">
-          <div class="col-2 f-bold text-start d-flex align-items-center ps-4">이름(닉네임)</div>
+          <label class="col-2 f-bold text-start d-flex align-items-center ps-4" for="name">이름(닉네임)</label>
           <div class="col-10">
-            <input type="text" class="form-control" disabled :value="newUserinfo.name">
+            <input id="name" :value="newUserinfo.name" class="form-control" disabled type="text">
           </div>
         </div>
         <div class="row mb-4 pe-3">
-          <div class="col-2 f-bold text-start d-flex align-items-center ps-4">이메일</div>
+          <label class="col-2 f-bold text-start d-flex align-items-center ps-4" for="email">이메일</label>
           <div class="col-10">
-            <input type="text" class="form-control" required v-model="newUserinfo.email" placeholder="id@email.com">
+            <input id="email" v-model="newUserinfo.email" class="form-control" placeholder="id@email.com" required
+                   type="email">
           </div>
         </div>
         <div class="row mb-4 pe-3">
-          <div class="col-2 f-bold text-start d-flex align-items-center ps-4">생년월일</div>
+          <label class="col-2 f-bold text-start d-flex align-items-center ps-4" for="birth">생년월일</label>
           <div class="col-10">
-            <input type="date" class="form-control" required v-model="newUserinfo.birth" placeholder="날짜를 골라주세요">
+            <input id="birth" v-model="newUserinfo.birth" class="form-control" placeholder="날짜를 골라주세요" required
+                   type="date">
           </div>
         </div>
         <div class="row mb-4 pe-3">
-          <div class="col-2 f-bold text-start d-flex align-items-center ps-4" style="height: 35px;">주소</div>
+          <label class="col-2 f-bold text-start d-flex align-items-center ps-4" for="address"
+                 style="height: 35px;">주소</label>
           <div class="col-10">
-            <div class="btn-group mb-2 w-100" >
-              <input type="text" class="form-control" placeholder="주소를 검색해 주세요" required readonly v-model="newUserinfo.address" ref="addRef">
-              <input type="button" class="btn btn-primary" value="주소 검색" @click="daumPostcode">
+            <div class="btn-group mb-2 w-100">
+              <input id="address" ref="addRef" v-model="newUserinfo.address" class="form-control"
+                     placeholder="주소를 검색해 주세요"
+                     readonly required type="text">
+              <input class="btn btn-primary" type="button" value="주소 검색" @click="daumPostcode">
             </div>
-            <div class="">
-              <input type="text" class="form-control" placeholder="상세 주소를 입력해 주세요" required v-model="newUserinfo.addressDetail" ref="addDetailRef">
-            </div>
+            <input ref="addDetailRef" v-model="newUserinfo.addressDetail" class="form-control"
+                   placeholder="상세 주소를 입력해 주세요"
+                   required type="text">
           </div>
         </div>
         <div class="row mb-4">
-          <div class="col-2 f-bold text-start d-flex align-items-center ps-4" style="height: 35px;">연락처</div>
+          <label class="col-2 f-bold text-start d-flex align-items-center ps-4" for="tel"
+                 style="height: 35px;">연락처</label>
           <div class="col-10">
             <div class="d-flex flex-column pe-3">
               <div class="btn-group w-100 mb-2">
-                <input type="text" class="form-control" placeholder="" required v-model="newUserinfo.tel" ref="telRef">
-                <input type="button" class="btn btn-primary" value="본인 인증" @click="updateTel" v-if="!isSocial">
+                <input id="tel" ref="telRef" v-model="newUserinfo.tel" class="form-control" placeholder="" required
+                       type="text">
+                <input v-if="!isSocial" class="btn btn-primary" type="button" value="본인 인증" @click="updateTel">
               </div>
-              <div class="btn-group w-50 flex-start" v-if="wantAuth">
-                <input type="text" class="form-control" placeholder="인증번호를 입력해 주세요." v-model="userAuthCode" :readonly="isSuccess" ref="authRef">
-                <input type="button" class="btn btn-primary" value="인증" @click="confirmAuth" :disabled="isSuccess">
+              <div v-if="wantAuth" class="btn-group w-50 flex-start">
+                <input ref="authRef" v-model="userAuthCode" :readonly="isSuccess" class="form-control"
+                       placeholder="인증번호를 입력해 주세요." type="text">
+                <input :disabled="isSuccess" class="btn btn-primary" type="button" value="인증" @click="confirmAuth">
               </div>
-              <div class="form-floating btn-group w-50 flex-start ps-2 mt-1" v-if="wantAuth" :class="{'c-red':!isSuccess, 'c-blue':isSuccess}">
-                {{confirmMsg}}
+              <div v-if="wantAuth" :class="{'c-red':!isSuccess, 'c-blue':isSuccess}"
+                   class="form-floating btn-group w-50 flex-start ps-2 mt-1">
+                {{ confirmMsg }}
               </div>
             </div>
           </div>
         </div>
         <div class="mt-4 text-end pe-3">
-          <button type="submit" class="btn btn-primary" style="width: 80px;">수정</button>
+          <button class="btn btn-primary" style="width: 80px;" type="submit">수정</button>
         </div>
       </form>
 
-      <form class="form-control p-4 pb-4 bg-secondary bg-opacity-10 p-5 pt-4 mt-3" @submit.prevent="updatePw" v-if="!isSocial">
+      <form v-if="!isSocial" class="form-control p-4 pb-4 bg-secondary bg-opacity-10 p-5 pt-4 mt-3"
+            @submit.prevent="updatePw">
         <div class="mt-4">
           <div class="w-100 pe-2">
-            <p class="m-0 mb-4 w-auto fw-bold">비밀번호 변경</p>
-            <input class="form-control mb-2" type="password" placeholder="현재 비밀번호" v-model="currentPw" ref="currentPwRef" required>
-            <div class="mb-2 text-start ps-2" :class="{'c-red':!isCorrect, 'c-blue':isCorrect}" v-if="currentPwMsg !== ''">{{currentPwMsg}}</div>
-            <input class="form-control mb-2" type="password" placeholder="새 비밀번호" v-model="newPw" ref="pwRef" required>
-            <input class="form-control" type="password" placeholder="새 비밀번호 확인" v-model="pwCheck" ref="pwCorrectRef" required>
-            <div class="mt-1 mb-4 text-start ps-2" :class="{'c-red':!isSame, 'c-blue':isSame}">{{correctPwMsg}}</div>
+            <label class="m-0 mb-4 w-auto fw-bold" for="pw">비밀번호 변경</label>
+            <input id="pw" ref="currentPwRef" v-model="currentPw" class="form-control mb-2"
+                   placeholder="현재 비밀번호" required type="password">
+            <div v-if="currentPwMsg!==''" :class="{'c-red':!isCorrect, 'c-blue':isCorrect}"
+                 class="mb-2 text-start ps-2">{{ currentPwMsg }}
+            </div>
+            <input ref="pwRef" v-model="newPw" class="form-control mb-2" placeholder="새 비밀번호" required type="password">
+            <input ref="pwCorrectRef" v-model="pwCheck" class="form-control" placeholder="새 비밀번호 확인" required
+                   type="password">
+            <div :class="{'c-red':!isSame, 'c-blue':isSame}" class="mt-1 mb-4 text-start ps-2">{{ correctPwMsg }}</div>
           </div>
         </div>
         <div class="mt-4 text-end pe-2">
-          <button type="submit" class="btn btn-primary" style="width: 80px;">수정</button>
+          <button class="btn btn-primary" style="width: 80px;" type="submit">수정</button>
         </div>
       </form>
 
       <div class="text-end">
         <button class="btn btn-danger mt-4 btn-md" @click="deleteAccount">회원 탈퇴</button>
       </div>
-
-    </div>
-
+    </main>
   </div>
-
 </template>
 
 <script>
@@ -125,7 +137,7 @@ export default {
       currentPw: '',
       isCorrect: false,
       pwCheck: '',
-      newPw:'',
+      newPw: '',
       isSame: false,
       currentPwMsg: '',
       correctPwMsg: '',
@@ -145,7 +157,7 @@ export default {
   created() {
 
     const social = sessionStorage.getItem('social');
-    if(social == null || social === '') {
+    if (social == null || social === '') {
       this.isSocial = false;
     }
 
@@ -170,9 +182,9 @@ export default {
   },
   watch: {
     currentPw() {
-      if(this.currentPw === '') {
+      if (this.currentPw === '') {
         this.currentPwMsg = '';
-      } else if(this.currentPw === this.userinfo.pw) {
+      } else if (this.currentPw === this.userinfo.pw) {
         this.currentPwMsg = '비밀번호가 일치합니다'
         this.isCorrect = true;
       } else {
@@ -181,9 +193,9 @@ export default {
       }
     },
     pwCheck() {
-      if(this.pwCheck === '') {
+      if (this.pwCheck === '') {
         this.correctPwMsg = '';
-      } else if(this.newPw === this.pwCheck) {
+      } else if (this.newPw === this.pwCheck) {
         this.correctPwMsg = '비밀번호 확인이 일치합니다'
         this.isSame = true;
       } else {
@@ -222,7 +234,7 @@ export default {
       }).open();
     },
     updateTel() {
-      if(this.userinfo.tel.length !== 11) {
+      if (this.userinfo.tel.length !== 11) {
         Swal.fire({
           title: '연락처를 입력해 주세요',
           icon: 'error'
@@ -231,7 +243,7 @@ export default {
       }
 
       //연락처가 바뀌었는지 확인
-      if(this.userinfo.tel === this.newUserinfo.tel) {
+      if (this.userinfo.tel === this.newUserinfo.tel) {
         Swal.fire({
           title: '연락처가 변경되지 않았습니다',
           text: '변경 후 다시 시도해 주세요',
@@ -261,11 +273,11 @@ export default {
         const index = Math.floor(Math.random() * chars.length);
         authCode += chars[index];
       }
-      this.authCode= authCode;
+      this.authCode = authCode;
     },
     confirmAuth() {
       this.isAuth = true;
-      if(this.authCode == this.userAuthCode) {
+      if (this.authCode == this.userAuthCode) {
         this.confirmMsg = '인증 성공';
         this.isSuccess = true;
         this.authMsg = '인증 완료'
@@ -283,7 +295,7 @@ export default {
       const addChng = (this.userinfo.addressDetail === this.newUserinfo.addressDetail);
       const tChng = (this.userinfo.tel === this.newUserinfo.tel);
 
-      if(eChng && bChng && adChng && addChng && tChng) {
+      if (eChng && bChng && adChng && addChng && tChng) {
         Swal.fire({
           title: '변경사항이 없습니다',
           icon: 'error'
@@ -292,7 +304,7 @@ export default {
       }
 
       //연락처를 변경하였으나 인증하지 않은 경우 확인(일반회원)
-      if(!tChng && !this.wantAuth && !this.isSocial) {
+      if (!tChng && !this.wantAuth && !this.isSocial) {
         Swal.fire({
           title: '연락처 본인 인증을 진행해 주세요',
           icon: 'error'
@@ -301,7 +313,7 @@ export default {
       }
 
       //연락처를 변경 후 인증을 요청했으나 인증확인이 되지 않은 경우 확인(일반회원)
-      if(this.wantAuth && !this.isSuccess && !this.isSocial) {
+      if (this.wantAuth && !this.isSuccess && !this.isSocial) {
         Swal.fire({
           title: '연락처 본인 인증을 완료해 주세요',
           icon: 'error'
@@ -313,7 +325,7 @@ export default {
       const emailPattern = new RegExp('^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$');
       let isEmailValid = emailPattern.test(this.newUserinfo.email)
 
-      if(!isEmailValid) {
+      if (!isEmailValid) {
         this.$refs.eRef.focus();
         Swal.fire({
           title: '올바르지 않은 이메일 형식입니다',
@@ -327,7 +339,7 @@ export default {
       const bdPattern = new RegExp('^([0-9]{0,4})-([0-9]{0,2})-([0-9]{0,2})$');
       let isBdValid = bdPattern.test(this.newUserinfo.birth);
 
-      if(!isBdValid) {
+      if (!isBdValid) {
         this.$refs.bdRef.focus();
         Swal.fire({
           title: '올바르지 않은 생년월일 형식입니다',
@@ -340,7 +352,7 @@ export default {
       //저장
       axios.put(this.$store.state.url + 'updateprofile', this.newUserinfo)
           .then(response => {
-            if(response.data.state) {
+            if (response.data.state) {
               Swal.fire({
                 title: '회원정보를 수정했습니다',
                 icon: 'success'
@@ -363,7 +375,7 @@ export default {
       const pwPattern = new RegExp('^(?=.*[A-Za-z])(?=.*\\d).{8,15}$');
       let isPwValid = pwPattern.test(this.newPw);
 
-      if(!this.isSocial && !isPwValid) {
+      if (!this.isSocial && !isPwValid) {
         this.$refs.pwRef.focus();
         Swal.fire({
           title: '올바르지 않은 비밀번호 형식입니다',
@@ -374,7 +386,7 @@ export default {
       }
 
       //현재 비밀번호 일치 검사 (일반회원)
-      if(!this.isSocial && !this.isCorrect) {
+      if (!this.isSocial && !this.isCorrect) {
         this.$refs.currentPwRef.focus();
         Swal.fire({
           title: '현재 비밀번호가 일치하지 않습니다',
@@ -384,7 +396,7 @@ export default {
       }
 
       //비밀번호와 비밀번호 확인 일치 검사 (일반회원)
-      if(!this.isSocial && !this.isSame) {
+      if (!this.isSocial && !this.isSame) {
         this.$refs.pwCorrectRef.focus();
         Swal.fire({
           title: '비밀번호 확인이 일치하지 않습니다',
@@ -394,7 +406,7 @@ export default {
       }
 
       //기존 비밀번호와 새로운 비밀번호가 같은지 검사 (일반회원)
-      if(!this.isSocial && this.newPw === this.userinfo.pw) {
+      if (!this.isSocial && this.newPw === this.userinfo.pw) {
         this.$refs.currentPwRef.focus();
         Swal.fire({
           title: '비밀번호가 기존과 동일합니다',
@@ -408,13 +420,13 @@ export default {
       //저장
       axios.put(this.$store.state.url + 'updatepw', this.newUserinfo)
           .then(response => {
-            if(response.data.state) {
+            if (response.data.state) {
               Swal.fire({
                 title: '비밀번호를 수정했습니다',
                 icon: 'success',
                 timer: 2000,
               }).then(() => {
-                location.href='/myprofile';
+                location.href = '/myprofile';
               });
             } else {
               Swal.fire({
@@ -437,7 +449,7 @@ export default {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Delete',
         preConfirm: () => {
-          return axios.delete(this.$store.state.url + 'deleteaccount', {params: {id : this.userinfo.id}})
+          return axios.delete(this.$store.state.url + 'deleteaccount', {params: {id: this.userinfo.id}})
               .catch(error => {
                 console.log(error);
                 Swal.showValidationMessage(
@@ -445,7 +457,7 @@ export default {
                 )
               })
         }
-      }).then( async result => {
+      }).then(async result => {
         if (result.isConfirmed) {
           //소셜 회원 연결 끊기
           await this.disconnect();
@@ -475,17 +487,17 @@ export default {
 
       const kakaoHeader = {
         headers: {
-          'Authorization' : `Bearer ${accessToken}`
+          'Authorization': `Bearer ${accessToken}`
         }
       }
 
-      if(btnType === 'kakao') {
+      if (btnType === 'kakao') {
         await axios.post(this.$store.state.url + 'disconnectKakao', {}, kakaoHeader);
-      } else if(btnType === 'naver') {
+      } else if (btnType === 'naver') {
         this.naverDisconnectParams.access_token = accessToken;
-        await axios.post(this.$store.state.url+'disconnectNaver', new URLSearchParams(this.naverDisconnectParams).toString());
-      } else if(btnType === 'google') {
-        await axios.post(this.$store.state.url+'disconnectGoogle', new URLSearchParams({token: accessToken}).toString());
+        await axios.post(this.$store.state.url + 'disconnectNaver', new URLSearchParams(this.naverDisconnectParams).toString());
+      } else if (btnType === 'google') {
+        await axios.post(this.$store.state.url + 'disconnectGoogle', new URLSearchParams({token: accessToken}).toString());
       }
 
     }

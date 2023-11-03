@@ -1,8 +1,7 @@
 <template>
-  <div class="mt-5">
-    <img src="@/assets/banner.png" class="img-fluid" alt="main-banner">
-  </div>
+  <main class="mt-5">
+    <figure>
+      <img alt="main-banner" class="img-fluid" src="@/assets/banner.png">
+    </figure>
+  </main>
 </template>
-
-<script>
-</script>
