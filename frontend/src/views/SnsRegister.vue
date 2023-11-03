@@ -1,99 +1,99 @@
 <template>
-  <section class="container-md d-flex justify-content-center p-5 mt-4 mb-4">
-
-    <div class="col-sm-12 col-md-12 col-lg-5 d-flex align-items-center rounded-end me-5 w-75 h-100 p-3">
-
-      <div class="container-md d-flex flex-column align-items-center">
-
-        <h1 class="h2 text-center fw-bold title">소셜 로그인 회원가입</h1>
+  <section class="container-md d-flex justify-content-center p-5 mt-5 mb-5">
+    <main class="col-sm-12 col-md-12 col-lg-5 d-flex flex-column align-items-center rounded-end w-100 h-100 p-3">
+      <header>
+        <h1 class="h2 text-center fw-bold title">소셜로그인 회원가입</h1>
         <p class="fs-6 text-center mb-4">회원가입 후 다양한 서비스를 이용하세요.</p>
+      </header>
 
-        <form id="formregister" class="w-100 mt-3" @submit.prevent="register">
+      <form class="w-100 mt-3" @submit.prevent="register">
+        <div class="row mb-4">
+          <label class="col-2 f-bold text-start d-flex align-items-center ps-4" for="id">아이디</label>
+          <div class="col-10 d-flex flex-column">
+            <div class="btn-group w-100">
+              <input id="id" ref="idRef" :value="userinfo.id" class="form-control" disabled required type="text">
+            </div>
+          </div>
+        </div>
 
-          <div class="row mb-4">
-            <div class="col-2 f-bold text-start d-flex align-items-center ps-4">아이디</div>
-            <div class="col-10 d-flex flex-column">
-              <div class="btn-group w-100">
-                <input ref="idRef" :value="userinfo.id" class="form-control" disabled required type="text">
+        <div class="row mb-4 mt-4">
+          <label class="col-2 f-bold text-start d-flex align-items-center ps-4" for="name"
+                 style="height: 50px;">이름(닉네임)</label>
+          <div class="col-10">
+            <div class="d-flex flex-column">
+              <div class="form-floating btn-group w-100 mb-2">
+                <input id="name" ref="nameRef" v-model="userinfo.name" :readonly="!isDupName" class="form-control"
+                       placeholder="이름은 10자까지 입력할 수 있습니다" required type="text">
+                <label>이름은 10자까지 입력할 수 있습니다</label>
+                <input :value="nameCheckBtnMsg" class="btn btn-primary" type="button" @click="dupOrMod">
+              </div>
+              <div v-if="isCheckNameDup" :class="{'c-red':isDupName, 'c-blue':!isDupName}"
+                   class="form-floating btn-group w-50 flex-start ps-2">
+                {{ nameDupMsg }}
               </div>
             </div>
           </div>
+        </div>
 
-          <div class="row mb-4 mt-4">
-            <div class="col-2 f-bold text-start d-flex align-items-center ps-4" style="height: 50px;">이름(닉네임)</div>
-            <div class="col-10">
-              <div class="d-flex flex-column">
-                <div class="form-floating btn-group w-100 mb-2">
-                  <input ref="nameRef" v-model="userinfo.name" :readonly="!isDupName" class="form-control" placeholder=""
-                         required type="text">
-                  <label for="floatingInput">이름은 10자까지 입력할 수 있습니다</label>
-                  <input :value="nameCheckBtnMsg" class="btn btn-primary" type="button" @click="dupOrMod">
-                </div>
-                <div v-if="isCheckNameDup" :class="{'c-red':isDupName, 'c-blue':!isDupName}"
-                     class="form-floating btn-group w-50 flex-start ps-2">
-                  {{ nameDupMsg }}
-                </div>
-              </div>
+        <div class="row mb-4">
+          <label class="col-2 f-bold text-start d-flex align-items-center ps-4" for="email">이메일</label>
+          <div class="col-10 d-flex flex-column">
+            <div class="btn-group w-100">
+              <input id="email" ref="eRef" :disabled="hasEmail" :value="userinfo.email" class="form-control"
+                     placeholder="" type="email">
             </div>
           </div>
+        </div>
 
-          <div class="row mb-4">
-            <div class="col-2 f-bold text-start d-flex align-items-center ps-4">이메일</div>
-            <div class="col-10 d-flex flex-column">
-              <div class="btn-group w-100">
-                <input ref="eRef" :disabled="hasEmail" :value="userinfo.email" class="form-control" placeholder=""
+        <div class="row mb-4">
+          <label class="col-2 f-bold text-start d-flex align-items-center ps-4" for="tel">연락처</label>
+          <div class="col-10">
+            <div class="d-flex flex-column">
+              <div class="form-floating btn-group w-100 mb-2">
+                <input id="tel" ref="telRef" v-model="userinfo.tel" class="form-control" placeholder="-빼고 입력해 주세요"
+                       required
                        type="text">
+                <label>-빼고 입력해 주세요</label>
               </div>
             </div>
           </div>
+        </div>
 
-          <div class="row mb-4">
-            <div class="col-2 f-bold text-start d-flex align-items-center ps-4">연락처</div>
-            <div class="col-10">
-              <div class="d-flex flex-column">
-                <div class="form-floating btn-group w-100 mb-2">
-                  <input ref="telRef" v-model="userinfo.tel" class="form-control" placeholder="" required type="text">
-                  <label for="floatingInput">-빼고 입력해 주세요.</label>
-                </div>
-              </div>
+        <div class="row mb-4">
+          <label class="col-2 f-bold text-start d-flex align-items-center ps-4" for="birth">생년월일</label>
+          <div class="col-10">
+            <div class="form-floating">
+              <input id="birth" ref="bdRef" v-model="userinfo.birth" class="form-control" placeholder="날짜를 골라주세요"
+                     required type="date">
+              <label>날짜를 골라주세요</label>
             </div>
           </div>
+        </div>
 
-          <div class="row mb-4">
-            <div class="col-2 f-bold text-start d-flex align-items-center ps-4">생년월일</div>
-            <div class="col-10">
-              <div class="form-floating">
-                <input ref="bdRef" v-model="userinfo.birth" class="form-control" placeholder="" required type="date">
-                <label for="floatingInput">날짜를 골라주세요</label>
-              </div>
+        <div class="row mb-4">
+          <label class="col-2 f-bold text-start d-flex align-items-center ps-4" for="address"
+                 style="height: 48px;">주소</label>
+          <div class="col-10">
+            <div class="form-floating btn-group mb-2 w-100">
+              <input id="address" ref="addRef" v-model="userinfo.address" class="form-control" placeholder="" readonly
+                     required type="text">
+              <label for="floatingInput">주소를 검색해 주세요</label>
+              <input class="btn btn-primary" type="button" value="주소 검색" @click="daumPostcode">
+            </div>
+            <div class="form-floating">
+              <input ref="addDetailRef" v-model="userinfo.addressDetail" class="form-control" placeholder="" required
+                     type="text">
+              <label for="floatingInput">상세 주소를 입력해 주세요</label>
             </div>
           </div>
+        </div>
 
-          <div class="row mb-4">
-            <div class="col-2 f-bold text-start d-flex align-items-center ps-4" style="height: 48px;">주소</div>
-            <div class="col-10">
-              <div class="form-floating btn-group mb-2 w-100">
-                <input ref="addRef" v-model="userinfo.address" class="form-control" placeholder="" readonly required
-                       type="text">
-                <label for="floatingInput">주소를 검색해 주세요</label>
-                <input class="btn btn-primary" type="button" value="주소 검색" @click="daumPostcode">
-              </div>
-              <div class="form-floating">
-                <input ref="addDetailRef" v-model="userinfo.addressDetail" class="form-control" placeholder="" required
-                       type="text">
-                <label for="floatingInput">상세 주소를 입력해 주세요</label>
-              </div>
-            </div>
-          </div>
-
-          <div class="container-fluid p-0 mt-3">
-            <button class="btn btn-primary mt-4 w-100" type="submit">회원가입</button>
-            <div class="mt-2">* 이름(닉네임)은 가입 후 변경할 수 없습니다.</div>
-          </div>
-        </form>
-
-      </div>
-    </div>
+        <div class="container-fluid p-0 mt-3">
+          <button class="btn btn-primary mt-4 w-100" type="submit">회원가입</button>
+          <div class="mt-2">* 이름(닉네임)은 가입 후 변경할 수 없습니다.</div>
+        </div>
+      </form>
+    </main>
   </section>
 </template>
 

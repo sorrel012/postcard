@@ -12,11 +12,9 @@
       <h1 class="mt-4 mb-5">{{ paper.title }}</h1>
     </header>
 
-    <!--    <section class="row w-100 m-0 align-items-baseline">-->
-    <section class="row w-100 m-0 align-items-start d-flex justify-content-between">
+    <section class="row w-100 m-0 align-items-baseline">
       <!-- 기존의 쪽지들 -->
-      <!--      <section class="d-flex flex-wrap justify-content-start">-->
-      <section class="d-flex flex-wrap justify-content-start flex-grow-1">
+      <section class="d-flex flex-wrap justify-content-start">
         <div v-for="postcard in postcards" class="p-3 fs-4 mt-4 mb-4 col-12 col-sm-4 col-xl-2">
           <article :style="{backgroundColor: paper.pcColor, outline: `${paper.pcBorderPx} solid ${paper.pcbColor}`,
         borderRadius: paper.pcbRadiusPx, boxShadow: `4px 4px 1px 3px ${paper.pcbColor}`, color: postcard.textColor}"
@@ -26,8 +24,7 @@
         </div>
       </section>
       <!-- 새로운 쪽지-->
-      <!--      <section class="p-3 fs-4 m-2 ms-0 me-0">-->
-      <section class="p-3 fs-4 m-2 ms-0 me-0 align-self-end or ml-auto">
+      <section class="p-3 fs-4 m-2 ms-0 me-0">
         <form class="d-flex align-items-start">
           <textarea v-model="postcard.content" :class="{'d-none': !isNew}"
                     :style="{backgroundColor: paper.pcColor, outline: `${paper.pcBorderPx} solid ${paper.pcbColor}`,borderRadius: paper.pcbRadiusPx, boxShadow: `4px 4px 1px 3px ${paper.pcbColor}`, color:postcard.textColor, maxWidth: '210px'}"
