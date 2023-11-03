@@ -12,7 +12,7 @@
           <router-link active-class="active" class="nav-link me-3" to="/create">도화지 만들기</router-link>
         </li>
         <li class="nav-item">
-          <router-link active-class="active" class="nav-link " to="/write">마음 전하기</router-link>
+          <router-link active-class="active" class="nav-link " to="/postcard">마음 전하기</router-link>
         </li>
         <li class="nav-item">
           <router-link active-class="active" class="nav-link ms-4" to="/treasure">보물상자</router-link>
