@@ -32,7 +32,7 @@
 - JAVA(JDK 11), SQL, HTML, CSS, JavaScript
 ### ✔ 사용 기술
 - SpringBoot(Maven), Vue2, Aws
-- ### ✔ 사용 라이브러리
+### ✔ 사용 라이브러리
 - CKEditor, Sweetalert, Bootstrap, Fontawesome, axios, vue-router, vuex
 ### ✔ IDE
 - Webstorm, IntelliJ, DBeaver, ERDCloud
