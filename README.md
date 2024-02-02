@@ -63,18 +63,22 @@
 
 
 - 보물상자
+![image](https://github.com/sorrel012/postcard/assets/115568532/78e7197a-678b-40e4-87a5-09ba05de6284)
+![image](https://github.com/sorrel012/postcard/assets/115568532/c8197a9a-127b-4c7b-8bd5-7344dcad1110)
+![image](https://github.com/sorrel012/postcard/assets/115568532/6a595cfe-df2c-4f2f-9f54-88a5dbaafd7b)
+![image](https://github.com/sorrel012/postcard/assets/115568532/af71c411-e686-4136-8f98-cd525c1b10da)
 
-  ![image](https://github.com/sorrel012/postcard/assets/115568532/80b77f52-1cba-4fcd-a5c0-04528647a09b)
-  ![image](https://github.com/sorrel012/postcard/assets/115568532/82f01398-c979-4632-a694-6bab44d4d487)
-  ![image](https://github.com/sorrel012/postcard/assets/115568532/ff04cc13-5eeb-4b08-89f8-16ad7716dccb)
+![image](https://github.com/sorrel012/postcard/assets/115568532/19df5265-8748-4bbe-a2a6-0894a71151f1)
 
   
 - 마이페이지
 
-  ![image](https://github.com/sorrel012/postcard/assets/115568532/2ac69efa-162b-481a-8d0a-b5cf2b374f93)
+
+  ![image](https://github.com/sorrel012/postcard/assets/115568532/b12332b8-3fdd-46d6-846e-b8a81732272d)
+  ![image](https://github.com/sorrel012/postcard/assets/115568532/6a6507ee-fca1-4776-82b1-ed9b7bcdc80e)
   ![image](https://github.com/sorrel012/postcard/assets/115568532/557c1f4b-30ca-4f82-adc4-54626a6f6b22)
-  ![image](https://github.com/sorrel012/postcard/assets/115568532/0150269a-e849-4c30-89fa-b7db3fa4332d)
-  ![image](https://github.com/sorrel012/postcard/assets/115568532/c5007cd2-a5ad-4b03-9d61-d66d5e128077)
+  ![image](https://github.com/sorrel012/postcard/assets/115568532/09c68450-b26d-4f5f-a165-e9af0c51eaad)
+  ![image](https://github.com/sorrel012/postcard/assets/115568532/3ca574c4-23e7-4ec1-8b1e-548809cc27e0)
 
 
 - 로그인, 회원가입
