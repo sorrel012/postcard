@@ -1,4 +1,4 @@
-# 💌 소중한 사람에게 마음을 정하는 롤링페이퍼 💌
+# 💌 소중한 사람에게 마음을 전하는 롤링페이퍼 💌
 ### 학창 시절 작성하던 롤링페이퍼를 인터넷에서 간편하게 작성할 수 있는 웹 사이트 <br>
 ![image](https://github.com/sorrel012/postcard/assets/115568532/e4ce8537-0ddd-405a-adb3-f0a9f01b3aab)
 
@@ -42,7 +42,7 @@
 <br>
 
 ## 📁 ERD 
-![rollingpaper📧](https://github.com/sorrel012/postcard/assets/115568532/cfa402e3-1a7d-4711-a82f-74d1ee67b1e9)
+![rollingpaper📧](https://github.com/sorrel012/postcard/assets/115568532/2d0ff8e2-4b58-4870-96b5-43f472eee15a)
 
 
 <br>
