@@ -12,8 +12,8 @@
       </article>
 
       <div class="text-end mt-4 mb-4">
-        <button type="submit" class="btn btn-primary me-2" v-if="editSeq==undefined"><font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #ffffff;" /> 등록</button>
-        <button type="submit" class="btn btn-primary me-2" v-if="editSeq!=undefined"><font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #ffffff;" /> 수정</button>
+        <button type="submit" class="btn btn-primary me-2" v-if="editSeq === undefined"><font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #ffffff;" /> 등록</button>
+        <button type="submit" class="btn btn-primary me-2" v-if="editSeq !== undefined"><font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #ffffff;" /> 수정</button>
         <button type="button" class="btn btn-border" @click="backToList"><font-awesome-icon :icon="['fas', 'bars']" style="color: black;" /> 목록</button>
       </div>
     </form>
@@ -42,7 +42,7 @@ export default {
   },
   async created() {
     const id = sessionStorage.getItem('id');
-    if(id == null || id == '') {
+    if(id == null || id === '') {
       await Swal.fire({
         icon: 'error',
         title: '로그인 후 이용하실 수 있습니다',
@@ -55,7 +55,7 @@ export default {
 
     //수정인지 추가인지 확인하여 수정일 경우 본문 내용 보여주기
     this.editSeq = this.$route.query.seq;
-    if(this.editSeq != undefined) {
+    if(this.editSeq !== undefined) {
       axios.get(this.$store.state.url + 'post', {params: {seq: this.editSeq}})
           .then(response => {
             this.title = response.data.result.title;
