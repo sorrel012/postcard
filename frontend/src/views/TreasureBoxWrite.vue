@@ -35,6 +35,7 @@ export default {
       images: [],
       editSeq: 0,
       b_seq: 0,
+      postType: sessionStorage.getItem('postType')
     }
   },
   components: {
