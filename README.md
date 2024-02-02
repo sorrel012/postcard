@@ -1,6 +1,6 @@
 # 💌 소중한 사람에게 마음을 전하는 롤링페이퍼 💌
-### 학창 시절 작성하던 롤링페이퍼를 인터넷에서 간편하게 작성할 수 있는 웹 사이트 <br>
-![image](https://github.com/sorrel012/postcard/assets/115568532/e4ce8537-0ddd-405a-adb3-f0a9f01b3aab)
+### 학창 시절 작성하던 롤링페이퍼를 인터넷에서 간편하게 작성할 수 있는 웹 사이트 <br><br>
+![image](https://github.com/sorrel012/postcard/assets/115568532/246d6632-c170-4e6c-b4a3-d7d80c141c0b)
 
 <br>
   
@@ -49,42 +49,36 @@
 
 
 ## 📷화면
-- 도화지 생성
+
+### ◼ 도화지 생성<br>
+  ![image](https://github.com/sorrel012/postcard/assets/115568532/2e353c6a-f71f-4881-91cb-c852d0748dcd)
+  <br><br>
+
+
+### ◼ 마음 전하기<br>
+  ![image](https://github.com/sorrel012/postcard/assets/115568532/7b7a1674-880d-461b-8744-b641295e247e)
+  ![image](https://github.com/sorrel012/postcard/assets/115568532/74309a0c-c549-42aa-8e82-0f2c924cd9d0)
+  ![image](https://github.com/sorrel012/postcard/assets/115568532/6cb32c41-d53c-4596-973a-9b4089684e4d)
+  ![image](https://github.com/sorrel012/postcard/assets/115568532/1a573be6-dfe7-446a-be44-a470c7299244)
+  ![image](https://github.com/sorrel012/postcard/assets/115568532/adcbf8e0-3af0-4997-9773-1d26f0a36289)
+  <br><br>
+
+
+### ◼ 보물상자<br>
+  ![image](https://github.com/sorrel012/postcard/assets/115568532/73ec0934-9bd0-4a7b-95c5-638ea564224b)
+  ![image](https://github.com/sorrel012/postcard/assets/115568532/fa25f6c5-16d0-409f-b273-81bc02b7f6a1)
+  ![image](https://github.com/sorrel012/postcard/assets/115568532/c923e2e3-a628-40ed-8f11-9f594d185c60)
+  <br><br>
+
   
-  ![image](https://github.com/sorrel012/postcard/assets/115568532/19fca4c5-44c2-441c-8734-6e2d9f6b8f8b)
-
-
-- 마음 전하기
-
-  ![image](https://github.com/sorrel012/postcard/assets/115568532/aa7e9d6b-14d5-43d4-9b1a-424f883f9eb6)
-  ![image](https://github.com/sorrel012/postcard/assets/115568532/c6a8e83e-3322-43ce-9879-3785224d9490)
-  ![image](https://github.com/sorrel012/postcard/assets/115568532/312fe776-8b00-472a-a914-935deba89273)
-  ![image](https://github.com/sorrel012/postcard/assets/115568532/a956539a-1ce3-4e9c-9675-bdf421d847e9)
-
-
-- 보물상자
-![image](https://github.com/sorrel012/postcard/assets/115568532/78e7197a-678b-40e4-87a5-09ba05de6284)
-![image](https://github.com/sorrel012/postcard/assets/115568532/c8197a9a-127b-4c7b-8bd5-7344dcad1110)
-![image](https://github.com/sorrel012/postcard/assets/115568532/6a595cfe-df2c-4f2f-9f54-88a5dbaafd7b)
-![image](https://github.com/sorrel012/postcard/assets/115568532/af71c411-e686-4136-8f98-cd525c1b10da)
-
-![image](https://github.com/sorrel012/postcard/assets/115568532/19df5265-8748-4bbe-a2a6-0894a71151f1)
-
-  
-- 마이페이지
-
-
-  ![image](https://github.com/sorrel012/postcard/assets/115568532/b12332b8-3fdd-46d6-846e-b8a81732272d)
-  ![image](https://github.com/sorrel012/postcard/assets/115568532/6a6507ee-fca1-4776-82b1-ed9b7bcdc80e)
-  ![image](https://github.com/sorrel012/postcard/assets/115568532/557c1f4b-30ca-4f82-adc4-54626a6f6b22)
+### ◼ 마이페이지<br>
+  ![image](https://github.com/sorrel012/postcard/assets/115568532/586c3add-c901-46a3-af6d-45957193205f)
+  ![image](https://github.com/sorrel012/postcard/assets/115568532/e8b314d3-7d38-4522-bd91-cfc2b2f6c143)
   ![image](https://github.com/sorrel012/postcard/assets/115568532/09c68450-b26d-4f5f-a165-e9af0c51eaad)
   ![image](https://github.com/sorrel012/postcard/assets/115568532/3ca574c4-23e7-4ec1-8b1e-548809cc27e0)
+  <br><br>
 
 
-- 로그인, 회원가입
-
-  ![image](https://github.com/sorrel012/postcard/assets/115568532/5e46b366-6cd1-4d71-8ea9-3051bc0518d7)
-  ![image](https://github.com/sorrel012/postcard/assets/115568532/4b7728aa-2b5e-4793-bcb0-03dada2e71e0)
-
-
-
+### ◼ 로그인, 회원가입<br>
+  ![image](https://github.com/sorrel012/postcard/assets/115568532/238afb84-0a01-48dd-a851-826ff8952e3c)
+  ![image](https://github.com/sorrel012/postcard/assets/115568532/544d7d2f-648a-4722-ba7f-e88804d57e0d)
