@@ -16,7 +16,7 @@
 - SpringBoot(Maven), Vue2, Aws
 ### ✔ 사용 라이브러리
 - CKEditor, Sweetalert, Bootstrap, Fontawesome, axios, vue-router, vuex
-### ✔ IDE
+### ✔ TOOL
 - Webstorm, IntelliJ, DBeaver, ERDCloud
 ### ✔ OS
 - Window
